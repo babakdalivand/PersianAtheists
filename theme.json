@@ -1,0 +1,73 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 2,
+  "settings": {
+    "color": {
+      "palette": [
+        { "slug": "primary",     "color": "#1E2A38", "name": "Primary" },
+        { "slug": "accent",      "color": "#D4A017", "name": "Accent Gold" },
+        { "slug": "background",  "color": "#F8F9FB", "name": "Background" },
+        { "slug": "surface",     "color": "#FFFFFF", "name": "Surface" },
+        { "slug": "text",        "color": "#1A1A1A", "name": "Text" },
+        { "slug": "muted",       "color": "#6B7280", "name": "Muted" },
+        { "slug": "border",      "color": "#E5E7EB", "name": "Border" },
+        { "slug": "dark-bg",     "color": "#0F172A", "name": "Dark Background" },
+        { "slug": "dark-surface","color": "#1E293B", "name": "Dark Surface" }
+      ],
+      "defaultPalette": false,
+      "custom": true
+    },
+    "typography": {
+      "fontFamilies": [
+        { "fontFamily": "'Vazirmatn', sans-serif", "slug": "persian", "name": "Vazirmatn (Persian)" },
+        { "fontFamily": "'Inter', sans-serif",      "slug": "english", "name": "Inter (English)" }
+      ],
+      "fontSizes": [
+        { "slug": "small",  "size": "14px", "name": "Small" },
+        { "slug": "normal", "size": "16px", "name": "Normal" },
+        { "slug": "medium", "size": "18px", "name": "Medium" },
+        { "slug": "large",  "size": "24px", "name": "Large" },
+        { "slug": "x-large","size": "32px", "name": "X-Large" }
+      ],
+      "customFontSize": true
+    },
+    "spacing": {
+      "spacingSizes": [
+        { "slug": "xs",  "size": "8px",  "name": "XS" },
+        { "slug": "sm",  "size": "16px", "name": "SM" },
+        { "slug": "md",  "size": "24px", "name": "MD" },
+        { "slug": "lg",  "size": "40px", "name": "LG" },
+        { "slug": "xl",  "size": "60px", "name": "XL" }
+      ]
+    },
+    "layout": {
+      "contentSize": "740px",
+      "wideSize": "1200px"
+    },
+    "border": {
+      "radius": true,
+      "width": true
+    },
+    "useRootPaddingAwareAlignments": true
+  },
+  "styles": {
+    "color": {
+      "background": "#F8F9FB",
+      "text": "#1A1A1A"
+    },
+    "typography": {
+      "fontFamily": "var(--font-persian)",
+      "fontSize": "16px",
+      "lineHeight": "1.7"
+    },
+    "elements": {
+      "link": {
+        "color": { "text": "#D4A017" },
+        ":hover": { "color": { "text": "#B8880F" } }
+      },
+      "h1": { "typography": { "fontSize": "32px", "fontWeight": "800" } },
+      "h2": { "typography": { "fontSize": "24px", "fontWeight": "700" } },
+      "h3": { "typography": { "fontSize": "18px", "fontWeight": "600" } }
+    }
+  }
+}
