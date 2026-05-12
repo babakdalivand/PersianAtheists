@@ -3,130 +3,215 @@
 <head>
     <meta charset="<?php bloginfo( 'charset' ); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="profile" href="https://gmpg.org/xfn/11">
     <?php wp_head(); ?>
 </head>
-
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
+
+<?php
+$lang  = pa_current_lang();
+$is_fa = ( $lang === 'fa' );
+?>
+
+<style>
+/* ══ LOGO SOLAR SYSTEM ══ */
+.pa-logo-solar {
+    position: relative;
+    width: 64px; height: 64px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+.pa-logo-solar::before {
+    content: '';
+    position: absolute;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--primary);
+    z-index: 4;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+}
+.pa-logo-solar img {
+    width: 42px !important; height: 42px !important;
+    border-radius: 50% !important; object-fit: contain !important;
+    position: absolute !important; z-index: 5 !important;
+    display: block !important;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+}
+#pa-logo-fb { display: none !important; }
+.pa-orbit-ring {
+    position: absolute; border-radius: 50%;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pa-orbit-rot linear infinite;
+    border-style: solid;
+}
+.pa-orbit-ring-1 { width: 54px; height: 54px; border-width: 1.2px; border-color: rgba(212,160,23,0.55); animation-duration: 6s; }
+.pa-orbit-ring-2 { width: 64px; height: 64px; border-width: 1px; border-color: rgba(212,160,23,0.25); animation-duration: 11s; animation-direction: reverse; }
+@keyframes pa-orbit-rot { from { transform: translate(-50%,-50%) rotate(0deg); } to { transform: translate(-50%,-50%) rotate(360deg); } }
+.pa-orbit-dot { position: absolute; border-radius: 50%; top: 50%; left: 50%; z-index: 6; }
+.pa-dot-earth { width: 8px; height: 8px; background: radial-gradient(circle at 35% 35%, #4fc3f7, #0277bd); box-shadow: 0 0 6px rgba(79,195,247,0.9); margin: -4px 0 0 -4px; animation: pa-dot-earth 6s linear infinite; }
+.pa-dot-moon { width: 4px; height: 4px; background: #E8E8E8; box-shadow: 0 0 4px rgba(255,255,255,0.9); margin: -2px 0 0 -2px; animation: pa-dot-moon 2s linear infinite; position: absolute; border-radius: 50%; top: 50%; left: 50%; }
+.pa-dot-planet { width: 7px; height: 7px; background: radial-gradient(circle at 35% 35%, #ffcc80, #e65100); box-shadow: 0 0 6px rgba(255,140,0,0.8); margin: -3.5px 0 0 -3.5px; animation: pa-dot-planet 11s linear infinite; }
+@keyframes pa-dot-earth { from { transform: rotate(0deg) translateX(27px) rotate(0deg); } to { transform: rotate(360deg) translateX(27px) rotate(-360deg); } }
+@keyframes pa-dot-moon { from { transform: rotate(0deg) translateX(9px) rotate(0deg); } to { transform: rotate(360deg) translateX(9px) rotate(-360deg); } }
+@keyframes pa-dot-planet { from { transform: rotate(180deg) translateX(32px) rotate(-180deg); } to { transform: rotate(540deg) translateX(32px) rotate(-540deg); } }
+.pa-logo-link { display: flex; align-items: center; gap: 10px; text-decoration: none !important; }
+.pa-logo-texts { display: flex; flex-direction: column; }
+.pa-logo-name { font-size: 14px; font-weight: 800; color: var(--text); line-height: 1.2; white-space: nowrap; }
+.pa-logo-desc { font-size: 10px; color: var(--muted); white-space: nowrap; letter-spacing: .3px; }
+
+/* ══ LANG SLIDER ══ */
+.pa-lang-slider {
+    position: relative; display: flex; align-items: center;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 20px; padding: 3px; overflow: hidden;
+    width: 68px; height: 32px; flex-shrink: 0; cursor: pointer;
+}
+.pa-lang-track { display: flex; align-items: center; width: 100%; position: relative; z-index: 2; }
+.pa-lang-item {
+    display: flex; align-items: center; justify-content: center;
+    width: 50%; height: 26px; border-radius: 16px;
+    text-decoration: none; position: relative; z-index: 2;
+    cursor: pointer; border: none; background: none;
+    padding: 0; font-size: 16px;
+}
+.pa-lang-flag { line-height: 1; transition: transform .25s, filter .25s; filter: grayscale(0.4) opacity(0.6); }
+.pa-lang-item.active .pa-lang-flag { transform: scale(1.18); filter: grayscale(0) opacity(1); }
+.pa-lang-indicator {
+    position: absolute; top: 3px; width: calc(50% - 3px);
+    height: calc(100% - 6px); background: var(--accent);
+    border-radius: 16px; transition: all .3s cubic-bezier(.4,0,.2,1);
+    z-index: 1; box-shadow: 0 2px 8px rgba(212,160,23,0.4);
+}
+.pa-lang-indicator.pos-fa { right: 3px; left: auto; }
+.pa-lang-indicator.pos-en { left: 3px; right: auto; }
+.pa-lang-slider:hover { border-color: var(--accent); }
+</style>
 
 <header class="site-header" id="site-header">
     <div class="header-inner container">
 
         <!-- LOGO -->
         <div class="header-logo">
-            <?php if ( has_custom_logo() ) : ?>
-                <?php the_custom_logo(); ?>
-            <?php else : ?>
-                <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="logo-text-link">
-                    <img src="<?php echo esc_url( PA_URI . '/assets/images/logo.png' ); ?>" alt="<?php bloginfo( 'name' ); ?>" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <span class="logo-text" style="display:none;">
-                        <span class="logo-icon">A</span>
-                        <span class="logo-label">
-                            <strong><?php bloginfo( 'name' ); ?></strong>
-                            <small><?php bloginfo( 'description' ); ?></small>
-                        </span>
-                    </span>
-                </a>
-            <?php endif; ?>
+            <a href="<?php echo esc_url(home_url('/')); ?>" class="pa-logo-link">
+                <div class="pa-logo-solar">
+                    <div class="pa-orbit-ring pa-orbit-ring-1"></div>
+                    <div class="pa-orbit-ring pa-orbit-ring-2"></div>
+                    <div class="pa-orbit-dot pa-dot-earth">
+                        <div class="pa-orbit-dot pa-dot-moon"></div>
+                    </div>
+                    <div class="pa-orbit-dot pa-dot-planet"></div>
+                    <?php if (file_exists(get_template_directory() . '/assets/images/logo.png')): ?>
+                        <img src="<?php echo esc_url(PA_URI . '/assets/images/logo.png'); ?>"
+                             alt="<?php bloginfo('name'); ?>"
+                             onerror="this.style.display='none';document.getElementById('pa-logo-fb').style.cssText='display:flex!important;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:42px;height:42px;border-radius:50%;background:var(--accent);align-items:center;justify-content:center;color:#fff;font-size:20px;font-weight:900;z-index:5;'">
+                        <div id="pa-logo-fb">A</div>
+                    <?php else: ?>
+                        <div id="pa-logo-fb" style="display:flex!important;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:42px;height:42px;border-radius:50%;background:var(--accent);align-items:center;justify-content:center;color:#fff;font-size:20px;font-weight:900;z-index:5;">A</div>
+                    <?php endif; ?>
+                </div>
+                <div class="pa-logo-texts">
+                    <span class="pa-logo-name"><?php echo $is_fa ? 'آتئیست‌های ایرانی' : 'Persian Atheists'; ?></span>
+                    <span class="pa-logo-desc">RAHA Network</span>
+                </div>
+            </a>
         </div>
 
-        <!-- PRIMARY NAV -->
-        <nav class="header-nav" aria-label="<?php esc_attr_e( 'منوی اصلی', 'persian-atheists' ); ?>">
-            <?php
-            wp_nav_menu( [
-                'theme_location' => pa_is_rtl() ? 'primary' : 'primary-en',
+        <!-- NAV -->
+        <nav class="header-nav">
+            <?php wp_nav_menu([
+                'theme_location' => $is_fa ? 'primary' : 'primary-en',
                 'container'      => false,
                 'menu_class'     => 'nav-list',
                 'fallback_cb'    => 'pa_fallback_menu',
-            ] );
-            ?>
+            ]); ?>
         </nav>
 
-        <!-- HEADER ACTIONS -->
+        <!-- ACTIONS -->
         <div class="header-actions">
 
-            <!-- Search -->
-            <button class="icon-btn search-toggle" aria-label="<?php esc_attr_e( 'جستجو', 'persian-atheists' ); ?>">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                </svg>
+            <button class="icon-btn search-toggle" aria-label="Search">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             </button>
 
-            <!-- Dark Mode -->
-            <button class="icon-btn dark-mode-toggle" id="darkModeToggle" aria-label="<?php esc_attr_e( 'تغییر حالت', 'persian-atheists' ); ?>">
-                <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                    <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
-                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-                </svg>
-                <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                </svg>
+            <button class="icon-btn dark-mode-toggle" id="darkModeToggle">
+                <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
             </button>
 
-            <!-- Language Switch -->
-            <?php if ( function_exists( 'pll_the_languages' ) ) : ?>
-                <div class="lang-switch" id="langSwitch">
-                    <button class="lang-btn" aria-expanded="false">
-                        <span><?php echo strtoupper( pa_current_lang() ); ?></span>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"/></svg>
+            <!-- ══ LANG SLIDER ══ -->
+            <div class="pa-lang-slider">
+                <div class="pa-lang-track">
+                    <button class="pa-lang-item <?php echo $is_fa ? 'active' : ''; ?>"
+                            onclick="paLangSwitch(this,'fa')" title="فارسی">
+                        <span class="pa-lang-flag">🇮🇷</span>
                     </button>
-                    <div class="lang-dropdown">
-                        <?php pll_the_languages( [ 'show_flags' => 0, 'show_names' => 1, 'display_names_as' => 'name', 'hide_current' => 0 ] ); ?>
-                    </div>
+                    <button class="pa-lang-item <?php echo !$is_fa ? 'active' : ''; ?>"
+                            onclick="paLangSwitch(this,'en')" title="English">
+                        <span class="pa-lang-flag">🇬🇧</span>
+                    </button>
                 </div>
-            <?php else : ?>
-                <div class="lang-switch">
-                    <a href="<?php echo esc_url( home_url( '/en/' ) ); ?>" class="lang-static <?php echo pa_current_lang() === 'en' ? 'active' : ''; ?>">EN</a>
-                    <span class="lang-sep">|</span>
-                    <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="lang-static <?php echo pa_current_lang() === 'fa' ? 'active' : ''; ?>">FA</a>
-                </div>
-            <?php endif; ?>
+                <div class="pa-lang-indicator <?php echo $is_fa ? 'pos-fa' : 'pos-en'; ?>" id="paLangInd"></div>
+            </div>
 
-            <!-- Donate Button -->
-            <a href="<?php echo esc_url( get_permalink( get_page_by_path( 'donate' ) ) ); ?>" class="btn btn-donate">
-                ❤️ <?php esc_html_e( 'حمایت مالی', 'persian-atheists' ); ?>
+            <a href="<?php echo esc_url(home_url('/donate')); ?>" class="btn btn-donate">
+                ❤️ <?php echo $is_fa ? 'حمایت مالی' : 'Donate'; ?>
             </a>
 
-            <!-- Mobile Hamburger -->
-            <button class="icon-btn mobile-menu-toggle" id="mobileMenuToggle" aria-label="منو">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
-                </svg>
+            <button class="icon-btn mobile-menu-toggle" id="mobileMenuToggle">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
             </button>
+        </div>
+    </div>
 
-        </div><!-- /header-actions -->
-    </div><!-- /header-inner -->
-
-    <!-- SEARCH BAR -->
+    <!-- Search Bar -->
     <div class="header-search-bar" id="headerSearchBar">
         <div class="container">
-            <form role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>" class="search-form">
-                <input type="search" name="s" placeholder="<?php esc_attr_e( 'جستجو در سایت...', 'persian-atheists' ); ?>" value="<?php the_search_query(); ?>" class="form-control search-input" autocomplete="off">
-                <button type="submit" class="btn btn-primary search-submit">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
-                        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                    </svg>
-                </button>
+            <form role="search" method="get" action="<?php echo esc_url(home_url('/')); ?>" class="search-form">
+                <input type="search" name="s" placeholder="<?php echo $is_fa ? 'جستجو...' : 'Search...'; ?>" value="<?php the_search_query(); ?>" class="form-control search-input" autocomplete="off">
+                <button type="submit" class="btn btn-primary search-submit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
                 <button type="button" class="icon-btn search-close" id="searchClose">✕</button>
             </form>
         </div>
     </div>
 </header>
 
-<!-- MOBILE NAV OVERLAY -->
+<!-- Mobile Nav -->
 <div class="mobile-nav-overlay" id="mobileNavOverlay">
     <div class="mobile-nav">
         <button class="mobile-nav-close" id="mobileNavClose">✕</button>
-        <?php
-        wp_nav_menu( [
-            'theme_location' => pa_is_rtl() ? 'primary' : 'primary-en',
+        <?php wp_nav_menu([
+            'theme_location' => $is_fa ? 'primary' : 'primary-en',
             'container'      => false,
             'menu_class'     => 'mobile-nav-list',
             'fallback_cb'    => 'pa_fallback_menu',
-        ] );
-        ?>
+        ]); ?>
     </div>
 </div>
+
+<script>
+// ── Language Switch ───────────────────────────────────
+// از cookie pa_lang استفاده می‌کنیم — Polylang این رو override نمی‌کنه
+function paLangSwitch(el, lang) {
+    if (el.classList.contains('active')) return;
+
+    // انیمیشن
+    var ind = document.getElementById('paLangInd');
+    if (ind) {
+        ind.classList.remove('pos-fa', 'pos-en');
+        ind.classList.add(lang === 'fa' ? 'pos-fa' : 'pos-en');
+    }
+    document.querySelectorAll('.pa-lang-item').forEach(function(b, i) {
+        b.classList.toggle('active', lang === 'fa' ? i === 0 : i === 1);
+    });
+
+    // ست کردن cookie pa_lang
+    var exp = new Date(Date.now() + 365*24*60*60*1000).toUTCString();
+    document.cookie = 'pa_lang=' + lang + '; path=/; expires=' + exp;
+
+    // reload
+    setTimeout(function() { location.reload(); }, 300);
+}
+</script>

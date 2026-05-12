@@ -1,117 +1,259 @@
 <?php
 /**
- * Single Video Template
+ * Single Video — Persian Atheists
  */
 get_header();
-while ( have_posts() ) : the_post();
-    $yt_id    = pa_get_youtube_id();
-    $duration = get_post_meta( get_the_ID(), 'pa_duration', true );
+
+$lang    = pa_current_lang();
+$is_en   = ($lang === 'en');
+$post_id = get_queried_object_id();
+$post    = get_post($post_id);
+
+if (!$post) { get_footer(); exit; }
+
+$yt_id   = get_post_meta($post_id, 'pa_youtube_id', true);
+$dur     = get_post_meta($post_id, 'pa_duration', true);
+$content = get_the_content(null, false, $post_id);
+$author  = get_the_author_meta('display_name', $post->post_author);
 ?>
+<style>
+.pv-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 28px 20px 60px;
+    box-sizing: border-box;
+}
+.pv-bread {
+    display: flex; gap: 6px; align-items: center;
+    font-size: 13px; color: var(--muted);
+    margin-bottom: 20px; flex-wrap: wrap;
+}
+.pv-bread a { color: var(--muted); text-decoration: none; }
+.pv-bread a:hover { color: var(--accent); }
+.pv-sep { opacity: .4; }
+.pv-player {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: 0 6px 32px rgba(0,0,0,0.25);
+}
+.pv-player iframe,
+.pv-player img {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+    object-fit: cover;
+}
+.pv-player-ph {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 80px;
+}
+.pv-info {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 28px;
+}
+.pv-title {
+    font-size: clamp(20px, 3vw, 26px);
+    font-weight: 900;
+    color: var(--text);
+    line-height: 1.4;
+    margin-bottom: 16px;
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+}
+body.lang-en .pv-title { font-family: 'Inter', Arial, sans-serif; }
+.pv-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 14px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 16px;
+}
+.pv-author { display: flex; align-items: center; gap: 10px; }
+.pv-author img { width: 36px; height: 36px; border-radius: 50%; }
+.pv-aname { font-size: 14px; font-weight: 700; color: var(--text); }
+.pv-asub { font-size: 12px; color: var(--muted); display: flex; gap: 6px; margin-top: 2px; }
+.pv-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.pv-btn {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 8px 14px; border-radius: 8px;
+    font-size: 13px; font-weight: 600;
+    text-decoration: none; cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--surface); color: var(--muted);
+    transition: all .2s; font-family: inherit;
+}
+.pv-btn:hover { border-color: var(--accent); color: var(--accent); }
+.pv-btn-yt { background: #FF0000 !important; border-color: #FF0000 !important; color: #fff !important; }
+.pv-btn-yt:hover { background: #CC0000 !important; }
+.pv-desc { font-size: 15px; line-height: 1.8; color: var(--muted); }
+.pv-more-title {
+    font-size: 18px; font-weight: 800; color: var(--text);
+    margin-bottom: 16px; padding-bottom: 8px;
+    border-bottom: 2px solid var(--accent);
+    display: inline-block;
+}
+.pv-list { display: flex; flex-direction: column; gap: 12px; }
+.pv-item {
+    display: flex; gap: 12px; text-decoration: none;
+    padding: 10px; border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface); transition: all .2s;
+}
+.pv-item:hover { border-color: var(--accent); }
+.pv-thumb {
+    width: 130px; height: 74px;
+    border-radius: 8px; overflow: hidden;
+    flex-shrink: 0; background: var(--primary);
+    position: relative;
+}
+.pv-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.pv-thumb-ph {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; color: var(--accent);
+}
+.pv-dur {
+    position: absolute; bottom: 5px; right: 5px;
+    background: rgba(0,0,0,.8); color: #fff;
+    font-size: 11px; padding: 2px 6px;
+    border-radius: 4px; font-weight: 600;
+}
+.pv-ititle {
+    font-size: 14px; font-weight: 700; color: var(--text);
+    line-height: 1.4; margin-bottom: 6px;
+    display: -webkit-box; -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical; overflow: hidden;
+}
+.pv-imeta { font-size: 12px; color: var(--muted); }
+@media (max-width: 600px) {
+    .pv-wrap { padding: 16px 14px 40px; }
+    .pv-info { padding: 16px; }
+    .pv-thumb { width: 100px; height: 58px; }
+    .pv-title { font-size: 18px; }
+}
+</style>
 
-<main class="site-main" id="main-content">
-<div class="container" style="padding-top:40px;padding-bottom:80px;">
-<div class="home-layout">
+<main class="site-main">
+<div class="pv-wrap">
 
-    <div class="main-column">
+    <!-- Breadcrumb -->
+    <nav class="pv-bread">
+        <a href="<?php echo esc_url(home_url('/')); ?>"><?php echo $is_en ? 'Home' : 'خانه'; ?></a>
+        <span class="pv-sep">›</span>
+        <a href="<?php echo esc_url(home_url('/videos')); ?>"><?php echo $is_en ? 'Videos' : 'ویدیوها'; ?></a>
+        <span class="pv-sep">›</span>
+        <span><?php echo wp_trim_words(get_the_title($post_id), 8, '...'); ?></span>
+    </nav>
 
-        <!-- BREADCRUMB -->
-        <nav class="breadcrumb">
-            <a href="<?php echo esc_url( home_url('/') ); ?>">خانه</a>
-            <span class="breadcrumb-sep">›</span>
-            <a href="<?php echo esc_url( home_url('/videos') ); ?>">ویدیوها</a>
-            <span class="breadcrumb-sep">›</span>
-            <span><?php echo wp_trim_words( get_the_title(), 6, '...' ); ?></span>
-        </nav>
+    <!-- Player -->
+    <div class="pv-player">
+        <?php if ($yt_id): ?>
+            <iframe
+                src="https://www.youtube.com/embed/<?php echo esc_attr($yt_id); ?>?rel=0&modestbranding=1"
+                title="<?php echo esc_attr(get_the_title($post_id)); ?>"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
+        <?php elseif (has_post_thumbnail($post_id)): ?>
+            <?php echo get_the_post_thumbnail($post_id, 'pa-hero', ['style'=>'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;']); ?>
+        <?php else: ?>
+            <div class="pv-player-ph">▶</div>
+        <?php endif; ?>
+    </div>
 
-        <!-- VIDEO PLAYER -->
-        <div class="video-player-wrap" style="position:relative;aspect-ratio:16/9;background:#000;border-radius:var(--radius);overflow:hidden;margin-bottom:24px;">
-            <?php if ( $yt_id ) : ?>
-                <iframe
-                    src="https://www.youtube.com/embed/<?php echo esc_attr($yt_id); ?>?autoplay=0&rel=0&modestbranding=1"
-                    title="<?php the_title_attribute(); ?>"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen
-                    style="position:absolute;inset:0;width:100%;height:100%;"
-                ></iframe>
-            <?php elseif ( has_post_thumbnail() ) : ?>
-                <?php the_post_thumbnail('pa-hero', ['style'=>'width:100%;height:100%;object-fit:cover;','alt'=>get_the_title()]); ?>
-            <?php else : ?>
-                <div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--accent);font-size:64px;">▶</div>
-            <?php endif; ?>
-        </div>
-
-        <!-- INFO -->
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:24px;">
-            <h1 class="article-title" style="font-size:22px;margin-bottom:12px;"><?php the_title(); ?></h1>
-
-            <div class="article-meta" style="border:none;padding:0;margin-bottom:16px;">
-                <div class="article-meta-author">
-                    <?php echo get_avatar(get_the_author_meta('email'), 34, '', '', ['style'=>'border-radius:50%;']); ?>
-                    <div>
-                        <span class="author-name"><?php the_author(); ?></span>
-                        <span class="meta-sep">·</span>
-                        <time><?php echo pa_time_ago(); ?></time>
-                        <?php if ($duration) : ?>
-                            <span class="meta-sep">·</span>
-                            <span>🕐 <?php echo esc_html($duration); ?></span>
-                        <?php endif; ?>
+    <!-- Info -->
+    <div class="pv-info">
+        <h1 class="pv-title"><?php echo get_the_title($post_id); ?></h1>
+        <div class="pv-meta">
+            <div class="pv-author">
+                <?php echo get_avatar(get_the_author_meta('email', $post->post_author), 36, '', '', ['class'=>'']); ?>
+                <div>
+                    <div class="pv-aname"><?php echo esc_html($author); ?></div>
+                    <div class="pv-asub">
+                        <span><?php echo pa_time_ago($post_id); ?></span>
+                        <?php if ($dur): ?><span>· 🕐 <?php echo esc_html($dur); ?></span><?php endif; ?>
                     </div>
                 </div>
-                <div class="share-btns">
-                    <?php if ($yt_id) : ?>
-                        <a href="https://youtube.com/watch?v=<?php echo esc_attr($yt_id); ?>" target="_blank" rel="noopener" class="share-btn" title="مشاهده در یوتیوب" style="width:auto;padding:0 12px;border-radius:8px;font-size:12px;font-weight:700;gap:5px;">
-                            <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                            یوتیوب
-                        </a>
-                    <?php endif; ?>
-                    <a href="https://t.me/share/url?url=<?php the_permalink(); ?>" target="_blank" rel="noopener" class="share-btn" title="اشتراک در تلگرام">✈</a>
-                    <a href="https://twitter.com/intent/tweet?url=<?php the_permalink(); ?>" target="_blank" rel="noopener" class="share-btn" title="اشتراک در X">𝕏</a>
-                </div>
             </div>
-
-            <?php if ( get_the_content() ) : ?>
-                <div class="article-content" style="font-size:15px;border-top:1px solid var(--border);padding-top:16px;">
-                    <?php the_content(); ?>
-                </div>
-            <?php elseif ( get_the_excerpt() ) : ?>
-                <p style="color:var(--muted);font-size:15px;line-height:1.7;"><?php the_excerpt(); ?></p>
-            <?php endif; ?>
+            <div class="pv-actions">
+                <?php if ($yt_id): ?>
+                    <a href="https://youtube.com/watch?v=<?php echo esc_attr($yt_id); ?>"
+                       target="_blank" rel="noopener" class="pv-btn pv-btn-yt">
+                        ▶ YouTube
+                    </a>
+                <?php endif; ?>
+                <a href="https://t.me/share/url?url=<?php echo urlencode(get_permalink($post_id)); ?>"
+                   target="_blank" class="pv-btn">✈</a>
+                <a href="https://twitter.com/intent/tweet?url=<?php echo urlencode(get_permalink($post_id)); ?>"
+                   target="_blank" class="pv-btn">𝕏</a>
+                <button class="pv-btn"
+                    onclick="navigator.clipboard.writeText('<?php echo esc_js(get_permalink($post_id)); ?>').then(function(){this.textContent='✓';}.bind(this))">🔗</button>
+            </div>
         </div>
-
-        <!-- MORE VIDEOS -->
-        <?php
-        $more = new WP_Query(['post_type'=>'pa_video','posts_per_page'=>4,'post__not_in'=>[get_the_ID()],'post_status'=>'publish']);
-        if ($more->have_posts()) : ?>
-            <section>
-                <h2 class="section-title">ویدیوهای بیشتر</h2>
-                <div class="scroll-row">
-                    <?php while ($more->have_posts()) : $more->the_post();
-                        $mid = pa_get_youtube_id(); $dur = get_post_meta(get_the_ID(),'pa_duration',true); ?>
-                        <div class="media-card">
-                            <div class="media-thumb">
-                                <?php if ($mid) : ?><img src="https://img.youtube.com/vi/<?php echo esc_attr($mid); ?>/mqdefault.jpg" alt="<?php the_title_attribute(); ?>"><?php elseif (has_post_thumbnail()) : ?><?php the_post_thumbnail('pa-thumb'); ?><?php endif; ?>
-                                <?php if ($dur) : ?><span class="media-duration"><?php echo esc_html($dur); ?></span><?php endif; ?>
-                                <div class="play-overlay"><div class="play-circle"><svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
-                            </div>
-                            <div class="media-info">
-                                <div class="media-title"><a href="<?php the_permalink(); ?>" style="color:inherit;"><?php the_title(); ?></a></div>
-                                <div class="media-meta"><?php pa_time_ago(); ?></div>
-                            </div>
-                        </div>
-                    <?php endwhile; wp_reset_postdata(); ?>
-                </div>
-            </section>
+        <?php if ($content): ?>
+            <div class="pv-desc"><?php echo apply_filters('the_content', $content); ?></div>
         <?php endif; ?>
+    </div>
 
-    </div><!-- /main-column -->
+    <!-- More Videos -->
+    <?php
+    $more_args = array(
+        'post_type'      => 'pa_video',
+        'posts_per_page' => 6,
+        'post__not_in'   => array($post_id),
+        'post_status'    => 'publish',
+        'orderby'        => 'date',
+        'order'          => 'DESC',
+    );
+    $more_query = new WP_Query($more_args);
+    ?>
+    <?php if ($more_query instanceof WP_Query && $more_query->have_posts()): ?>
+    <div>
+        <div class="pv-more-title"><?php echo $is_en ? 'More Videos' : 'ویدیوهای بیشتر'; ?></div>
+        <div class="pv-list">
+            <?php while ($more_query->have_posts()): $more_query->the_post();
+                $mid  = get_post_meta(get_the_ID(), 'pa_youtube_id', true);
+                $mdur = get_post_meta(get_the_ID(), 'pa_duration', true);
+            ?>
+                <a href="<?php the_permalink(); ?>" class="pv-item">
+                    <div class="pv-thumb">
+                        <?php if ($mid): ?>
+                            <img src="https://img.youtube.com/vi/<?php echo esc_attr($mid); ?>/mqdefault.jpg"
+                                 alt="<?php the_title_attribute(); ?>" loading="lazy">
+                        <?php elseif (has_post_thumbnail()): ?>
+                            <?php the_post_thumbnail('pa-thumb', ['style'=>'width:100%;height:100%;object-fit:cover;']); ?>
+                        <?php else: ?>
+                            <div class="pv-thumb-ph">▶</div>
+                        <?php endif; ?>
+                        <?php if ($mdur): ?>
+                            <span class="pv-dur"><?php echo esc_html($mdur); ?></span>
+                        <?php endif; ?>
+                    </div>
+                    <div style="flex:1;min-width:0;">
+                        <div class="pv-ititle"><?php the_title(); ?></div>
+                        <div class="pv-imeta"><?php echo pa_time_ago(); ?></div>
+                    </div>
+                </a>
+            <?php endwhile; ?>
+            <?php wp_reset_postdata(); ?>
+        </div>
+    </div>
+    <?php endif; ?>
 
-    <aside class="sidebar-column">
-        <?php get_template_part('parts/sidebar'); ?>
-    </aside>
-
-</div>
 </div>
 </main>
 
-<?php endwhile; get_footer(); ?>
+<?php wp_reset_postdata(); get_footer(); ?>

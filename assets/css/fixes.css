@@ -1,0 +1,83 @@
+/* ══ PA FIXES — header + pages ══ */
+
+/* ── Header ── */
+.site-header { overflow: visible !important; }
+
+.header-inner {
+    height: 64px !important;
+    gap: 6px !important;
+    overflow: visible !important;
+    flex-wrap: nowrap !important;
+    padding: 0 !important;
+}
+
+.header-logo { flex-shrink: 0 !important; min-width: 0; }
+
+.header-nav {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+    display: flex !important;
+    justify-content: center !important;
+}
+
+.nav-list {
+    gap: 0 !important;
+    flex-wrap: nowrap !important;
+}
+
+.nav-list li a {
+    padding: 7px 8px !important;
+    font-size: 13px !important;
+}
+
+.header-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    flex-shrink: 0 !important;
+}
+
+.btn-donate {
+    font-size: 12px !important;
+    padding: 7px 10px !important;
+    white-space: nowrap !important;
+}
+
+/* ── Container ── */
+.container {
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    padding: 0 20px !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+}
+
+/* ── Font global ── */
+body {
+    font-family: 'Vazirmatn', Tahoma, Arial, sans-serif !important;
+}
+body.lang-en {
+    font-family: 'Inter', Arial, sans-serif !important;
+}
+
+/* ── Single post pages ── */
+.pv-wrap {
+    max-width: 860px !important;
+    margin: 0 auto !important;
+    padding: 28px 20px 60px !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+    .header-nav { overflow: hidden !important; }
+    .nav-list li a { padding: 7px 6px !important; font-size: 12px !important; }
+    .btn-donate { display: none !important; }
+}
+
+@media (max-width: 768px) {
+    .header-nav { display: none !important; }
+    .mobile-menu-toggle { display: flex !important; }
+}

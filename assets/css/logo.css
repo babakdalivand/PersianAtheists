@@ -1,0 +1,159 @@
+/* ══ LOGO SOLAR SYSTEM ══ */
+.pa-logo-solar {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* دایره تیره پشت لوگو */
+.pa-logo-solar::before {
+    content: '';
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--primary);
+    z-index: 4;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* لوگو — همیشه نمایش داده بشه */
+.pa-logo-solar img {
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: 50% !important;
+    object-fit: contain !important;
+    position: absolute !important;
+    z-index: 5 !important;
+    display: block !important;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Fallback — فقط وقتی لوگو نیست */
+#pa-logo-fb,
+.pa-logo-fallback {
+    display: none !important;
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: var(--accent);
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 900;
+    position: absolute !important;
+    z-index: 5;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* ── Orbit rings ── */
+.pa-orbit-ring {
+    position: absolute;
+    border-radius: 50%;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pa-orbit-rot linear infinite;
+    border-style: solid;
+}
+
+.pa-orbit-ring-1 {
+    width: 54px; height: 54px;
+    border-width: 1.2px;
+    border-color: rgba(212,160,23,0.55);
+    animation-duration: 6s;
+}
+
+.pa-orbit-ring-2 {
+    width: 64px; height: 64px;
+    border-width: 1px;
+    border-color: rgba(212,160,23,0.25);
+    animation-duration: 11s;
+    animation-direction: reverse;
+}
+
+@keyframes pa-orbit-rot {
+    from { transform: translate(-50%,-50%) rotate(0deg); }
+    to   { transform: translate(-50%,-50%) rotate(360deg); }
+}
+
+/* ── Orbiting dots ── */
+.pa-orbit-dot {
+    position: absolute;
+    border-radius: 50%;
+    top: 50%; left: 50%;
+    z-index: 6;
+}
+
+.pa-dot-earth {
+    width: 8px; height: 8px;
+    background: radial-gradient(circle at 35% 35%, #4fc3f7, #0277bd);
+    box-shadow: 0 0 6px rgba(79,195,247,0.9);
+    margin: -4px 0 0 -4px;
+    animation: pa-dot-earth 6s linear infinite;
+}
+
+.pa-dot-moon {
+    width: 4px; height: 4px;
+    background: #E8E8E8;
+    box-shadow: 0 0 4px rgba(255,255,255,0.9);
+    margin: -2px 0 0 -2px;
+    animation: pa-dot-moon 2s linear infinite;
+    position: absolute;
+    border-radius: 50%;
+    top: 50%; left: 50%;
+}
+
+.pa-dot-planet {
+    width: 7px; height: 7px;
+    background: radial-gradient(circle at 35% 35%, #ffcc80, #e65100);
+    box-shadow: 0 0 6px rgba(255,140,0,0.8);
+    margin: -3.5px 0 0 -3.5px;
+    animation: pa-dot-planet 11s linear infinite;
+}
+
+@keyframes pa-dot-earth {
+    from { transform: rotate(0deg) translateX(27px) rotate(0deg); }
+    to   { transform: rotate(360deg) translateX(27px) rotate(-360deg); }
+}
+
+@keyframes pa-dot-moon {
+    from { transform: rotate(0deg) translateX(9px) rotate(0deg); }
+    to   { transform: rotate(360deg) translateX(9px) rotate(-360deg); }
+}
+
+@keyframes pa-dot-planet {
+    from { transform: rotate(180deg) translateX(32px) rotate(-180deg); }
+    to   { transform: rotate(540deg) translateX(32px) rotate(-540deg); }
+}
+
+/* ── Logo link ── */
+.pa-logo-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none !important;
+}
+
+.pa-logo-texts { display: flex; flex-direction: column; }
+
+.pa-logo-name {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+.pa-logo-desc {
+    font-size: 10px;
+    color: var(--muted);
+    white-space: nowrap;
+    letter-spacing: .3px;
+}
