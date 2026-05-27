@@ -605,6 +605,12 @@
 .pa-media-duo-col .pa-media-grid {
     grid-template-columns: repeat(2, 1fr);
 }
+.pa-media-duo-inner.pa-duo-single {
+    grid-template-columns: 1fr;
+}
+.pa-media-duo-inner.pa-duo-single .pa-media-grid {
+    grid-template-columns: repeat(4, 1fr);
+}
 
 @media (max-width: 900px) {
     .pa-media-duo-inner { grid-template-columns: 1fr; gap: 32px; }

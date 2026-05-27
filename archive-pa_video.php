@@ -23,60 +23,41 @@ get_header();
         </div>
     </div>
 
-    <div class="home-layout" style="padding-top:32px;">
-        <div class="main-column">
-
-            <?php if (have_posts()) : ?>
-                <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:var(--card-gap);">
-                    <?php while (have_posts()) : the_post();
-                        $yt_id    = pa_get_youtube_id();
-                        $duration = get_post_meta(get_the_ID(),'pa_duration',true);
-                    ?>
-                        <div class="media-card">
-                            <div class="media-thumb">
-                                <?php if (has_post_thumbnail()) : ?>
-                                    <?php the_post_thumbnail('pa-card',['alt'=>get_the_title()]); ?>
-                                <?php elseif ($yt_id) : ?>
-                                    <img src="https://img.youtube.com/vi/<?php echo esc_attr($yt_id); ?>/hqdefault.jpg" alt="<?php the_title_attribute(); ?>">
-                                <?php else : ?>
-                                    <div style="height:100%;background:var(--primary);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:36px;">▶</div>
-                                <?php endif; ?>
-
-                                <?php if ($duration) : ?><span class="media-duration"><?php echo esc_html($duration); ?></span><?php endif; ?>
-
-                                <div class="play-overlay">
-                                    <div class="play-circle">
-                                        <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="media-info">
-                                <div class="media-title">
-                                    <a href="<?php the_permalink(); ?>" style="color:inherit;"><?php the_title(); ?></a>
-                                </div>
-                                <div class="media-meta"><?php echo pa_time_ago(); ?></div>
-                            </div>
-                        </div>
-                    <?php endwhile; ?>
-                </div>
-
-                <div class="archive-pagination">
-                    <?php the_posts_pagination(['prev_text'=>'← قبلی','next_text'=>'بعدی →']); ?>
-                </div>
-
-            <?php else : ?>
-                <div class="no-results">
-                    <div style="font-size:64px;margin-bottom:16px;">📹</div>
-                    <h2>هنوز ویدیویی منتشر نشده</h2>
-                    <p style="color:var(--muted);">به زودی ویدیوهای جدید اضافه خواهند شد.</p>
-                    <a href="<?php echo esc_url(home_url('/')); ?>" class="btn btn-primary" style="margin-top:20px;">بازگشت به خانه</a>
-                </div>
-            <?php endif; ?>
-
+    <?php if (have_posts()) : ?>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:var(--card-gap);padding-top:32px;">
+            <?php while (have_posts()) : the_post();
+                $yt_id    = pa_get_youtube_id();
+                $duration = get_post_meta(get_the_ID(),'pa_duration',true);
+            ?>
+                <a href="<?php the_permalink(); ?>" class="media-card media-card-link" style="text-decoration:none;display:block;">
+                    <div class="media-thumb">
+                        <?php if (has_post_thumbnail()) : ?>
+                            <?php the_post_thumbnail('pa-card',['alt'=>get_the_title()]); ?>
+                        <?php elseif ($yt_id) : ?>
+                            <img src="https://img.youtube.com/vi/<?php echo esc_attr($yt_id); ?>/hqdefault.jpg" alt="<?php the_title_attribute(); ?>" loading="lazy">
+                        <?php else : ?>
+                            <div style="height:100%;background:var(--surface);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:36px;">▶</div>
+                        <?php endif; ?>
+                        <?php if ($duration) : ?><span class="media-duration"><?php echo esc_html($duration); ?></span><?php endif; ?>
+                        <div class="play-overlay"><div class="play-circle"><svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
+                    </div>
+                    <div class="media-info">
+                        <div class="media-title"><?php the_title(); ?></div>
+                        <div class="media-meta"><?php echo pa_time_ago(); ?></div>
+                    </div>
+                </a>
+            <?php endwhile; ?>
         </div>
-
-        <aside class="sidebar-column"><?php get_template_part('parts/sidebar'); ?></aside>
-    </div>
+        <div class="archive-pagination" style="margin-top:32px;">
+            <?php the_posts_pagination(['prev_text'=>'← قبلی','next_text'=>'بعدی →']); ?>
+        </div>
+    <?php else : ?>
+        <div class="no-results" style="text-align:center;padding:60px 20px;">
+            <div style="font-size:64px;margin-bottom:16px;">📹</div>
+            <h2>هنوز ویدیویی منتشر نشده</h2>
+            <a href="<?php echo esc_url(home_url('/')); ?>" class="btn btn-primary" style="margin-top:20px;">بازگشت به خانه</a>
+        </div>
+    <?php endif; ?>
 
 </div>
 </main>

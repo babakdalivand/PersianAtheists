@@ -155,16 +155,16 @@ $has_logo  = file_exists( $logo_path );
                 </ul>
             </div>
 
-            <!-- Categories -->
+            <!-- Categories — از دیتابیس واقعی -->
             <div class="footer-col">
                 <div class="footer-col-title"><?php echo $is_en ? 'Categories' : 'دسته‌بندی‌ها'; ?></div>
                 <ul class="footer-links">
-                    <li><a href="<?php echo esc_url(home_url('/category/science')); ?>"><?php echo $is_en ? 'Science' : 'علم'; ?></a></li>
-                    <li><a href="<?php echo esc_url(home_url('/category/philosophy')); ?>"><?php echo $is_en ? 'Philosophy' : 'فلسفه'; ?></a></li>
-                    <li><a href="<?php echo esc_url(home_url('/category/history')); ?>"><?php echo $is_en ? 'History' : 'تاریخ'; ?></a></li>
-                    <li><a href="<?php echo esc_url(home_url('/category/atheism')); ?>"><?php echo $is_en ? 'Atheism' : 'الحاد'; ?></a></li>
-                    <li><a href="<?php echo esc_url(home_url('/category/secularism')); ?>"><?php echo $is_en ? 'Secularism' : 'سکولاریسم'; ?></a></li>
-                    <li><a href="<?php echo esc_url(home_url('/category/iran')); ?>"><?php echo $is_en ? 'Iran' : 'ایران'; ?></a></li>
+                    <?php
+                    $cats = get_categories(['number'=>6,'orderby'=>'count','order'=>'DESC','hide_empty'=>true]);
+                    foreach($cats as $cat):
+                    ?>
+                    <li><a href="<?php echo esc_url(get_category_link($cat->term_id)); ?>"><?php echo esc_html($cat->name); ?></a></li>
+                    <?php endforeach; ?>
                 </ul>
             </div>
 
@@ -184,15 +184,20 @@ $has_logo  = file_exists( $logo_path );
             <!-- Donate Box -->
             <div class="footer-col">
                 <div class="footer-donate-box">
-                    <div class="footer-donate-title">❤️ <?php echo $is_en ? 'Support Us' : 'حمایت مالی'; ?></div>
-                    <a href="https://paypal.com" target="_blank" rel="noopener" class="donate-paypal-btn">
-                        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.59 3.025-2.566 4.643-5.813 4.643h-1.38l-1.016 6.44h2.19c.456 0 .843-.332.915-.781l.764-4.843c.072-.449.46-.781.916-.781h.577c3.733 0 6.65-1.518 7.503-5.912a4.13 4.13 0 0 0-3.008-2.479z"/></svg>
-                        PayPal
+                    <div class="footer-donate-title">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14" style="color:#e74c3c;"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
+                        <?php echo $is_en ? 'Support Us' : 'حمایت مالی'; ?>
+                    </div>
+                    <p class="footer-donate-desc"><?php echo $is_en ? 'Help us grow with a small donation.' : 'با کمک مالی کوچک به رشد ما کمک کنید.'; ?></p>
+                    <a href="<?php echo esc_url(home_url('/donate')); ?>" class="donate-paypal-btn">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
+                        <?php echo $is_en ? 'Donate Now' : 'حمایت کنید'; ?>
                     </a>
                     <div class="crypto-row">
-                        <a href="#" class="crypto-btn crypto-btc" title="Bitcoin">₿ BTC</a>
-                        <a href="#" class="crypto-btn crypto-eth" title="Ethereum">Ξ ETH</a>
-                        <a href="#" class="crypto-btn crypto-usdt" title="USDT">₮ USDT</a>
+                        <a href="#" class="crypto-btn crypto-btc" title="Bitcoin">₿</a>
+                        <a href="#" class="crypto-btn crypto-eth" title="Ethereum">Ξ</a>
+                        <a href="#" class="crypto-btn crypto-usdt" title="USDT">₮</a>
+                        <a href="https://paypal.com" target="_blank" rel="noopener" class="crypto-btn" title="PayPal" style="font-size:10px;padding:4px 8px;">PP</a>
                     </div>
                 </div>
             </div>
@@ -203,6 +208,10 @@ $has_logo  = file_exists( $logo_path );
             <span>
                 &copy; <?php echo date('Y'); ?> <?php bloginfo('name'); ?>.
                 <?php echo $is_en ? 'All rights reserved.' : 'تمام حقوق محفوظ است.'; ?>
+                &nbsp;·&nbsp;
+                <span style="color:rgba(255,255,255,0.4);font-size:11px;">
+                    Designed by <a href="https://dalivand.com" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.55);text-decoration:none;">Babak Dalivand</a>
+                </span>
             </span>
             <div class="footer-bottom-links">
                 <a href="<?php echo esc_url(get_privacy_policy_url()); ?>"><?php echo $is_en ? 'Privacy Policy' : 'سیاست حریم خصوصی'; ?></a>

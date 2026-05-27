@@ -120,12 +120,11 @@ body.home .pa-lang-flag { filter: grayscale(0.2) opacity(0.75); }
 body.home .pa-lang-item.active .pa-lang-flag { filter: grayscale(0) opacity(1); }
 
 /* ══ HERO SPLIT LAYOUT ══ */
-.pa-hero-full { background: #1A1714; overflow: hidden; }
+.pa-hero-full { background: #1A1714; overflow: hidden; position: relative; }
 .pa-hero-inner {
     display: grid;
     grid-template-columns: 45fr 55fr;
-    grid-template-rows: minmax(380px, 1fr);
-    /* RTL: اول در DOM = سمت راست. content-col اول → راست، slides-col دوم → چپ */
+    grid-template-rows: minmax(300px, 1fr);
 }
 
 /* ── چپ: اسلاید پست‌ها ── */
@@ -194,12 +193,21 @@ body.home .pa-lang-item.active .pa-lang-flag { filter: grayscale(0) opacity(1); 
     position: absolute; inset: 0;
     width: 100%; height: 100%;
     object-fit: cover; object-position: center top;
-    opacity: 0.55; z-index: 0;
+    opacity: 0.75; z-index: 0;
 }
 .pa-hero-content-col::before {
     content: ''; position: absolute; inset: 0; z-index: 1;
     background: linear-gradient(135deg,
-        rgba(26,23,20,0.97) 0%, rgba(26,23,20,0.75) 55%, rgba(26,23,20,0.45) 100%);
+        rgba(26,23,20,0.88) 0%, rgba(26,23,20,0.55) 55%, rgba(26,23,20,0.25) 100%);
+}
+.pa-hero-full::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 60px;
+    background: linear-gradient(to bottom, transparent, var(--bg));
+    z-index: 10;
+    pointer-events: none;
 }
 .pa-hero-text {
     position: relative; z-index: 2;
@@ -324,6 +332,87 @@ body.home .pa-lang-item.active .pa-lang-flag { filter: grayscale(0) opacity(1); 
 </script>
 
 
+<?php
+/* ── Random quote + scholar bar ── */
+$home_quotes = [
+    ['text'=>'آنچه بدون شواهد ادعا شود، بدون شواهد رد می‌شود.','who'=>'کریستوفر هیچنز'],
+    ['text'=>'خداوند با قریب به یقین وجود ندارد. زندگی کن و لذت ببر.','who'=>'ریچارد داوکینز'],
+    ['text'=>'علم منبع عمیق‌ترین معنا برای روح انسان است.','who'=>'کارل سِیگن'],
+    ['text'=>'اگر با خدا روبرو شوم می‌گویم: مدرک کافی نداشتید.','who'=>'برتراند راسل'],
+    ['text'=>'من به خدایی که در امور انسانی دخالت می‌کند باور ندارم.','who'=>'آلبرت اینشتین'],
+    ['text'=>'دین یک توهم است و قدرتش از آرزوهای ما است.','who'=>'زیگموند فروید'],
+    ['text'=>'فکر کردن برای خودتان شجاعانه‌ترین عمل ممکن است.','who'=>'ولتر'],
+    ['text'=>'دانش یگانه راه آزادی است.','who'=>'فردریک داگلاس'],
+    ['text'=>'شک کردن آغاز دانستن است.','who'=>'رنه دکارت'],
+    ['text'=>'دین را عقل توجیه نمی‌کند؛ ترس توجیه می‌کند.','who'=>'لوکرتیوس'],
+];
+$home_scholars = [
+    ['name'=>'ریچارد داوکینز','role'=>'زیست‌شناس تکاملی، نویسنده «ژن خودخواه»','emoji'=>'🔬'],
+    ['name'=>'کارل سِیگن','role'=>'اخترشناس، نویسنده «کیهان» و «پیام آبی کمرنگ»','emoji'=>'🌌'],
+    ['name'=>'کریستوفر هیچنز','role'=>'روزنامه‌نگار، نویسنده «خدا بزرگ نیست»','emoji'=>'✍️'],
+    ['name'=>'سام هریس','role'=>'نوروساینتیست، نویسنده «پایان ایمان»','emoji'=>'🧠'],
+    ['name'=>'برتراند راسل','role'=>'فیلسوف و ریاضیدان، نویسنده «چرا مسیحی نیستم»','emoji'=>'📐'],
+    ['name'=>'دنیل دنت','role'=>'فیلسوف، نویسنده «جادوی شکستن»','emoji'=>'🦋'],
+    ['name'=>'ابن‌رشد','role'=>'فیلسوف و پزشک اندلسی — پدر عقل‌گرایی','emoji'=>'📚'],
+    ['name'=>'فردریک نیچه','role'=>'فیلسوف آلمانی — «خدا مرده است»','emoji'=>'⚡'],
+];
+$hq = $home_quotes[ array_rand($home_quotes) ];
+$hs = $home_scholars[ array_rand($home_scholars) ];
+?>
+<section class="pa-hero-bar">
+    <div class="container">
+        <div class="pa-hero-bar-inner">
+            <div class="pa-hero-bar-quote">
+                <span class="pa-hb-qq">❝</span>
+                <span class="pa-hb-text"><?php echo esc_html($hq['text']); ?></span>
+                <span class="pa-hb-who">— <?php echo esc_html($hq['who']); ?></span>
+            </div>
+            <div class="pa-hero-bar-sep"></div>
+            <div class="pa-hero-bar-scholar">
+                <span class="pa-hb-emoji"><?php echo $hs['emoji']; ?></span>
+                <div>
+                    <div class="pa-hb-name"><?php echo esc_html($hs['name']); ?></div>
+                    <div class="pa-hb-role"><?php echo esc_html($hs['role']); ?></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<style>
+.pa-hero-bar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 0;
+}
+.pa-hero-bar-inner {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+.pa-hero-bar-quote {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    flex: 1;
+    min-width: 240px;
+}
+.pa-hb-qq { font-size: 22px; color: var(--accent); line-height: 1; flex-shrink: 0; }
+.pa-hb-text { font-size: 13px; color: var(--text); font-style: italic; line-height: 1.5; }
+.pa-hb-who { font-size: 12px; color: var(--muted); white-space: nowrap; flex-shrink: 0; }
+.pa-hero-bar-sep { width: 1px; height: 36px; background: var(--border); flex-shrink: 0; }
+.pa-hero-bar-scholar {
+    display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+}
+.pa-hb-emoji { font-size: 22px; }
+.pa-hb-name { font-size: 13px; font-weight: 700; color: var(--text); }
+.pa-hb-role { font-size: 11px; color: var(--muted); }
+@media(max-width:600px){
+    .pa-hero-bar-sep { display: none; }
+    .pa-hero-bar-scholar { display: none; }
+}
+</style>
+
 <!-- ══════════════════════════════════════════
      CONTENT FILTER + LATEST
 ══════════════════════════════════════════ -->
@@ -370,7 +459,7 @@ body.home .pa-lang-item.active .pa-lang-flag { filter: grayscale(0) opacity(1); 
 ══════════════════════════════════════════ -->
 <section class="pa-media-duo">
     <div class="container">
-    <div class="pa-media-duo-inner">
+    <div class="pa-media-duo-inner <?php echo !$latest_podcasts->have_posts() ? 'pa-duo-single' : ''; ?>">
 
 <!-- ستون ویدیوها -->
 <div class="pa-media-duo-col">
@@ -450,27 +539,69 @@ body.home .pa-lang-item.active .pa-lang-flag { filter: grayscale(0) opacity(1); 
 <section class="pa-media-section">
     <div class="container">
         <div class="pa-section-header">
-            <h2 class="pa-section-title">📱 <?php echo esc_html($t['shorts_title']); ?></h2>
+            <h2 class="pa-section-title">🎬 <?php echo esc_html($t['shorts_title']); ?></h2>
             <a href="<?php echo esc_url(home_url('/shorts')); ?>" class="pa-section-more"><?php echo esc_html($t['shorts_more']); ?> →</a>
         </div>
         <div class="pa-shorts-grid">
             <?php while($latest_shorts->have_posts()): $latest_shorts->the_post();
                 $yt_id=pa_get_youtube_id(); $dur=get_post_meta(get_the_ID(),'pa_duration',true);
             ?>
-                <a href="<?php the_permalink(); ?>" class="pa-short-card">
+                <div class="pa-short-card pa-short-popup-trigger"
+                     data-yt="<?php echo esc_attr($yt_id); ?>"
+                     data-title="<?php echo esc_attr(get_the_title()); ?>"
+                     data-url="<?php the_permalink(); ?>"
+                     style="cursor:pointer;">
                     <div class="pa-short-thumb">
-                        <?php if($yt_id): ?><img src="https://img.youtube.com/vi/<?php echo esc_attr($yt_id); ?>/mqdefault.jpg" alt="<?php the_title_attribute(); ?>" loading="lazy">
+                        <?php if($yt_id): ?><img src="https://i.ytimg.com/vi/<?php echo esc_attr($yt_id); ?>/oardefault.jpg" alt="<?php the_title_attribute(); ?>" loading="lazy" onerror="this.src='https://img.youtube.com/vi/<?php echo esc_attr($yt_id); ?>/mqdefault.jpg'">
                         <?php elseif(has_post_thumbnail()): the_post_thumbnail('pa-square',['loading'=>'lazy']);
-                        else: ?><div class="pa-media-placeholder">📱</div><?php endif; ?>
+                        else: ?><div class="pa-media-placeholder">🎬</div><?php endif; ?>
                         <div class="pa-media-play pa-play-sm"><svg viewBox="0 0 24 24" fill="white" width="16" height="16"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
                         <?php if($dur): ?><span class="pa-media-dur"><?php echo esc_html($dur); ?></span><?php endif; ?>
                     </div>
                     <div class="pa-short-title"><?php the_title(); ?></div>
-                </a>
+                </div>
             <?php endwhile; wp_reset_postdata(); ?>
         </div>
     </div>
 </section>
+
+<!-- Home Shorts Popup -->
+<div id="home-short-overlay" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.88);align-items:center;justify-content:center;backdrop-filter:blur(6px);">
+    <div id="home-short-box" style="position:relative;width:min(360px,92vw);animation:shortPopIn .3s cubic-bezier(.34,1.56,.64,1) both;">
+        <button onclick="closeHomeShort()" style="position:absolute;top:-44px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,.12);border:none;color:#fff;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;">✕</button>
+        <div style="position:relative;aspect-ratio:9/16;border-radius:16px;overflow:hidden;background:#000;box-shadow:0 20px 60px rgba(0,0,0,.6);">
+            <iframe id="home-short-iframe" src="" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;"></iframe>
+        </div>
+        <div style="margin-top:12px;text-align:center;">
+            <p id="home-short-title" style="color:#fff;font-size:14px;font-weight:700;margin:0 0 8px;line-height:1.5;"></p>
+            <a id="home-short-link" href="#" style="font-size:12px;color:rgba(255,255,255,.6);text-decoration:none;">صفحه کامل →</a>
+        </div>
+    </div>
+</div>
+<script>
+(function(){
+    document.querySelectorAll('.pa-short-popup-trigger').forEach(function(card){
+        card.addEventListener('click', function(){
+            var yt = card.dataset.yt, ttl = card.dataset.title, url = card.dataset.url;
+            if (!yt) { window.location.href = url; return; }
+            document.getElementById('home-short-iframe').src = 'https://www.youtube.com/embed/' + yt + '?autoplay=1&rel=0&modestbranding=1';
+            document.getElementById('home-short-title').textContent = ttl || '';
+            document.getElementById('home-short-link').href = url || '#';
+            var ov = document.getElementById('home-short-overlay');
+            ov.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        });
+    });
+    document.getElementById('home-short-overlay').addEventListener('click', function(e){ if(e.target===this) closeHomeShort(); });
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeHomeShort(); });
+})();
+function closeHomeShort(){
+    var ov = document.getElementById('home-short-overlay');
+    var box = document.getElementById('home-short-box');
+    box.style.animation = 'shortPopOut .2s ease both';
+    setTimeout(function(){ ov.style.display='none'; document.getElementById('home-short-iframe').src=''; box.style.animation='shortPopIn .3s cubic-bezier(.34,1.56,.64,1) both'; document.body.style.overflow=''; }, 200);
+}
+</script>
 <?php endif; ?>
 
 </main>

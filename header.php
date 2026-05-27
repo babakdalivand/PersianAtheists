@@ -146,7 +146,27 @@ $is_fa = ( $lang === 'fa' );
                 <div class="pa-lang-track">
                     <button class="pa-lang-item <?php echo $is_fa ? 'active' : ''; ?>"
                             onclick="paLangSwitch(this,'fa')" title="فارسی">
-                        <span class="pa-lang-flag">🇮🇷</span>
+                        <span class="pa-lang-flag">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 20" width="22" height="15" style="border-radius:2px;display:block;">
+                                <rect width="30" height="7" fill="#239F40"/>
+                                <rect y="7" width="30" height="6" fill="#FFFFFF"/>
+                                <rect y="13" width="30" height="7" fill="#DA0000"/>
+                                <g transform="translate(15,10)">
+                                    <circle r="2.8" fill="#F4C542" opacity="0.9"/>
+                                    <g stroke="#F4C542" stroke-width="0.5" opacity="0.8">
+                                        <line x1="0" y1="-4.2" x2="0" y2="-3.2"/>
+                                        <line x1="0" y1="3.2" x2="0" y2="4.2"/>
+                                        <line x1="-4.2" y1="0" x2="-3.2" y2="0"/>
+                                        <line x1="3.2" y1="0" x2="4.2" y2="0"/>
+                                        <line x1="-3" y1="-3" x2="-2.3" y2="-2.3"/>
+                                        <line x1="2.3" y1="2.3" x2="3" y2="3"/>
+                                        <line x1="3" y1="-3" x2="2.3" y2="-2.3"/>
+                                        <line x1="-2.3" y1="2.3" x2="-3" y2="3"/>
+                                    </g>
+                                    <path d="M-1.8,0.5 C-1.8,-0.8 -0.8,-1.8 0.2,-1.5 C0.8,-1.3 1.2,-0.6 1.4,0 C1.6,0.5 1.2,1.2 0.5,1.4 C0,1.6 -0.5,1.4 -0.8,1.8 L-1.5,2.2 C-1.8,1.8 -1.8,1.2 -1.8,0.5Z" fill="#8B4513" opacity="0.8"/>
+                                </g>
+                            </svg>
+                        </span>
                     </button>
                     <button class="pa-lang-item <?php echo !$is_fa ? 'active' : ''; ?>"
                             onclick="paLangSwitch(this,'en')" title="English">
