@@ -33,7 +33,7 @@ if ( ! $shorts->have_posts() ) return;
                     <?php if ( has_post_thumbnail() ) : ?>
                         <?php the_post_thumbnail( 'pa-square', [ 'alt' => get_the_title() ] ); ?>
                     <?php elseif ( $yt_id ) : ?>
-                        <img src="https://img.youtube.com/vi/<?php echo esc_attr( $yt_id ); ?>/hqdefault.jpg" alt="<?php the_title_attribute(); ?>" style="object-position:center;">
+                        <img src="https://i.ytimg.com/vi/<?php echo esc_attr( $yt_id ); ?>/oardefault.jpg" alt="<?php the_title_attribute(); ?>" style="object-position:center;object-fit:cover;width:100%;height:100%;">
                     <?php else : ?>
                         <div style="background:#1E2A38;width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:28px;">📱</div>
                     <?php endif; ?>

@@ -80,7 +80,7 @@ while ( have_posts() ) : the_post();
                         <a href="<?php the_permalink(); ?>" style="text-decoration:none;">
                             <div class="media-card">
                                 <div class="media-thumb" style="aspect-ratio:9/16;">
-                                    <?php if ($mid): ?><img src="https://img.youtube.com/vi/<?php echo esc_attr($mid);?>/mqdefault.jpg" alt="<?php the_title_attribute();?>" style="object-position:center;"><?php elseif(has_post_thumbnail()):?><?php the_post_thumbnail('pa-square');?><?php else:?><div style="height:100%;background:var(--primary);display:flex;align-items:center;justify-content:center;color:var(--accent);">📱</div><?php endif;?>
+                                    <?php if ($mid): ?><img src="https://i.ytimg.com/vi/<?php echo esc_attr($mid);?>/oardefault.jpg" alt="<?php the_title_attribute();?>" style="object-fit:cover;width:100%;height:100%;"><?php elseif(has_post_thumbnail()):?><?php the_post_thumbnail('pa-square');?><?php else:?><div style="height:100%;background:var(--primary);display:flex;align-items:center;justify-content:center;color:var(--accent);">📱</div><?php endif;?>
                                     <?php if($mdur):?><span class="media-duration"><?php echo esc_html($mdur);?></span><?php endif;?>
                                 </div>
                                 <div class="media-info"><div class="media-title" style="-webkit-line-clamp:2;"><?php the_title();?></div></div>
