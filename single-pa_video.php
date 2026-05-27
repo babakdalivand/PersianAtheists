@@ -18,10 +18,56 @@ $author  = get_the_author_meta('display_name', $post->post_author);
 ?>
 <style>
 .pv-wrap {
-    max-width: 860px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 28px 20px 60px;
     box-sizing: border-box;
+}
+.pv-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 28px;
+    align-items: start;
+}
+.pv-main { min-width: 0; }
+.pv-sidebar { position: sticky; top: 90px; }
+.pv-widget {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+.pv-widget-title {
+    font-size: 13px; font-weight: 800; color: var(--text);
+    padding: 12px 16px; border-bottom: 1px solid var(--border);
+    background: rgba(124,58,237,.04);
+}
+.pv-widget-body { padding: 12px 16px; }
+.pv-witem {
+    display: flex; gap: 10px; padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none; transition: opacity .2s;
+}
+.pv-witem:last-child { border-bottom: none; padding-bottom: 0; }
+.pv-witem:hover { opacity: .75; }
+.pv-wthumb { width: 64px; height: 44px; border-radius: 6px; overflow: hidden; flex-shrink: 0; background: var(--primary); position: relative; }
+.pv-wthumb img { width:100%; height:100%; object-fit:cover; }
+.pv-wtitle { font-size: 12px; font-weight: 700; color: var(--text); line-height: 1.4; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.pv-wmeta { font-size: 11px; color: var(--muted); margin-top: 3px; }
+.pv-wdur { position:absolute; bottom:3px; right:3px; background:rgba(0,0,0,.8); color:#fff; font-size:10px; padding:1px 4px; border-radius:3px; font-weight:600; }
+.pv-quote-widget {
+    background: linear-gradient(135deg, rgba(124,58,237,.12), rgba(79,184,180,.08));
+    border: 1px solid rgba(124,58,237,.2);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+}
+.pv-quote-widget .q-text { font-size:13px; color:var(--text); font-weight:600; line-height:1.7; margin-bottom:8px; }
+.pv-quote-widget .q-who { font-size:11px; color:var(--muted); text-align:left; }
+@media (max-width: 860px) {
+    .pv-layout { grid-template-columns: 1fr; }
+    .pv-sidebar { position: static; }
 }
 .pv-bread {
     display: flex; gap: 6px; align-items: center;
@@ -146,6 +192,17 @@ body.lang-en .pv-title { font-family: 'Inter', Arial, sans-serif; }
 }
 </style>
 
+<?php
+$pv_quotes = [
+    ['text'=>'آنچه بدون شواهد ادعا شود، بدون شواهد رد می‌شود.','who'=>'کریستوفر هیچنز'],
+    ['text'=>'خداوند با قریب به یقین وجود ندارد.','who'=>'ریچارد داوکینز'],
+    ['text'=>'علم نه تنها با روح انسانی سازگار است، بلکه منبع عمیق‌ترین معنا برای آن است.','who'=>'کارل سِیگن'],
+    ['text'=>'اگر در برابر خداوند ایستادم، می‌گویم: مدرک کافی نداشتید.','who'=>'برتراند راسل'],
+    ['text'=>'من به خدای شخصی که در امور انسانی دخالت می‌کند، باور ندارم.','who'=>'آلبرت اینشتین'],
+    ['text'=>'پرسیدن سوال نشانه هوشمندی است، نه بی‌ادبی.','who'=>'ابن‌رشد'],
+];
+$pv_q = $pv_quotes[array_rand($pv_quotes)];
+?>
 <main class="site-main">
 <div class="pv-wrap">
 
@@ -157,6 +214,9 @@ body.lang-en .pv-title { font-family: 'Inter', Arial, sans-serif; }
         <span class="pv-sep">›</span>
         <span><?php echo wp_trim_words(get_the_title($post_id), 8, '...'); ?></span>
     </nav>
+
+    <div class="pv-layout">
+    <div class="pv-main">
 
     <!-- Player -->
     <div class="pv-player">
@@ -252,6 +312,61 @@ body.lang-en .pv-title { font-family: 'Inter', Arial, sans-serif; }
         </div>
     </div>
     <?php endif; ?>
+
+    </div><!-- .pv-main -->
+
+    <!-- ── Sidebar ── -->
+    <aside class="pv-sidebar">
+
+        <!-- Quote -->
+        <div class="pv-quote-widget">
+            <div class="q-text">❝ <?php echo esc_html($pv_q['text']); ?></div>
+            <div class="q-who">— <?php echo esc_html($pv_q['who']); ?></div>
+        </div>
+
+        <!-- Latest articles -->
+        <?php
+        $pv_articles = new WP_Query(['post_type'=>'post','posts_per_page'=>4,'post_status'=>'publish','orderby'=>'date','order'=>'DESC']);
+        if ($pv_articles->have_posts()) : ?>
+            <div class="pv-widget">
+                <div class="pv-widget-title">📰 <?php echo $is_en ? 'Latest Articles' : 'مقالات اخیر'; ?></div>
+                <div class="pv-widget-body" style="padding:8px 12px;">
+                    <?php while ($pv_articles->have_posts()) : $pv_articles->the_post(); ?>
+                        <a href="<?php the_permalink(); ?>" class="pv-witem">
+                            <?php if (has_post_thumbnail()) : ?>
+                                <div class="pv-wthumb"><?php the_post_thumbnail('pa-thumb',['style'=>'width:100%;height:100%;object-fit:cover;']); ?></div>
+                            <?php endif; ?>
+                            <div><div class="pv-wtitle"><?php the_title(); ?></div><div class="pv-wmeta"><?php echo pa_time_ago(); ?></div></div>
+                        </a>
+                    <?php endwhile; wp_reset_postdata(); ?>
+                </div>
+            </div>
+        <?php endif; ?>
+
+        <!-- Latest short videos -->
+        <?php
+        $pv_shorts = new WP_Query(['post_type'=>'pa_short','posts_per_page'=>4,'post_status'=>'publish']);
+        if ($pv_shorts->have_posts()) : ?>
+            <div class="pv-widget">
+                <div class="pv-widget-title">🎬 <?php echo $is_en ? 'Short Videos' : 'ویدئوهای کوتاه'; ?></div>
+                <div class="pv-widget-body" style="padding:8px 12px;">
+                    <?php while ($pv_shorts->have_posts()) : $pv_shorts->the_post();
+                        $svid = pa_get_youtube_id();
+                        $sdur = get_post_meta(get_the_ID(),'pa_duration',true); ?>
+                        <a href="<?php the_permalink(); ?>" class="pv-witem">
+                            <div class="pv-wthumb" style="aspect-ratio:9/16;width:30px;height:52px;">
+                                <?php if ($svid): ?><img src="https://i.ytimg.com/vi/<?php echo esc_attr($svid); ?>/oardefault.jpg" alt="" loading="lazy"><?php else: ?><div style="height:100%;background:var(--primary);display:flex;align-items:center;justify-content:center;">🎬</div><?php endif; ?>
+                                <?php if ($sdur) : ?><span class="pv-wdur"><?php echo esc_html($sdur); ?></span><?php endif; ?>
+                            </div>
+                            <div><div class="pv-wtitle"><?php the_title(); ?></div><div class="pv-wmeta"><?php echo pa_time_ago(); ?></div></div>
+                        </a>
+                    <?php endwhile; wp_reset_postdata(); ?>
+                </div>
+            </div>
+        <?php endif; ?>
+
+    </aside><!-- .pv-sidebar -->
+    </div><!-- .pv-layout -->
 
 </div>
 </main>

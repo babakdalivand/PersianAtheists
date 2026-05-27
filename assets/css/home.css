@@ -1,9 +1,9 @@
-/* ══════════════════════════════════════════
-   HOME PAGE CSS — Persian Atheists
-   رنگ: سفید/شیری + طلایی + آبی نفتی
-══════════════════════════════════════════ */
+﻿/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   HOME PAGE CSS â€” Persian Atheists
+   Ø±Ù†Ú¯: Ø³ÙÛŒØ¯/Ø´ÛŒØ±ÛŒ + Ø·Ù„Ø§ÛŒÛŒ + Ø¢Ø¨ÛŒ Ù†ÙØªÛŒ
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
-/* ── HERO ── */
+/* â”€â”€ HERO â”€â”€ */
 .pa-hero {
     background: var(--primary);
     position: relative;
@@ -13,25 +13,25 @@
 
 .pa-hero-bg {
     position: absolute; inset: 0;
-    background: radial-gradient(ellipse at 70% 50%, rgba(212,160,23,0.12) 0%, transparent 70%),
-                radial-gradient(ellipse at 20% 80%, rgba(212,160,23,0.06) 0%, transparent 50%);
+    background: radial-gradient(ellipse at 70% 50%, rgba(235,94,40,0.12) 0%, transparent 70%),
+                radial-gradient(ellipse at 20% 80%, rgba(235,94,40,0.06) 0%, transparent 50%);
     pointer-events: none;
 }
 
-/* Hero inner — همیشه LTR تا text و featured هر دو نمایش داده شن */
+/* Hero inner â€” Ù‡Ù…ÛŒØ´Ù‡ LTR ØªØ§ text Ùˆ featured Ù‡Ø± Ø¯Ùˆ Ù†Ù…Ø§ÛŒØ´ Ø¯Ø§Ø¯Ù‡ Ø´Ù† */
 .pa-hero-inner {
     position: relative; z-index: 2;
     display: grid;
     grid-template-columns: 1fr 420px;
     gap: 48px;
     align-items: center;
-    direction: ltr; /* مهم: featured همیشه سمت راست باشه */
+    direction: ltr; /* Ù…Ù‡Ù…: featured Ù‡Ù…ÛŒØ´Ù‡ Ø³Ù…Øª Ø±Ø§Ø³Øª Ø¨Ø§Ø´Ù‡ */
 }
 
-/* در فارسی text راست‌چین باشه */
+/* Ø¯Ø± ÙØ§Ø±Ø³ÛŒ text Ø±Ø§Ø³Øªâ€ŒÚ†ÛŒÙ† Ø¨Ø§Ø´Ù‡ */
 [dir="rtl"] .pa-hero-inner {
     direction: rtl;
-    grid-template-columns: 420px 1fr; /* featured چپ، text راست */
+    grid-template-columns: 420px 1fr; /* featured Ú†Ù¾ØŒ text Ø±Ø§Ø³Øª */
 }
 
 /* Hero Text */
@@ -47,8 +47,8 @@
     font-size: 12px;
     font-weight: 700;
     color: var(--accent);
-    background: rgba(212,160,23,0.12);
-    border: 1px solid rgba(212,160,23,0.3);
+    background: rgba(235,94,40,0.12);
+    border: 1px solid rgba(235,94,40,0.3);
     padding: 6px 14px;
     border-radius: 20px;
     margin-bottom: 20px;
@@ -84,13 +84,13 @@
     max-width: 500px;
 }
 
-/* RAHA Acronym — همیشه R A H A از چپ به راست */
+/* RAHA Acronym â€” Ù‡Ù…ÛŒØ´Ù‡ R A H A Ø§Ø² Ú†Ù¾ Ø¨Ù‡ Ø±Ø§Ø³Øª */
 .pa-raha-row {
     display: flex;
     gap: 10px;
     margin-bottom: 28px;
     flex-wrap: wrap;
-    direction: ltr; /* R A H A همیشه از چپ */
+    direction: ltr; /* R A H A Ù‡Ù…ÛŒØ´Ù‡ Ø§Ø² Ú†Ù¾ */
 }
 
 [dir="rtl"] .pa-raha-row {
@@ -106,7 +106,7 @@
     flex-direction: column;
     align-items: center;
     background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(212,160,23,0.25);
+    border: 1px solid rgba(235,94,40,0.25);
     border-radius: 10px;
     padding: 10px 16px;
     min-width: 76px;
@@ -114,8 +114,8 @@
 }
 
 .pa-raha-letter:hover {
-    background: rgba(212,160,23,0.12);
-    border-color: rgba(212,160,23,0.5);
+    background: rgba(235,94,40,0.12);
+    border-color: rgba(235,94,40,0.5);
     transform: translateY(-2px);
 }
 
@@ -166,7 +166,7 @@
     border-color: rgba(255,255,255,0.6);
 }
 
-/* Hero Featured Card — همیشه نمایش داده بشه */
+/* Hero Featured Card â€” Ù‡Ù…ÛŒØ´Ù‡ Ù†Ù…Ø§ÛŒØ´ Ø¯Ø§Ø¯Ù‡ Ø¨Ø´Ù‡ */
 .pa-hero-featured {
     display: block !important;
     flex-shrink: 0;
@@ -209,8 +209,8 @@
     display: inline-block;
     font-size: 11px; font-weight: 700;
     color: var(--accent);
-    background: rgba(212,160,23,0.2);
-    border: 1px solid rgba(212,160,23,0.4);
+    background: rgba(235,94,40,0.2);
+    border: 1px solid rgba(235,94,40,0.4);
     padding: 3px 10px; border-radius: 12px;
     width: fit-content;
 }
@@ -233,7 +233,7 @@
     display: flex; gap: 8px;
 }
 
-/* ── STATS BAR ── */
+/* â”€â”€ STATS BAR â”€â”€ */
 .pa-stats {
     background: var(--surface);
     border-bottom: 1px solid var(--border);
@@ -245,7 +245,7 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
     text-align: center;
-    direction: ltr; /* همیشه از چپ */
+    direction: ltr; /* Ù‡Ù…ÛŒØ´Ù‡ Ø§Ø² Ú†Ù¾ */
 }
 
 .pa-stat-num {
@@ -263,7 +263,7 @@
     font-weight: 600;
 }
 
-/* ── SECTION HEADER ── */
+/* â”€â”€ SECTION HEADER â”€â”€ */
 .pa-section-header {
     display: flex;
     align-items: center;
@@ -291,7 +291,7 @@
 
 .pa-section-more:hover { opacity: .75; }
 
-/* ── FILTER PILLS ── */
+/* â”€â”€ FILTER PILLS â”€â”€ */
 .pa-filter-row {
     display: flex;
     gap: 8px;
@@ -318,15 +318,13 @@
 .pa-pill:hover { border-color: var(--accent); color: var(--accent); }
 .pa-pill.active { background: var(--accent); border-color: var(--accent); color: #fff; }
 
-/* ── LATEST SECTION ── */
+/* â”€â”€ LATEST SECTION â”€â”€ */
 .pa-latest { padding: 48px 0; }
 
 /* Content Grid Cards */
 .pa-content-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-}
+    grid-template-columns: repeat(4, 1fr);n    gap: 20px;n}
 
 .pa-card {
     background: var(--surface);
@@ -395,7 +393,7 @@
     padding-top: 10px; margin-top: 4px;
 }
 
-/* ── MEDIA SECTIONS ── */
+/* â”€â”€ MEDIA SECTIONS â”€â”€ */
 .pa-media-section { padding: 48px 0; }
 .pa-bg-alt { background: var(--bg); }
 
@@ -434,7 +432,7 @@
     width: 100%; height: 100%;
     display: flex; align-items: center; justify-content: center;
     font-size: 36px; color: var(--accent);
-    background: rgba(212,160,23,0.08);
+    background: rgba(235,94,40,0.08);
     min-height: 120px;
 }
 
@@ -467,7 +465,7 @@
 
 .pa-media-meta { font-size: 12px; color: var(--muted); }
 
-/* ── PODCASTS LIST ── */
+/* â”€â”€ PODCASTS LIST â”€â”€ */
 .pa-podcast-list { display: flex; flex-direction: column; gap: 16px; }
 
 .pa-podcast-item {
@@ -492,7 +490,7 @@
 .pa-podcast-cover-placeholder {
     width: 100%; height: 100%;
     display: flex; align-items: center; justify-content: center;
-    font-size: 28px; background: rgba(212,160,23,0.1);
+    font-size: 28px; background: rgba(235,94,40,0.1);
 }
 
 .pa-podcast-info { flex: 1; min-width: 0; }
@@ -517,7 +515,7 @@
 
 .pa-podcast-link:hover { opacity: .75; }
 
-/* ── SHORTS GRID ── */
+/* â”€â”€ SHORTS GRID â”€â”€ */
 .pa-shorts-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
 
 .pa-short-card {
@@ -543,7 +541,7 @@
     -webkit-box-orient: vertical; overflow: hidden;
 }
 
-/* ══ RESPONSIVE ══ */
+/* â•â• RESPONSIVE â•â• */
 @media (max-width: 1100px) {
     .pa-hero-inner { grid-template-columns: 1fr 360px; gap: 32px; }
     [dir="rtl"] .pa-hero-inner { grid-template-columns: 360px 1fr; }
@@ -552,7 +550,7 @@
 }
 
 @media (max-width: 900px) {
-    /* در موبایل featured رو زیر text بذار — نه مخفی */
+    /* Ø¯Ø± Ù…ÙˆØ¨Ø§ÛŒÙ„ featured Ø±Ùˆ Ø²ÛŒØ± text Ø¨Ø°Ø§Ø± â€” Ù†Ù‡ Ù…Ø®ÙÛŒ */
     .pa-hero-inner {
         grid-template-columns: 1fr;
         grid-template-rows: auto auto;
@@ -589,4 +587,38 @@
 @media (max-width: 400px) {
     .pa-shorts-grid { grid-template-columns: repeat(2, 1fr); }
     .pa-media-grid { grid-template-columns: 1fr; }
+}
+
+
+/* ── MEDIA DUO — ویدیو + پادکست کنار هم ── */
+.pa-media-duo {
+    padding: 48px 0;
+    background: var(--bg);
+}
+.pa-media-duo-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+}
+.pa-media-duo-col {}
+.pa-media-duo-col .pa-media-grid {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+@media (max-width: 900px) {
+    .pa-media-duo-inner { grid-template-columns: 1fr; gap: 32px; }
+    .pa-media-duo-col .pa-media-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+
+/* ── Responsive fix for 4-col content grid ── */
+@media (max-width: 1100px) {
+    .pa-content-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 900px) {
+    .pa-content-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+    .pa-content-grid { grid-template-columns: 1fr; }
 }

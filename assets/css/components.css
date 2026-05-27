@@ -1,5 +1,5 @@
-/* ============================================
-   COMPONENTS — Single Post, Archive, Search
+﻿/* ============================================
+   COMPONENTS â€” Single Post, Archive, Search
    ============================================ */
 
 /* BREADCRUMB */
@@ -90,7 +90,7 @@
   border-right: 4px solid var(--accent);
   padding: 12px 20px;
   margin: 1.6em 0;
-  background: rgba(212,160,23,0.06);
+  background: rgba(235,94,40,0.06);
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
   font-style: italic;
   color: var(--muted);
@@ -113,7 +113,7 @@
 }
 .article-content pre code { background: none; border: none; color: inherit; }
 .article-content img { border-radius: var(--radius-sm); margin: 1em auto; }
-.article-content a { color: var(--accent); border-bottom: 1px solid rgba(212,160,23,0.3); }
+.article-content a { color: var(--accent); border-bottom: 1px solid rgba(235,94,40,0.3); }
 .article-content a:hover { border-bottom-color: var(--accent); }
 
 /* TAGS */
@@ -166,7 +166,7 @@
 /* ARCHIVE */
 .archive-hero { margin-bottom: 0; }
 .archive-hero-inner { padding: 40px 0; }
-.archive-label { display: inline-block; font-size: 12px; font-weight: 700; color: var(--accent); background: rgba(212,160,23,0.1); border: 1px solid rgba(212,160,23,0.3); padding: 4px 12px; border-radius: 20px; margin-bottom: 12px; }
+.archive-label { display: inline-block; font-size: 12px; font-weight: 700; color: var(--accent); background: rgba(235,94,40,0.1); border: 1px solid rgba(235,94,40,0.3); padding: 4px 12px; border-radius: 20px; margin-bottom: 12px; }
 .archive-title { font-size: 28px; font-weight: 800; color: var(--text); margin-bottom: 8px; }
 .archive-desc { color: var(--muted); font-size: 15px; }
 .archive-desc em { color: var(--accent); font-style: normal; font-weight: 700; }

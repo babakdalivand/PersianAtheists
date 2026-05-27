@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 function pa_register_meta_boxes() {
     add_meta_box( 'pa_video_meta',      '📹 اطلاعات ویدیو',           'pa_video_meta_cb',      'pa_video',      'normal', 'high' );
     add_meta_box( 'pa_podcast_meta',    '🎙️ اطلاعات پادکست',          'pa_podcast_meta_cb',    'pa_podcast',    'normal', 'high' );
-    add_meta_box( 'pa_short_meta',      '📱 اطلاعات شورت',            'pa_short_meta_cb',      'pa_short',      'normal', 'high' );
+    add_meta_box( 'pa_short_meta',      '📱 اطلاعات ویدئو کوتاه',     'pa_short_meta_cb',      'pa_short',      'normal', 'high' );
     add_meta_box( 'pa_post_meta',       '⭐ تنظیمات پست',             'pa_post_meta_cb',       'post',          'side',   'high' );
     add_meta_box( 'pa_member_app_meta', '👤 جزئیات درخواست عضویت',   'pa_member_app_meta_cb', 'pa_member_app', 'normal', 'high' );
 }
@@ -143,7 +143,7 @@ function pa_short_meta_cb( $post ) {
     ?>
     <table class="form-table">
         <tr>
-            <th style="width:160px;padding:8px 0;"><label for="pa_youtube_id">شناسه شورت یوتیوب</label></th>
+            <th style="width:160px;padding:8px 0;"><label for="pa_youtube_id">شناسه ویدئو کوتاه یوتیوب</label></th>
             <td>
                 <input type="text" id="pa_youtube_id" name="pa_youtube_id" value="<?php echo esc_attr($yt_id); ?>" class="regular-text" placeholder="شناسه از URL Shorts">
             </td>

@@ -1,13 +1,15 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'PA_VERSION', '1.0.2' );
+define( 'PA_VERSION', '1.1.1' );
 define( 'PA_DIR', get_template_directory() );
 define( 'PA_URI', get_template_directory_uri() );
 
 require_once PA_DIR . '/inc/meta-boxes.php';
 require_once PA_DIR . '/inc/admin.php';
 require_once PA_DIR . '/inc/login.php';
+require_once PA_DIR . '/inc/migration.php';
+require_once PA_DIR . '/inc/webp.php';
 
 /* ── LANGUAGE ── */
 function pa_current_lang() {
@@ -78,7 +80,7 @@ function pa_register_post_types() {
         'rewrite'  => ['slug'=>'podcasts'], 'show_in_rest'=>true,
     ]);
     register_post_type( 'pa_short', [
-        'labels'   => ['name'=>'شورت‌ها','singular_name'=>'شورت'],
+        'labels'   => ['name'=>'ویدئوهای کوتاه','singular_name'=>'ویدئو کوتاه','add_new_item'=>'افزودن ویدئو کوتاه'],
         'public'   => true, 'has_archive'=>true, 'menu_icon'=>'dashicons-format-video',
         'supports' => ['title','thumbnail','custom-fields'],
         'rewrite'  => ['slug'=>'shorts'], 'show_in_rest'=>true,
@@ -107,6 +109,28 @@ function pa_register_post_types() {
     ]);
 }
 add_action( 'init', 'pa_register_post_types' );
+
+/* ── REST META FIELDS ── */
+add_action( 'init', function() {
+    $all_types = [ 'post', 'pa_video', 'pa_podcast', 'pa_short', 'pa_book' ];
+    foreach ( $all_types as $pt ) {
+        register_post_meta( $pt, 'pa_lang', [
+            'show_in_rest'  => true, 'single' => true,
+            'type'          => 'string',
+            'auth_callback' => '__return_true',
+        ]);
+        register_post_meta( $pt, 'pa_youtube_id', [
+            'show_in_rest'  => true, 'single' => true,
+            'type'          => 'string',
+            'auth_callback' => '__return_true',
+        ]);
+    }
+    register_post_meta( 'pa_podcast', 'pa_podcast_url', [
+        'show_in_rest'  => true, 'single' => true,
+        'type'          => 'string',
+        'auth_callback' => '__return_true',
+    ]);
+});
 
 /* ── ROLES ── */
 add_action( 'init', function() {
@@ -179,7 +203,7 @@ function pa_fallback_menu() {
     $en = pa_current_lang()==='en';
     $items = $en
         ? ['/'=>'Home','/videos'=>'Videos','/podcasts'=>'Podcasts','/shorts'=>'Shorts','/books'=>'Library','/about'=>'About']
-        : ['/'=>'خانه','/videos'=>'ویدیوها','/podcasts'=>'پادکست‌ها','/shorts'=>'شورت‌ها','/books'=>'کتاب‌خانه','/about'=>'درباره ما'];
+        : ['/'=>'خانه','/videos'=>'ویدیوها','/podcasts'=>'پادکست‌ها','/shorts'=>'ویدئوهای کوتاه','/books'=>'کتاب‌خانه','/about'=>'درباره ما'];
     echo '<ul class="nav-list">';
     foreach ($items as $p=>$l) echo '<li><a href="'.esc_url(home_url($p)).'">'.esc_html($l).'</a></li>';
     echo '</ul>';

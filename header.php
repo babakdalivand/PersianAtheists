@@ -47,8 +47,8 @@ $is_fa = ( $lang === 'fa' );
     animation: pa-orbit-rot linear infinite;
     border-style: solid;
 }
-.pa-orbit-ring-1 { width: 54px; height: 54px; border-width: 1.2px; border-color: rgba(212,160,23,0.55); animation-duration: 6s; }
-.pa-orbit-ring-2 { width: 64px; height: 64px; border-width: 1px; border-color: rgba(212,160,23,0.25); animation-duration: 11s; animation-direction: reverse; }
+.pa-orbit-ring-1 { width: 54px; height: 54px; border-width: 1.2px; border-color: rgba(235,94,40,0.55); animation-duration: 6s; }
+.pa-orbit-ring-2 { width: 64px; height: 64px; border-width: 1px; border-color: rgba(235,94,40,0.25); animation-duration: 11s; animation-direction: reverse; }
 @keyframes pa-orbit-rot { from { transform: translate(-50%,-50%) rotate(0deg); } to { transform: translate(-50%,-50%) rotate(360deg); } }
 .pa-orbit-dot { position: absolute; border-radius: 50%; top: 50%; left: 50%; z-index: 6; }
 .pa-dot-earth { width: 8px; height: 8px; background: radial-gradient(circle at 35% 35%, #4fc3f7, #0277bd); box-shadow: 0 0 6px rgba(79,195,247,0.9); margin: -4px 0 0 -4px; animation: pa-dot-earth 6s linear infinite; }
@@ -83,7 +83,7 @@ $is_fa = ( $lang === 'fa' );
     position: absolute; top: 3px; width: calc(50% - 3px);
     height: calc(100% - 6px); background: var(--accent);
     border-radius: 16px; transition: all .3s cubic-bezier(.4,0,.2,1);
-    z-index: 1; box-shadow: 0 2px 8px rgba(212,160,23,0.4);
+    z-index: 1; box-shadow: 0 2px 8px rgba(235,94,40,0.4);
 }
 .pa-lang-indicator.pos-fa { right: 3px; left: auto; }
 .pa-lang-indicator.pos-en { left: 3px; right: auto; }
@@ -129,7 +129,7 @@ $is_fa = ( $lang === 'fa' );
             ]); ?>
         </nav>
 
-        <!-- ACTIONS -->
+        <!-- ACTIONS — [UI-03] دکمه حمایت مالی حذف شد -->
         <div class="header-actions">
 
             <button class="icon-btn search-toggle" aria-label="Search">
@@ -155,10 +155,6 @@ $is_fa = ( $lang === 'fa' );
                 </div>
                 <div class="pa-lang-indicator <?php echo $is_fa ? 'pos-fa' : 'pos-en'; ?>" id="paLangInd"></div>
             </div>
-
-            <a href="<?php echo esc_url(home_url('/donate')); ?>" class="btn btn-donate">
-                ❤️ <?php echo $is_fa ? 'حمایت مالی' : 'Donate'; ?>
-            </a>
 
             <button class="icon-btn mobile-menu-toggle" id="mobileMenuToggle">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
@@ -192,12 +188,8 @@ $is_fa = ( $lang === 'fa' );
 </div>
 
 <script>
-// ── Language Switch ───────────────────────────────────
-// از cookie pa_lang استفاده می‌کنیم — Polylang این رو override نمی‌کنه
 function paLangSwitch(el, lang) {
     if (el.classList.contains('active')) return;
-
-    // انیمیشن
     var ind = document.getElementById('paLangInd');
     if (ind) {
         ind.classList.remove('pos-fa', 'pos-en');
@@ -206,12 +198,8 @@ function paLangSwitch(el, lang) {
     document.querySelectorAll('.pa-lang-item').forEach(function(b, i) {
         b.classList.toggle('active', lang === 'fa' ? i === 0 : i === 1);
     });
-
-    // ست کردن cookie pa_lang
     var exp = new Date(Date.now() + 365*24*60*60*1000).toUTCString();
     document.cookie = 'pa_lang=' + lang + '; path=/; expires=' + exp;
-
-    // reload
     setTimeout(function() { location.reload(); }, 300);
 }
 </script>

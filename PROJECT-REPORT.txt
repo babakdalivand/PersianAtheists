@@ -1,328 +1,497 @@
 ================================================================================
-     پروژه Persian Atheists (pa) — گزارش کامل توسعه
-     تاریخ: 12 مه 2026
-     GitHub: https://github.com/babakdalivand/persian-atheists-theme
+        پروژه Persian Atheists (pa) — گزارش کامل توسعه
+        تاریخ: 12 مه 2026
+        GitHub: https://github.com/babakdalivand/persian-atheists-theme
 ================================================================================
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-                         محیط توسعه
+  1. محیط توسعه
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  مسیر:     D:\xampp\htdocs\pa
-  URL:       http://localhost/pa
-  تم:        D:\xampp\htdocs\pa\wp-content\themes\persian-atheists\
-  DB:        babak | Admin: bdalivand / Raha@2026
-  WP ver:    6.9.4
-  GitHub:    https://github.com/babakdalivand/persian-atheists-theme (private)
+  مسیر پروژه:    D:\xampp\htdocs\pa
+  URL محلی:      http://localhost/pa
+  تم:            D:\xampp\htdocs\pa\wp-content\themes\persian-atheists\
+  Database:      babak
+  Admin user:    bdalivand
+  Admin pass:    Raha@2026
+  WP Version:    6.9.4
+  GitHub:        https://github.com/babakdalivand/persian-atheists-theme (private)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-                         ساختار فایل‌های تم
+  2. ساختار کامل فایل‌های تم
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   themes/persian-atheists/
-  ├── functions.php              ← زبان، enqueue، CPTs، helpers
-  ├── header.php                 ← لوگو solar system + lang slider + nav
-  ├── footer.php                 ← CTA + footer دوزبانه با لوگو
-  ├── index.php                  ← بارگذاری home.php
-  ├── single.php                 ← صفحه مقاله دوزبانه
-  ├── single-pa_video.php        ← صفحه ویدیو با YouTube embed
-  ├── single-pa_podcast.php      ← صفحه پادکست با audio player + playlist
-  ├── single-pa_book.php         ← صفحه معرفی کتاب
-  ├── single-pa_short.php        ← صفحه شورت
-  ├── archive-pa_video.php       ← آرشیو ویدیوها
-  ├── archive-pa_podcast.php     ← آرشیو پادکست‌ها
-  ├── archive-pa_book.php        ← کتاب‌خانه
-  ├── archive.php                ← آرشیو عمومی
-  ├── style.css
+  ├── functions.php              زبان، enqueue، CPTs، helpers
+  ├── header.php                 لوگو solar system + lang slider + nav
+  ├── footer.php                 CTA + footer دوزبانه با لوگو واقعی
+  ├── index.php                  بارگذاری home.php
+  ├── single.php                 صفحه مقاله دوزبانه کامل
+  ├── single-pa_video.php        صفحه ویدیو با YouTube embed full-width
+  ├── single-pa_podcast.php      صفحه پادکست با audio player + playlist
+  ├── single-pa_book.php         صفحه معرفی کتاب با cover + metadata
+  ├── single-pa_short.php        صفحه شورت (نیاز به بهبود)
+  ├── archive-pa_video.php       آرشیو ویدیوها
+  ├── archive-pa_podcast.php     آرشیو پادکست‌ها
+  ├── archive-pa_book.php        کتاب‌خانه با grid و placeholder
+  ├── archive.php                آرشیو عمومی
+  ├── search.php                 صفحه جستجو (بدون استایل)
+  ├── 404.php                    صفحه 404 (بدون استایل)
+  ├── comments.php               نظرات (بدون استایل)
+  ├── author.php                 صفحه نویسنده
+  ├── page.php                   صفحات ایستا
+  ├── taxonomy.php               صفحه taxonomy
+  ├── style.css                  متغیرهای CSS + تنظیمات پایه
+  ├── theme.json
+  ├── PROJECT-REPORT.txt         این فایل
   ├── assets/
   │   ├── css/
-  │   │   ├── logo.css           ← solar system animation
-  │   │   ├── header.css
-  │   │   ├── components.css
-  │   │   ├── home.css
-  │   │   └── fixes.css          ← override CSS (آخرین load)
-  │   ├── js/main.js
-  │   └── images/logo.png        ← لوگو اصلی
+  │   │   ├── logo.css           solar system animation CSS
+  │   │   ├── header.css         استایل هدر
+  │   │   ├── components.css     کامپوننت‌های عمومی (کارت، دکمه، ...)
+  │   │   ├── home.css           استایل صفحه اصلی
+  │   │   └── fixes.css          override CSS - همیشه آخرین load می‌شود
+  │   ├── js/
+  │   │   └── main.js            dark mode, lang switch, mobile menu
+  │   └── images/
+  │       ├── logo.png           لوگو اصلی سایت (876KB)
+  │       ├── logo.svg
+  │       ├── placeholder-article.svg
+  │       └── placeholder-podcast.svg
   ├── inc/
-  │   ├── meta-boxes.php
-  │   ├── admin.php
-  │   └── login.php
-  └── templates/home.php         ← صفحه اصلی دوزبانه کامل
+  │   ├── meta-boxes.php         meta boxes ادمین (ویدیو/پادکست/کتاب/پست)
+  │   ├── admin.php              تنظیمات پنل ادمین
+  │   └── login.php             صفحه login سفارشی
+  └── templates/
+      └── home.php               صفحه اصلی دوزبانه کامل
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-                    ✅ کارهای انجام شده (از صفر تا کنون)
+  3. نکات فنی کلیدی
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ─── فاز ۱: راه‌اندازی پایه ────────────────────────────────────────────────
-  ✅ نصب WordPress روی XAMPP
-  ✅ تم اختصاصی persian-atheists از صفر
+  [LANG]   pa_current_lang() فقط از cookie pa_lang استفاده می‌کند
+           Polylang این cookie را override نمی‌کند
+           Cookie یک سال اعتبار دارد
+
+  [QUERY]  WP_Query → همیشه new WP_Query($args_array) با array جداگانه
+           همیشه instanceof WP_Query قبل از have_posts() چک شود
+           هرگز از orderby=rand استفاده نشود (integer برمی‌گرداند!)
+
+  [SINGLE] صفحات single از get_queried_object_id() استفاده می‌کنند
+           بدون while(have_posts()) loop اصلی
+           Secondary queries تداخل ایجاد نمی‌کنند
+
+  [PLAYER] Audio player همیشه direction:ltr دارد
+           صرف‌نظر از زبان سایت (FA یا EN)
+
+  [CSS]    fixes.css همیشه آخرین CSS است
+           همه override ها باید اینجا باشند
+
+  [GIT]    فایل‌های موقت (setup-*.php، fix-*.php) را commit نکن
+           همیشه قبل از push: فایل‌های temp را خالی کن
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  4. Custom Post Types (CPT)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  pa_video      → /videos/      ویدیوهای YouTube
+  pa_podcast    → /podcasts/    پادکست با MP3/Embed/Spotify
+  pa_short      → /shorts/      شورت‌های YouTube
+  pa_member_app → (private)     درخواست عضویت
+  pa_book       → /books/       کتاب‌خانه
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  5. Meta Fields مهم
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ویدیو:        pa_youtube_id، pa_duration
+  پادکست:       pa_episode_number، pa_duration، pa_audio_url،
+                pa_embed_code، pa_spotify_url، pa_anchor_url
+  کتاب:         pa_book_title_en، pa_book_author، pa_book_author_en،
+                pa_book_year، pa_book_pages، pa_book_lang، pa_book_isbn،
+                pa_book_download، pa_book_buy، pa_book_cover، pa_book_category
+  پست:          pa_featured (1/0)، pa_recommended (1/0)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  6. کارهای انجام شده ✅
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✅ نصب WordPress + تم اختصاصی از صفر
   ✅ رنگ‌بندی: آبی نفتی #1E2A38 + طلایی #D4A017
-  ✅ فونت Vazirmatn (FA) + Inter (EN)
+  ✅ فونت Vazirmatn (FA) + Inter (EN) از Google Fonts
   ✅ Dark/Light mode با cookie pa_theme
-  ✅ GitHub Repository
-  ✅ Permalink → Post name
-
-  ─── فاز ۲: هدر و لوگو ─────────────────────────────────────────────────────
   ✅ لوگو Solar System Animation (خورشید + زمین + ماه + سیاره)
-  ✅ هدر responsive
-  ✅ Search bar toggle
-  ✅ Dark mode button
+  ✅ لوگو PNG واقعی در header و footer
+  ✅ سیستم دوزبانه FA/EN با cookie pa_lang (مستقل از Polylang)
+  ✅ Lang slider با پرچم 🇮🇷/🇬🇧 — رفت‌وبرگشت بدون از دست دادن صفحه
+  ✅ RTL/LTR خودکار بر اساس زبان
+  ✅ منوی جداگانه FA/EN (primary / primary-en)
   ✅ Mobile hamburger menu
-  ✅ لوگو در footer
-
-  ─── فاز ۳: سیستم دوزبانه FA/EN ───────────────────────────────────────────
-  ✅ Lang slider با پرچم 🇮🇷/🇬🇧
-  ✅ Cookie pa_lang مستقل از Polylang
-  ✅ RTL/LTR خودکار
-  ✅ منوی جداگانه FA/EN
-  ✅ همه متن‌های UI دوزبانه
-  ✅ رفت‌وبرگشت بین زبان‌ها
-
-  ─── فاز ۴: Custom Post Types ──────────────────────────────────────────────
-  ✅ pa_video     → /videos/
-  ✅ pa_podcast   → /podcasts/
-  ✅ pa_short     → /shorts/
-  ✅ pa_member_app → private
-  ✅ pa_book      → /books/
-
-  ─── فاز ۵: Meta Boxes ادمین ───────────────────────────────────────────────
-  ✅ ویدیو: YouTube ID + مدت زمان
-  ✅ پادکست: اپیزود، مدت، MP3، Embed، Spotify، Anchor + راهنما
-  ✅ کتاب: عنوان/نویسنده FA+EN، سال، صفحات، زبان، ISBN، دانلود، خرید، جلد
-  ✅ پست: featured + recommended flag
-
-  ─── فاز ۶: صفحه اصلی ─────────────────────────────────────────────────────
-  ✅ Hero section
-  ✅ RAHA acronym
-  ✅ Stats bar
-  ✅ Filter pills
-  ✅ Latest content grid
-  ✅ Videos / Podcasts / Shorts sections
-  ✅ CTA strip
-  ✅ Footer دوزبانه با PayPal + Crypto
-
-  ─── فاز ۷: صفحات single ───────────────────────────────────────────────────
-  ✅ single.php (مقاله): breadcrumb، متادیتا، share، تگ، author box، related
-  ✅ single-pa_video.php: YouTube full width، share، more videos
-  ✅ single-pa_podcast.php: hero، audio player LTR، playlist، embed support
-  ✅ single-pa_book.php: cover، متادیتا، دانلود، more books
-
-  ─── فاز ۸: Archive pages ──────────────────────────────────────────────────
-  ✅ archive-pa_video.php
-  ✅ archive-pa_podcast.php
-  ✅ archive-pa_book.php (grid با جلد + placeholder)
-
-  ─── فاز ۹: محتوای اولیه ───────────────────────────────────────────────────
-  ✅ ۳ مقاله + ۴ ویدیو + ۳ پادکست
-  ✅ ۵ کتاب (داوکینز، سم هریس x2، هیچنز، دنت)
-  ✅ دسته‌بندی‌ها
-
-  ─── فاز ۱۰: رفع باگ‌ها ────────────────────────────────────────────────────
-  ✅ Fatal error: have_posts() on int → instanceof WP_Query
-  ✅ Loop تداخل → get_queried_object_id()
-  ✅ orderby=rand مشکل → تبدیل به date
-  ✅ lang slider گیر کردن → cookie pa_lang مستقل
-  ✅ Polylang override → حذف pll_current_language
-  ✅ دو cookie تداخل → پاک کردن
-  ✅ لوگو fallback A → display:none!important
+  ✅ Search bar toggle
+  ✅ 5 CPT: pa_video، pa_podcast، pa_short، pa_member_app، pa_book
+  ✅ Meta boxes کامل برای ویدیو، پادکست (MP3+Embed+Spotify+راهنما)، کتاب
+  ✅ صفحه اصلی: hero، RAHA acronym، stats bar، filter pills، latest content
+  ✅ صفحه اصلی: videos section، podcasts section، shorts section، CTA strip
+  ✅ single.php: breadcrumb، share buttons، author box، related posts، sidebar
+  ✅ single-pa_video.php: YouTube full width 16:9
+  ✅ single-pa_podcast.php:
+     - Hero card با blur background
+     - Audio Player سفارشی (همیشه LTR):
+       Play/Pause + Rewind/Forward 15s + Progress bar + Speed + Volume
+     - Playlist کامل با انیمیشن bars + Auto-play next
+     - پشتیبانی از Embed (اولویت بالاتر از MP3)
+  ✅ single-pa_book.php: cover + metadata + دانلود + more books
+  ✅ archive-pa_book.php: grid با جلد + placeholder + دانلود
+  ✅ محتوای اولیه: 3 مقاله + 4 ویدیو + 3 پادکست + 5 کتاب
+  ✅ Polylang نصب + زبان‌ها اضافه شد (FA پیش‌فرض)
   ✅ Permalink → Post name
-  ✅ Header overflow → fixes.css
-  ✅ Video player کوچیک → padding-top:56.25%
-  ✅ فایل‌های موقت پاک شد
+  ✅ GitHub Repository
+  ✅ رفع Fatal error: have_posts() on int
+  ✅ رفع loop تداخل → get_queried_object_id()
+  ✅ رفع مشکل lang slider گیر کردن
+  ✅ رفع مشکل Polylang override کردن زبان
+  ✅ رفع لوگو fallback A
+  ✅ رفع Video player اندازه کوچک
+  ✅ پاک کردن فایل‌های موقت
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-              ❌ لیست کامل کارهای باقی‌مانده (TODO)
-      ترتیب اولویت: [🔴 بالا] [🟡 متوسط] [🟢 پایین]
+  7. لیست کامل کارهای باقی‌مانده با اولویت‌بندی
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ════ بخش UI / طراحی ══════════════════════════════════════════════════════
+  ─────────────────────────────────────────────────────────────────────────────
+  🔴 اولویت 1 — بحرانی (باید قبل از هر launch انجام شود)
+  ─────────────────────────────────────────────────────────────────────────────
 
-  🔴 [HERO-01] Hero Section بازطراحی:
-     - تبدیل از یک پست به SLIDER ۱۰ پست
-     - دو تب: "آخرین‌ها" و "برترین‌ها"
-     - شکل مستطیلی (landscape) نه مربعی
-     - Auto-play slider + دکمه‌های prev/next + dots
-     - "برترین‌ها" بر اساس meta فیلد pa_top یا بازدید
+  [UI-01]  پاکسازی Hero Section
+           ├── حذف دکمه "عضو شو" از hero (در footer موجود است)
+           ├── حذف دکمه "درباره رها" از hero
+           └── فایل: templates/home.php
 
-  🔴 [HERO-02] پاکسازی Hero:
-     - حذف دکمه "عضو شو" از hero (در footer هست)
-     - حذف دکمه "درباره رها" از hero
-     - حذف باکس "حمایت از ما" (CTA strip)
-     - نگه داشتن فقط عنوان + slider
+  [UI-02]  حذف باکس CTA سه‌تایی زیر hero
+           ├── باکس "اساسنامه گروه / عضویت / حمایت از ما" حذف شود
+           ├── این باکس‌ها در footer موجود هستند
+           └── فایل: templates/home.php + footer.php
 
-  🔴 [HEADER-01] پاکسازی header:
-     - حذف دکمه "حمایت مالی ❤️" از header
-     - اصلاح فرم و شکل دکمه حمایت (اگه بماند)
+  [UI-03]  پاکسازی Header
+           ├── حذف کامل دکمه "حمایت مالی ❤️" از header
+           ├── اصلاح فرم و شکل دکمه‌های باقی‌مانده در header
+           └── فایل: header.php + header.css
 
-  🔴 [LANG-01] رفع مشکل زبان انگلیسی:
-     - وقتی EN انتخاب می‌شه فقط header تغییر می‌کند
-     - محتوای پست‌ها (عنوان، متن) باید به EN تغییر کند
-     - راه‌حل‌ها:
-       A) Polylang کامل: هر پست ترجمه EN داشته باشد
-       B) WPML (پولی)
-       C) سیستم اختصاصی: فیلد meta برای EN content
-     - فعلاً: محتوا فقط به فارسی وجود دارد
-     - باید برای هر پست نسخه EN هم نوشته شود
+  [UI-04]  Hero Slider — بازطراحی کامل
+           ├── تبدیل از یک پست ثابت به Slider با 10 پست
+           ├── دو تب:
+           │   ├── تب "آخرین‌ها" (orderby=date, 10 پست)
+           │   └── تب "برترین‌ها" (orderby=comment_count یا meta pa_top)
+           ├── شکل مستطیلی/landscape (نه مربعی)
+           │   توصیه: aspect-ratio 16:7 یا 16:6
+           ├── Auto-play (هر 5 ثانیه) + prev/next arrows + dot indicators
+           ├── Transition: fade یا slide
+           ├── Swipe برای موبایل
+           └── فایل: templates/home.php + home.css
 
-  🔴 [WATERMARK-01] واترمارک لوگو روی تصاویر:
-     - لوگو سایت به اندازه ۱/۱۵ تصویر
-     - پایین-چپ هر تصویر/تامبنیل
-     - responsive: با تصویر scale می‌کند
-     - اعمال روی: تامبنیل پست، جلد کتاب، thumbnail ویدیو
-     - پیاده‌سازی: Canvas API یا ImageMagick در PHP
+  [UI-05]  واترمارک لوگو روی تصاویر
+           ├── لوگو سایت روی هر عکس/تامبنیل
+           ├── موقعیت: پایین-چپ (corner با padding کوچک)
+           ├── اندازه: دقیقاً 1/15 عرض تصویر (responsive)
+           ├── شفافیت: 60-70% opacity
+           ├── اعمال روی:
+           │   ├── تامبنیل مقالات
+           │   ├── جلد کتاب‌ها
+           │   ├── thumbnail ویدیوهای YouTube
+           │   └── تصاویر پادکست
+           ├── روش پیشنهادی: CSS overlay با ::after pseudo-element
+           │   (ساده‌ترین روش، فقط visual، نیاز به PHP ندارد)
+           └── فایل: components.css یا fixes.css
 
-  🔴 [BOOK-01] نمایش کتاب در صفحه اصلی:
-     - یک section "کتاب هفته" یا "کتاب‌های پیشنهادی"
-     - نمایش ۳-۴ کتاب در homepage
-     - کارت کوچک با جلد + عنوان + دکمه دانلود
+  [LANG-01] رفع مشکل ترجمه محتوا به EN
+           ├── وضعیت فعلی: فقط header/UI تغییر می‌کند
+           ├── محتوای پست‌ها (عنوان/متن) فارسی می‌ماند
+           ├── مشکل اصلی: هیچ محتوای EN در database وجود ندارد
+           ├── راه‌حل پیشنهادی (ساده‌تر):
+           │   اضافه کردن meta fields اختصاصی:
+           │   pa_title_en، pa_content_en، pa_excerpt_en
+           │   برای هر CPT و پست
+           ├── در single pages:
+           │   اگه EN انتخاب شده و ترجمه موجود است → EN نمایش
+           │   وگرنه FA + badge کوچک "Translation not available"
+           └── فایل: functions.php + meta-boxes.php + همه single pages
 
-  ════ بخش یوتیوب API ═══════════════════════════════════════════════════════
+  ─────────────────────────────────────────────────────────────────────────────
+  🟠 اولویت 2 — مهم (برای launch اول)
+  ─────────────────────────────────────────────────────────────────────────────
 
-  🔴 [YT-01] YouTube API Integration:
-     - دریافت API Key از Google Console
-       → https://console.cloud.google.com/
-       → YouTube Data API v3 را فعال کن
-     - ذخیره API Key در wp-config.php یا options
-     - ساخت plugin/function برای fetch ویدیوها
-     - آپدیت خودکار هر X ساعت (WP Cron)
-     - ساخت صفحه تنظیمات در ادمین:
-       * وارد کردن Channel ID/Handle
-       * تعداد ویدیو برای import
-       * فاصله زمانی آپدیت
-     - import خودکار به CPT pa_video
-     - ذخیره: عنوان، توضیحات، YouTube ID، thumbnail، تاریخ
+  [YT-01]  YouTube API — دریافت ویدیو از کانال‌ها
+           ├── پیش‌نیاز: Google API Key (YouTube Data API v3)
+           │   مراحل دریافت:
+           │   1. برو به https://console.cloud.google.com/
+           │   2. پروژه جدید بساز
+           │   3. YouTube Data API v3 را enable کن
+           │   4. API Key بساز و در wp-config.php ذخیره کن
+           ├── عملکرد:
+           │   ├── صفحه تنظیمات در ادمین:
+           │   │     Channel ID + تعداد ویدیو + فاصله زمانی آپدیت
+           │   ├── WP Cron برای fetch خودکار (مثلاً هر 6 ساعت)
+           │   ├── Import به CPT pa_video به صورت خودکار
+           │   └── جلوگیری از duplicate (بر اساس YouTube ID)
+           ├── فیلدهای import:
+           │   title، description، YouTube ID، thumbnail URL، date، duration
+           ├── پشتیبانی از چند کانال با category جداگانه
+           └── فایل جدید: inc/youtube-api.php + inc/admin-settings.php
 
-  🔴 [YT-02] چند کانال یوتیوب:
-     - ممکنه چند کانال مختلف داشته باشند
-     - هر کانال tag/category جداگانه
-     - فیلتر بر اساس کانال در archive
+  [YT-02]  نمایش ویدیوهای YouTube در صفحه اصلی از API
+           ├── بعد از YT-01 این خودکار کار می‌کند
+           └── فایل: templates/home.php
 
-  ════ بخش پادکست RSS ═══════════════════════════════════════════════════════
+  [RSS-01] RSS Feed پادکست — import خودکار
+           ├── دریافت RSS از Spotify/Anchor/Buzzsprout/SoundCloud
+           ├── parse XML و ذخیره در CPT pa_podcast
+           ├── WP Cron برای آپدیت خودکار (هر 6 ساعت)
+           ├── صفحه تنظیمات در ادمین:
+           │   URL فید RSS + فاصله زمانی + تعداد اپیزود
+           ├── جلوگیری از duplicate (بر اساس episode GUID)
+           ├── فیلدهای import:
+           │   title، description، duration، date، MP3 URL، embed
+           └── فایل جدید: inc/podcast-rss.php + inc/admin-settings.php
 
-  🔴 [RSS-01] RSS Feed پادکست:
-     - دریافت RSS feed از Spotify/Anchor/Buzzsprout
-     - parse و import خودکار
-     - ذخیره در CPT pa_podcast
-     - آپدیت هر X ساعت با WP Cron
-     - فیلدها: عنوان، توضیحات، مدت، تاریخ، MP3/embed
-     - ساخت تنظیمات در ادمین:
-       * URL فید RSS
-       * فاصله زمانی
-       * تعداد اپیزود برای import
+  [BOOK-01] نمایش کتاب پیشنهادی در صفحه اصلی
+           ├── اضافه کردن section "کتاب‌های پیشنهادی" به home.php
+           ├── نمایش 3-4 کتاب با جلد + عنوان + دکمه دانلود
+           ├── فیلتر: کتاب‌هایی که pa_featured=1 هستند
+           └── فایل: templates/home.php + home.css
 
-  ════ بخش محتوا و SEO ══════════════════════════════════════════════════════
+  [BOOK-02] نمایش کتاب در sidebar صفحات مقاله
+           ├── widget "کتاب هفته" در sidebar
+           ├── یک کتاب تصادفی یا featured
+           └── فایل: single.php
 
-  🟡 [CONTENT-01] Featured Image:
-     - همه پست‌ها تصویر شاخص ندارند
-     - باید از WP Media Library اضافه شود
-     - یا helper برای YouTube thumbnail
+  ─────────────────────────────────────────────────────────────────────────────
+  🟡 اولویت 3 — متوسط (بعد از launch اول)
+  ─────────────────────────────────────────────────────────────────────────────
 
-  🟡 [PAGE-01] صفحات ایستا:
-     - درباره ما (About): info گروه، ارزش‌ها، اعضا
-     - تماس (Contact): ایمیل، تلگرام، شبکه‌های اجتماعی
-     - اساسنامه (Constitution): متن کامل
+  [PAGE-01] صفحه "درباره ما" (About)
+           ├── معرفی گروه آتئیست‌های ایرانی
+           ├── ارزش‌ها و اهداف (RAHA)
+           ├── تیم/اعضای فعال (اختیاری)
+           ├── تاریخچه گروه
+           └── فایل جدید: page-about.php
 
-  🟡 [FORM-01] فرم عضویت (Membership):
-     - فرم frontend کامل
-     - CPT pa_member_app آماده است
-     - AJAX submit + validation
+  [PAGE-02] صفحه "تماس" (Contact)
+           ├── ایمیل، تلگرام، شبکه‌های اجتماعی
+           ├── فرم تماس AJAX با validation
+           └── فایل جدید: page-contact.php
 
-  🟡 [PAGE-02] صفحه حمایت (Donate):
-     - آدرس‌های واقعی PayPal + Crypto
-     - صفحه اختصاصی
+  [PAGE-03] صفحه "اساسنامه" (Constitution)
+           ├── متن کامل اساسنامه گروه
+           └── فایل جدید: page-constitution.php
 
-  🟡 [SHORT-01] بخش شورت‌ها:
-     - single-pa_short.php بهبود
-     - archive-pa_short.php
+  [PAGE-04] صفحه "حمایت مالی" (Donate)
+           ├── آدرس‌های واقعی PayPal + Crypto (BTC، ETH، USDT)
+           ├── توضیح هدف حمایت
+           └── فایل جدید: page-donate.php
 
-  🟡 [SEARCH-01] صفحه Search:
-     - search.php استایل ندارد
+  [FORM-01] فرم عضویت frontend کامل
+           ├── فرم AJAX با validation
+           ├── CAPTCHA (hCaptcha یا Google reCAPTCHA)
+           ├── CPT pa_member_app آماده است (فقط frontend نیاز دارد)
+           ├── email confirmation پس از ثبت
+           └── فایل جدید: page-membership.php
 
-  🟡 [404-01] صفحه 404:
-     - 404.php استایل ندارد
+  [IMG-01] Featured Image برای همه پست‌ها
+           ├── همه پست‌های فعلی تصویر شاخص ندارند
+           ├── helper function:
+           │   اگه thumbnail نداشت از YouTube thumbnail استفاده کند
+           ├── placeholder هوشمند بر اساس دسته‌بندی
+           └── فایل: functions.php
 
-  ════ بخش فنی / Performance ═════════════════════════════════════════════════
+  [SHORT-01] بهبود بخش شورت‌ها
+           ├── single-pa_short.php طراحی کامل
+           ├── archive-pa_short.php با layout عمودی/موبایل
+           ├── نمایش بهتر در صفحه اصلی
+           └── فایل: single-pa_short.php + archive-pa_short.php (جدید)
 
-  🟡 [SEO-01] SEO:
-     - Meta tags: og:title, og:image, twitter:card
-     - Structured data (JSON-LD)
-     - Yoast یا RankMath
+  [HEADER-02] Header Responsive نهایی
+           ├── منو در همه رزولوشن‌ها کامل نمایش داده شود
+           ├── پرچم‌های زبان همیشه visible
+           ├── تست در: 320px، 480px، 768px، 1024px، 1440px
+           └── فایل: header.css + fixes.css
 
-  🟡 [LOGIN-01] صفحه Login:
-     - لوگو درست نشون داده نمی‌شه
+  [LOGIN-01] صفحه Login سفارشی
+           ├── لوگو در حال حاضر درست نشون داده نمی‌شود
+           ├── glassmorphism + mountain background آماده است
+           └── فایل: inc/login.php + logo fix
 
-  🟡 [HEADER-02] Header Responsive:
-     - منو در برخی رزولوشن‌ها بریده می‌شود
-     - پرچم‌های زبان fix نهایی
+  [DARK-01] Dark Mode کامل
+           ├── برخی المان‌ها در dark mode مشکل دارند
+           ├── کارت‌ها، sidebar، فرم‌ها بررسی شوند
+           └── فایل: fixes.css + components.css
 
-  🟡 [DARK-01] Dark Mode کامل:
-     - بعضی المان‌ها در dark mode مشکل دارند
+  ─────────────────────────────────────────────────────────────────────────────
+  🟢 اولویت 4 — بهبود کیفیت
+  ─────────────────────────────────────────────────────────────────────────────
 
-  🟡 [PAGINATION-01] Pagination:
-     - archive صفحات استایل ندارند
+  [SEO-01] SEO کامل
+           ├── Open Graph: og:title، og:image، og:description، og:type
+           ├── Twitter Card: twitter:card، twitter:title، twitter:image
+           ├── JSON-LD Structured Data:
+           │   ├── Article schema برای مقالات
+           │   ├── VideoObject schema برای ویدیوها
+           │   ├── Book schema برای کتاب‌ها
+           │   └── PodcastEpisode schema برای پادکست‌ها
+           ├── Canonical URL
+           ├── Robots meta
+           └── فایل: functions.php (wp_head hook)
 
-  🟡 [COMMENT-01] Comments:
-     - comments.php استایل ندارد
+  [SEARCH-01] صفحه Search با استایل
+           ├── نمایش نتایج از همه CPT ها
+           ├── filter بر اساس نوع محتوا
+           └── فایل: search.php
 
-  🟢 [PERF-01] Performance:
-     - Image lazy loading بهینه
-     - CSS/JS minify
-     - Caching plugin (W3TC / LiteSpeed)
+  [404-01] صفحه 404 با طراحی
+           ├── پیام دوستانه + لینک‌های پیشنهادی
+           └── فایل: 404.php
 
-  🟢 [SEC-01] امنیت:
-     - CAPTCHA برای فرم‌ها
-     - Rate limiting
-     - WAF
+  [COMMENT-01] صفحه نظرات با استایل
+           ├── طراحی متناسب با تم
+           └── فایل: comments.php
 
-  🟢 [FA-01] فارسی‌سازی کامل:
-     - اعداد فارسی (۱، ۲، ۳)
-     - تاریخ شمسی (Jalali Calendar plugin)
+  [PAGINATION-01] Pagination با استایل
+           ├── archive pages صفحه‌بندی استایل ندارند
+           └── فایل: archive pages + components.css
 
-  🟢 [POLYLANG-01] Polylang کامل:
-     - ترجمه محتوا به انگلیسی
-     - URL: /en/videos/ و ...
-     - Hreflang tags
+  [SHARE-02] Share Buttons بهبود
+           ├── اضافه کردن WhatsApp
+           ├── کپی لینک با تأیید بصری (✓ copied!)
+           └── فایل: single pages
+
+  [FOOTER-01] Footer بهبود
+           ├── لینک‌های footer فعال نیستند (404)
+           ├── شبکه‌های اجتماعی واقعی
+           └── فایل: footer.php
+
+  ─────────────────────────────────────────────────────────────────────────────
+  🔵 اولویت 5 — بلندمدت
+  ─────────────────────────────────────────────────────────────────────────────
+
+  [FA-01]  فارسی‌سازی کامل
+           ├── اعداد فارسی (۱، ۲، ۳ به جای 1، 2، 3)
+           ├── تاریخ شمسی (Jalali Date plugin)
+           └── فایل: functions.php + همه templates
+
+  [PERF-01] Performance بهینه‌سازی
+           ├── Image lazy loading پیشرفته
+           ├── WebP conversion خودکار
+           ├── CSS/JS minify در production
+           ├── Caching: W3 Total Cache یا LiteSpeed Cache
+           └── CDN برای تصاویر (Cloudflare یا BunnyCDN)
+
+  [SEC-01] امنیت
+           ├── CAPTCHA برای همه فرم‌ها (hCaptcha توصیه می‌شود)
+           ├── Rate limiting برای فرم عضویت
+           ├── Wordfence یا Solid Security plugin
+           ├── Two Factor Authentication برای ادمین
+           └── SSL Certificate (بعد از انتقال به هاستینگ)
+
+  [ANALYTICS-01] آمار و تحلیل
+           ├── Google Analytics 4 یا Matomo (privacy-friendly)
+           ├── آمار بازدید هر پست برای feature "برترین‌ها"
+           ├── Dashboard کوچک در ادمین
+           └── WP Statistics plugin (رایگان)
+
+  [POLYLANG-01] Polylang کامل (اگه نیاز باشد)
+           ├── URL structure: /en/videos/، /en/podcasts/
+           ├── هر پست ترجمه EN جداگانه داشته باشد
+           ├── Hreflang tags در head
+           ├── Language switcher در URL (نه فقط cookie)
+           └── پیچیده و زمان‌بر — فقط اگه واقعاً نیاز باشد
+
+  [PWA-01] Progressive Web App
+           ├── manifest.json
+           ├── Service Worker برای offline mode
+           ├── Install prompt (Add to Home Screen)
+           └── Push Notifications (اختیاری)
+
+  [API-01] REST API برای App موبایل
+           ├── /wp-json/pa/v1/posts
+           ├── /wp-json/pa/v1/videos
+           ├── /wp-json/pa/v1/podcasts
+           ├── /wp-json/pa/v1/books
+           └── JWT Authentication
+
+  [NEWSLETTER-01] خبرنامه ایمیل
+           ├── فرم ثبت‌نام ایمیل در footer و صفحات
+           ├── اتصال به Mailchimp یا SendGrid
+           ├── آرشیو خبرنامه در سایت
+           └── Double opt-in
+
+  [COMMENT-02] سیستم نظرات پیشرفته
+           ├── Disqus یا نظرات بومی بهتر
+           ├── Moderation panel
+           └── Anti-spam (Akismet)
+
+  [PLAYER-01] Video Player اختصاصی
+           ├── به جای YouTube embed، player اختصاصی
+           ├── پشتیبانی از فایل‌های mp4 self-hosted
+           ├── کیفیت‌های مختلف (360p، 720p، 1080p)
+           └── Plyr.js یا VideoJS
+
+  [LIBRARY-01] کتاب‌خانه پیشرفته
+           ├── فیلتر بر اساس دسته، نویسنده، سال، زبان
+           ├── Sort: جدیدترین، محبوب‌ترین، الفبایی
+           ├── Search داخل کتاب‌خانه
+           └── فایل: archive-pa_book.php
+
+  [PODCAST-ADV] پادکست پیشرفته
+           ├── صفحه کانال پادکست (مثل Spotify)
+           ├── آمار گوش دادن
+           ├── Chapters (فصل‌بندی اپیزود)
+           └── Transcript (متن اپیزود)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-              📊 خلاصه وضعیت
+  8. خلاصه آماری
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  فایل‌های تم:     ~25 فایل PHP + 5 CSS
-  CPTs:            5 نوع محتوا
-  صفحات کامل:     8 صفحه
-  محتوای اولیه:   3 مقاله + 4 ویدیو + 3 پادکست + 5 کتاب
-  پیشرفت کلی:     ~60% (برای Beta Launch آماده)
+  فایل‌های PHP تم:      ~25 فایل
+  CSS files:             5 فایل
+  CPT های فعال:          5 نوع
+  صفحات کامل:           8 صفحه
+  محتوای اولیه:         15 آیتم (3+4+3+5)
+  باگ‌های رفع شده:      12 باگ
+  پیشرفت کلی:           ~60%
+
+  TODO باقی‌مانده:
+  ├── 🔴 اولویت 1 (بحرانی):    5 آیتم
+  ├── 🟠 اولویت 2 (مهم):       4 آیتم
+  ├── 🟡 اولویت 3 (متوسط):     9 آیتم
+  ├── 🟢 اولویت 4 (کیفیت):     7 آیتم
+  └── 🔵 اولویت 5 (بلندمدت):  11 آیتم
+  مجموع:  36 آیتم
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-              🔧 نکات فنی مهم
+  9. URLهای مهم
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  1. pa_current_lang() → فقط cookie pa_lang (Polylang مزاحمت نمی‌کند)
-  2. WP_Query → همیشه instanceof چک + هرگز orderby=rand
-  3. Single pages → get_queried_object_id() بدون while loop
-  4. Audio player → همیشه direction:ltr
-  5. fixes.css → آخرین CSS است، همه چیز را override می‌کند
+  سایت اصلی:        http://localhost/pa/
+  ادمین:             http://localhost/pa/wp-admin/
+  Permalinks:        http://localhost/pa/wp-admin/options-permalink.php
+  Languages:         http://localhost/pa/wp-admin/admin.php?page=mlang
+  ویدیوها:           http://localhost/pa/videos/
+  پادکست‌ها:         http://localhost/pa/podcasts/
+  شورت‌ها:           http://localhost/pa/shorts/
+  کتاب‌خانه:         http://localhost/pa/books/
+  GitHub:            https://github.com/babakdalivand/persian-atheists-theme
+  Google Console:    https://console.cloud.google.com/ (برای YouTube API)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-              🔄 Git Commands
+  10. Git Commands
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   cd D:\xampp\htdocs\pa\wp-content\themes\persian-atheists
+  git status
   git add .
-  git commit -m "your message"
+  git commit -m "feat: description of changes"
   git push origin main
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-              🌐 URLهای مهم
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  سایت:       http://localhost/pa/
-  ادمین:      http://localhost/pa/wp-admin/
-  ویدیوها:    http://localhost/pa/videos/
-  پادکست‌ها:  http://localhost/pa/podcasts/
-  شورت‌ها:    http://localhost/pa/shorts/
-  کتاب‌خانه:  http://localhost/pa/books/
-
 ================================================================================
-  آخرین به‌روزرسانی: 12 مه 2026 — Claude (Anthropic)
+  آخرین به‌روزرسانی: 12 مه 2026
+  نوشته شده توسط: Claude (Anthropic) برای پروژه Persian Atheists
 ================================================================================

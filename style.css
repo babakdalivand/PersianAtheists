@@ -1,4 +1,4 @@
-/*
+﻿/*
 Theme Name: Persian Atheists
 Theme URI: https://persianAtheists.org
 Author: Persian Atheists Team
@@ -17,14 +17,14 @@ Tags: rtl-language, custom-menu, featured-images, translation-ready, dark-mode
    CSS CUSTOM PROPERTIES — DESIGN TOKENS
    ============================================ */
 :root {
-  --bg: #F8F9FB;
+  --bg: #FFFCF2;
   --surface: #FFFFFF;
-  --primary: #1E2A38;
-  --accent: #D4A017;
-  --accent-hover: #B8880F;
-  --text: #1A1A1A;
-  --muted: #6B7280;
-  --border: #E5E7EB;
+  --primary: #252422;
+  --accent: #EB5E28;
+  --accent-hover: #D04E1E;
+  --text: #403D39;
+  --muted: #8C857D;
+  --border: #E0D9CF;
   --font-persian: 'Vazirmatn', sans-serif;
   --font-english: 'Inter', sans-serif;
   --h1: 32px;
@@ -43,14 +43,14 @@ Tags: rtl-language, custom-menu, featured-images, translation-ready, dark-mode
 }
 
 [data-theme="dark"] {
-  --bg: #0F172A;
-  --surface: #1E293B;
-  --primary: #F9FAFB;
-  --text: #F9FAFB;
-  --muted: #94A3B8;
-  --border: #334155;
-  --shadow: 0 2px 16px rgba(0,0,0,0.4);
-  --shadow-hover: 0 8px 32px rgba(0,0,0,0.6);
+  --bg: #1A1714;
+  --surface: #252220;
+  --primary: #FFFCF2;
+  --text: #E8E2D9;
+  --muted: #CCC5B9;
+  --border: #3A3530;
+  --shadow: 0 2px 16px rgba(0,0,0,0.5);
+  --shadow-hover: 0 8px 32px rgba(0,0,0,0.7);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -344,7 +344,7 @@ h3 { font-size: var(--h3); font-weight: 600; line-height: 1.4; }
   outline: none;
 }
 
-.form-control:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(212,160,23,0.15); }
+.form-control:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(235,94,40,0.15); }
 textarea.form-control { resize: vertical; min-height: 100px; }
 
 .form-check { display: flex; align-items: flex-start; gap: 10px; font-size: var(--small); color: var(--muted); }
@@ -352,9 +352,9 @@ textarea.form-control { resize: vertical; min-height: 100px; }
 
 /* CTA STRIP */
 .cta-strip { background: var(--primary); padding: 48px 0; }
-[data-theme="dark"] .cta-strip { background: #0a1628; }
+[data-theme="dark"] .cta-strip { background: #2A1A10; }
 
-.cta-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.cta-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
 
 .cta-block {
   background: rgba(255,255,255,0.06);
@@ -403,8 +403,8 @@ textarea.form-control { resize: vertical; min-height: 100px; }
 .footer-social a:hover { background: var(--accent); color: #fff; }
 
 .footer-donate-box {
-  background: rgba(212,160,23,0.1);
-  border: 1px solid rgba(212,160,23,0.3);
+  background: rgba(235,94,40,0.1);
+  border: 1px solid rgba(235,94,40,0.3);
   border-radius: var(--radius);
   padding: 18px;
 }
@@ -496,7 +496,7 @@ textarea.form-control { resize: vertical; min-height: 100px; }
 .section-number { font-size: 60px; font-weight: 900; color: var(--accent); opacity: 0.12; line-height: 1; margin-bottom: -16px; }
 
 /* MEMBERSHIP */
-.membership-hero { background: linear-gradient(135deg, #1E2A38 0%, #2d3f54 100%); padding: 70px 0; text-align: center; }
+.membership-hero { background: linear-gradient(135deg, #252422 0%, #403D39 100%); padding: 70px 0; text-align: center; }
 
 .membership-form-wrap {
   max-width: 720px;
@@ -526,7 +526,7 @@ textarea.form-control { resize: vertical; min-height: 100px; }
   transition: var(--transition);
 }
 
-.upload-area:hover { border-color: var(--accent); background: rgba(212,160,23,0.04); }
+.upload-area:hover { border-color: var(--accent); background: rgba(235,94,40,0.04); }
 
 /* SITE SECTION */
 .site-section { padding: var(--section-gap) 0; }

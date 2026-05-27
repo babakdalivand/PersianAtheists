@@ -38,7 +38,7 @@
               home_url( '/articles/' )    => 'مقالات',
               home_url( '/videos/' )      => 'ویدیوها',
               home_url( '/podcast/' )     => 'پادکست',
-              home_url( '/shorts/' )      => 'شورت‌ها',
+              home_url( '/shorts/' )      => 'ویدئوهای کوتاه',
               home_url( '/categories/' )  => 'دسته‌بندی‌ها',
               home_url( '/about/' )       => 'درباره ما',
               home_url( '/constitution/' )=> 'اساسنامه',

@@ -6,6 +6,41 @@
 if ( ! defined('ABSPATH') ) exit;
 
 /* ============================================
+   FIX ADMIN SIDEBAR OVERLAP (RTL / right-side menu)
+   ============================================ */
+add_action('admin_head', function() { ?>
+<style id="pa-admin-ltr-fix">
+/* Force LTR on entire admin — theme RTL must not bleed in */
+html, body { direction: ltr !important; }
+
+/* Desktop: sidebar on LEFT */
+@media (min-width: 783px) {
+    #adminmenuwrap,
+    #adminmenuback {
+        left:  0    !important;
+        right: auto !important;
+    }
+    #wpcontent, #wpfooter {
+        margin-left:  160px !important;
+        margin-right: 0     !important;
+    }
+    body.folded #wpcontent,
+    body.folded #wpfooter {
+        margin-left:  36px !important;
+        margin-right: 0    !important;
+    }
+}
+/* Mobile: full-width content, sidebar as WP overlay */
+@media (max-width: 782px) {
+    #wpcontent, #wpfooter {
+        margin-left:  0 !important;
+        margin-right: 0 !important;
+    }
+}
+</style>
+<?php });
+
+/* ============================================
    ADMIN COLUMNS — VIDEOS
    ============================================ */
 function pa_video_columns($cols) {
@@ -160,7 +195,7 @@ function pa_stats_widget_cb() {
         'مقالات'        => wp_count_posts('post')->publish,
         'ویدیوها'       => wp_count_posts('pa_video')->publish,
         'پادکست‌ها'     => wp_count_posts('pa_podcast')->publish,
-        'شورت‌ها'       => wp_count_posts('pa_short')->publish,
+        'ویدئوهای کوتاه' => wp_count_posts('pa_short')->publish,
         'درخواست‌های عضویت' => wp_count_posts('pa_member_app')->pending,
     ];
     echo '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">';

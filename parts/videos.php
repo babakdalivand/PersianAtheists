@@ -1,11 +1,11 @@
 <?php
 /**
- * YouTube Videos Section
+ * YouTube Videos Section — 4-column grid
  */
 
 $videos = new WP_Query( [
     'post_type'      => 'pa_video',
-    'posts_per_page' => 6,
+    'posts_per_page' => 8,
     'post_status'    => 'publish',
 ] );
 
@@ -24,17 +24,18 @@ if ( ! $videos->have_posts() ) return;
         </a>
     </div>
 
-    <div class="scroll-row">
+    <div class="videos-grid-4">
         <?php while ( $videos->have_posts() ) : $videos->the_post();
             $yt_id    = pa_get_youtube_id();
             $duration = get_post_meta( get_the_ID(), 'pa_duration', true );
         ?>
-            <div class="media-card">
+            <a href="<?php the_permalink(); ?>" class="media-card media-card-link" style="text-decoration:none;display:block;">
                 <div class="media-thumb">
                     <?php if ( has_post_thumbnail() ) : ?>
                         <?php the_post_thumbnail( 'pa-thumb', [ 'alt' => get_the_title() ] ); ?>
                     <?php elseif ( $yt_id ) : ?>
-                        <img src="https://img.youtube.com/vi/<?php echo esc_attr( $yt_id ); ?>/hqdefault.jpg" alt="<?php the_title_attribute(); ?>">
+                        <img src="https://img.youtube.com/vi/<?php echo esc_attr( $yt_id ); ?>/hqdefault.jpg"
+                             alt="<?php the_title_attribute(); ?>" loading="lazy">
                     <?php else : ?>
                         <div style="background:#1E2A38;width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:32px;">▶</div>
                     <?php endif; ?>
@@ -51,12 +52,26 @@ if ( ! $videos->have_posts() ) return;
                 </div>
                 <div class="media-info">
                     <div class="media-title">
-                        <a href="<?php the_permalink(); ?>" style="color:inherit;"><?php the_title(); ?></a>
+                        <?php the_title(); ?>
                     </div>
                     <div class="media-meta"><?php pa_time_ago(); ?></div>
                 </div>
-            </div>
+            </a>
         <?php endwhile; wp_reset_postdata(); ?>
     </div>
 
 </section>
+
+<style>
+.videos-grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+@media (max-width: 900px) {
+    .videos-grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+    .videos-grid-4 { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+}
+</style>

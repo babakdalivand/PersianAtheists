@@ -1,4 +1,4 @@
-/* ============================================
+﻿/* ============================================
    HEADER STYLES
    ============================================ */
 
@@ -75,28 +75,84 @@
 .nav-list li a:hover,
 .nav-list li.current-menu-item > a {
   color: var(--accent);
-  background: rgba(212,160,23,0.08);
+  background: rgba(235,94,40,0.08);
 }
 
-.nav-list li.has-submenu { position: relative; }
+/* ══ DROPDOWN MENU ══ */
+.nav-list li { position: relative; }
 
+/* WordPress generates menu-item-has-children + sub-menu */
+.nav-list .menu-item-has-children > a::after {
+  content: '';
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  margin-inline-start: 6px;
+  vertical-align: middle;
+  opacity: 0.6;
+  transition: transform .2s;
+}
+.nav-list .menu-item-has-children:hover > a::after {
+  transform: rotate(-135deg);
+  opacity: 1;
+}
+
+.nav-list .sub-menu,
 .nav-list li.has-submenu > ul {
   display: none;
   position: absolute;
-  top: 100%;
+  top: calc(100% + 4px);
   right: 0;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  box-shadow: var(--shadow-hover);
-  min-width: 200px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  min-width: 210px;
   list-style: none;
-  padding: 8px 0;
-  z-index: 100;
+  padding: 6px 0;
+  z-index: 500;
+  animation: ddFadeIn .18s ease;
+}
+[dir="ltr"] .nav-list .sub-menu,
+[dir="ltr"] .nav-list li.has-submenu > ul { right: auto; left: 0; }
+
+@keyframes ddFadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
+.nav-list .menu-item-has-children:hover > .sub-menu,
 .nav-list li.has-submenu:hover > ul { display: block; }
-.nav-list li.has-submenu > ul li a { padding: 8px 16px; border-radius: 0; }
+
+.nav-list .sub-menu li a,
+.nav-list li.has-submenu > ul li a {
+  padding: 9px 18px;
+  font-size: 13px;
+  border-radius: 0;
+  display: block;
+  color: var(--text);
+  font-weight: 500;
+  border-inline-start: 3px solid transparent;
+  transition: all .15s;
+}
+.nav-list .sub-menu li a:hover,
+.nav-list li.has-submenu > ul li a:hover {
+  color: var(--accent);
+  background: rgba(235,94,40,0.07);
+  border-inline-start-color: var(--accent);
+  padding-inline-start: 22px;
+}
+
+/* Mobile: dropdown به صورت indent */
+.mobile-nav-list .sub-menu {
+  display: block;
+  padding-inline-start: 16px;
+  list-style: none;
+}
+.mobile-nav-list .sub-menu li { border-bottom: none; }
+.mobile-nav-list .sub-menu li a { font-size: 14px; padding: 10px 0; color: var(--muted); }
 
 /* ACTIONS */
 .header-actions {
@@ -297,8 +353,8 @@
   font-size: 12px;
   font-weight: 700;
   color: var(--accent);
-  background: rgba(212,160,23,0.2);
-  border: 1px solid rgba(212,160,23,0.4);
+  background: rgba(235,94,40,0.2);
+  border: 1px solid rgba(235,94,40,0.4);
   padding: 4px 10px;
   border-radius: 20px;
   width: fit-content;

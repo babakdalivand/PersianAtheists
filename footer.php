@@ -6,37 +6,70 @@ $logo_url  = get_template_directory_uri() . '/assets/images/logo.png';
 $has_logo  = file_exists( $logo_path );
 ?>
 
-<!-- CTA STRIP -->
-<section class="cta-strip">
+<!-- CTA STRIP — minimal -->
+<section class="cta-strip-mini">
     <div class="container">
-        <div class="cta-grid">
-            <div class="cta-block">
-                <div class="cta-icon">📜</div>
-                <h3><?php echo $is_en ? 'Group Constitution' : 'اساسنامه گروه'; ?></h3>
-                <p><?php echo $is_en ? 'Read the principles, values and rules of the Persian Atheists.' : 'اصول، ارزش‌ها و قوانین اساسنامه آتئیست‌های ایرانی را مطالعه کنید.'; ?></p>
-                <a href="<?php echo esc_url( home_url('/constitution') ); ?>" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);">
-                    <?php echo $is_en ? 'Read' : 'مطالعه'; ?>
-                </a>
-            </div>
-            <div class="cta-block">
-                <div class="cta-icon">👥</div>
-                <h3><?php echo $is_en ? 'Join the Group' : 'عضویت در گروه'; ?></h3>
-                <p><?php echo $is_en ? 'Fill out the membership application form to join Persian Atheists.' : 'فرم درخواست عضویت فعال در گروه آتئیست‌های ایرانی را پر کنید.'; ?></p>
-                <a href="<?php echo esc_url( home_url('/membership') ); ?>" class="btn btn-primary">
-                    <?php echo $is_en ? 'Apply for Membership' : 'درخواست عضویت'; ?>
-                </a>
-            </div>
-            <div class="cta-block">
-                <div class="cta-icon">❤️</div>
-                <h3><?php echo $is_en ? 'Support Us' : 'حمایت از ما'; ?></h3>
-                <p><?php echo $is_en ? 'Help us continue our independent work with your financial support.' : 'با حمایت مالی خود به ادامه فعالیت مستقل ما کمک کنید.'; ?></p>
-                <a href="<?php echo esc_url( home_url('/donate') ); ?>" class="btn btn-primary">
-                    <?php echo $is_en ? 'Donate' : 'حمایت کنید'; ?>
-                </a>
-            </div>
+        <div class="cta-mini-row">
+            <a href="<?php echo esc_url( home_url('/constitution') ); ?>" class="cta-mini-item">
+                <span class="cta-mini-icon">📜</span>
+                <span class="cta-mini-label"><?php echo $is_en ? 'Constitution' : 'اساسنامه'; ?></span>
+            </a>
+            <span class="cta-mini-sep"></span>
+            <a href="<?php echo esc_url( home_url('/membership') ); ?>" class="cta-mini-item cta-mini-highlight">
+                <span class="cta-mini-icon">👥</span>
+                <span class="cta-mini-label"><?php echo $is_en ? 'Join Us' : 'عضویت'; ?></span>
+            </a>
+            <span class="cta-mini-sep"></span>
+            <a href="<?php echo esc_url( home_url('/donate') ); ?>" class="cta-mini-item cta-mini-highlight">
+                <span class="cta-mini-icon">❤️</span>
+                <span class="cta-mini-label"><?php echo $is_en ? 'Donate' : 'حمایت'; ?></span>
+            </a>
+            <span class="cta-mini-sep"></span>
+            <a href="<?php echo esc_url( home_url('/submit') ); ?>" class="cta-mini-item">
+                <span class="cta-mini-icon">✏️</span>
+                <span class="cta-mini-label"><?php echo $is_en ? 'Write for Us' : 'ارسال مقاله'; ?></span>
+            </a>
         </div>
     </div>
 </section>
+<style>
+.cta-strip-mini {
+    background: var(--primary);
+    border-top: 1px solid var(--border);
+    padding: 0;
+}
+.cta-mini-row {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.cta-mini-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 14px 24px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    transition: color .2s, background .2s;
+    white-space: nowrap;
+}
+.cta-mini-item:hover { color: var(--accent); background: rgba(124,58,237,.06); }
+.cta-mini-highlight { color: var(--text); }
+.cta-mini-icon { font-size: 16px; }
+.cta-mini-sep {
+    width: 1px;
+    background: var(--border);
+    margin: 8px 0;
+    flex-shrink: 0;
+}
+@media (max-width: 600px) {
+    .cta-mini-row { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; }
+    .cta-mini-item { padding: 12px 16px; }
+}
+</style>
 
 <style>
 /* Footer logo */
@@ -44,7 +77,7 @@ $has_logo  = file_exists( $logo_path );
     width: 48px; height: 48px;
     border-radius: 50%;
     background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(212,160,23,0.3);
+    border: 1px solid rgba(124,58,237,0.3);
     overflow: hidden;
     flex-shrink: 0;
     display: flex;
