@@ -287,7 +287,7 @@ body.home .pa-lang-item.active .pa-lang-flag { filter: grayscale(0) opacity(1); 
     /* فیلسوف بالا، متن پایین */
     .pa-hero-content-col {
         order: 1;
-        min-height: 400px;
+        min-height: 240px;
         height: auto;
         align-items: flex-end;
     }
