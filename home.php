@@ -11,7 +11,7 @@ $is_en = ($lang === 'en');
 $t = [
     'hero_badge'     => $is_en ? 'Persian Atheists Network'      : 'شبکه آتئیست‌های ایرانی',
     'hero_title'     => $is_en ? 'Thinking Is Not a Crime'       : 'اندیشیدن جرم نیست',
-    'hero_desc'      => $is_en ? 'A safe space for Iranian freethinkers, atheists, agnostics and humanists around the world.' : 'فضایی امن برای آزاداندیشان، آتئیست‌ها، آگنوستیک‌ها و اومانیست‌های ایرانی در سراسر جهان.',
+    'hero_desc'      => $is_en ? 'A safe space for Iranian freethinkers, atheists,<br>agnostics and humanists around the world.' : 'فضایی امن برای آزاداندیشان، آتئیست‌ها،<br>آگنوستیک‌ها و اومانیست‌های ایرانی در سراسر جهان.',
     'tab_latest'     => $is_en ? 'Latest'                        : 'آخرین‌ها',
     'tab_top'        => $is_en ? 'Top'                           : 'برترین‌ها',
     'raha_r'         => $is_en ? 'Rationalist'                   : 'عقل‌گرا',
@@ -339,7 +339,7 @@ body.home .pa-lang-item.active .pa-lang-flag { filter: grayscale(0) opacity(1); 
                     <span class="pa-hero-badge-text"><?php echo esc_html($t['hero_badge']); ?></span>
                 </div>
                 <h1 class="pa-hero-title"><?php echo esc_html($t['hero_title']); ?></h1>
-                <p class="pa-hero-desc"><?php echo esc_html($t['hero_desc']); ?></p>
+                <p class="pa-hero-desc"><?php echo wp_kses($t['hero_desc'], ['br'=>[]]); ?></p>
                 <div class="pa-raha-row">
                     <div class="pa-raha-letter"><span class="pa-raha-char">R</span><span class="pa-raha-word"><?php echo esc_html($t['raha_r']); ?></span></div>
                     <div class="pa-raha-letter"><span class="pa-raha-char">A</span><span class="pa-raha-word"><?php echo esc_html($t['raha_a1']); ?></span></div>
