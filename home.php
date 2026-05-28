@@ -244,6 +244,36 @@ body.home .pa-lang-item.active .pa-lang-flag { filter: grayscale(0) opacity(1); 
 .pa-raha-char { display: block; font-size: 18px; font-weight: 900; color: var(--accent); margin-bottom: 2px; }
 .pa-raha-word { display: block; font-size: 10px; color: rgba(255,252,242,0.5); font-weight: 600; }
 
+/* ── Title + desc entrance animations ── */
+@keyframes pa-hero-in {
+    from { opacity: 0; transform: translateY(22px); filter: blur(5px); }
+    to   { opacity: 1; transform: translateY(0);    filter: blur(0);   }
+}
+@keyframes pa-title-shine {
+    0%   { background-position: 200% center; }
+    100% { background-position: -200% center; }
+}
+.pa-hero-badge {
+    animation: pa-hero-in .6s cubic-bezier(.16,1,.3,1) .05s both;
+}
+.pa-hero-title {
+    background: linear-gradient(100deg,
+        #FFFCF2 30%, #D4A017 52%, #FFFCF2 72%);
+    background-size: 250% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation:
+        pa-hero-in     .8s cubic-bezier(.16,1,.3,1) .2s  both,
+        pa-title-shine 4s linear 1.2s infinite;
+}
+.pa-hero-desc {
+    animation: pa-hero-in .8s cubic-bezier(.16,1,.3,1) .45s both;
+}
+.pa-raha-row {
+    animation: pa-hero-in .8s cubic-bezier(.16,1,.3,1) .65s both;
+}
+
 @media(max-width:768px){
     .pa-hero-inner,
     [dir] .pa-hero-inner,
@@ -254,11 +284,28 @@ body.home .pa-lang-item.active .pa-lang-flag { filter: grayscale(0) opacity(1); 
         grid-template-columns: unset !important;
         grid-template-rows: unset !important;
     }
+    /* فیلسوف بالا، متن پایین */
     .pa-hero-content-col {
         order: 1;
-        min-height: 240px;
+        min-height: 400px;
         height: auto;
+        align-items: flex-end;
     }
+    /* فیلسوف روشن‌تر — صورت در بالا */
+    .pa-hero-philosopher {
+        opacity: 0.9;
+        object-position: center 10%;
+    }
+    /* گرادیان: بالا شفاف → پایین تاریک */
+    .pa-hero-content-col::before {
+        background: linear-gradient(to bottom,
+            transparent 0%,
+            rgba(26,23,20,0.10) 35%,
+            rgba(26,23,20,0.72) 62%,
+            rgba(26,23,20,0.97) 100%
+        );
+    }
+    .pa-hero-text { padding: 20px 20px 28px; }
     .pa-hero-slides-col {
         order: 2;
         min-height: 220px;
@@ -267,8 +314,6 @@ body.home .pa-lang-item.active .pa-lang-flag { filter: grayscale(0) opacity(1); 
         border-inline-end: none;
         border-top: 1px solid rgba(255,252,242,0.06);
     }
-    .pa-hero-content-col::before { background: rgba(26,23,20,0.93); }
-    .pa-hero-text { padding: 24px 20px; }
     .pa-raha-row { gap: 6px; }
     .pa-raha-letter { padding: 7px 10px; min-width: 56px; }
 }
