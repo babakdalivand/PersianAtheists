@@ -34,10 +34,11 @@ $has_logo  = file_exists( $logo_path );
 </section>
 <style>
 .cta-strip-mini {
-    background: var(--primary);
-    border-top: 1px solid var(--border);
+    background: #111827;
+    border-top: 1px solid rgba(255,255,255,0.08);
     padding: 0;
 }
+[data-theme="dark"] .cta-strip-mini { background: #070f1e; }
 .cta-mini-row {
     display: flex;
     align-items: stretch;
@@ -49,19 +50,19 @@ $has_logo  = file_exists( $logo_path );
     align-items: center;
     gap: 7px;
     padding: 14px 24px;
-    color: var(--muted);
+    color: rgba(255,255,255,0.6);
     text-decoration: none;
     font-size: 13px;
     font-weight: 600;
     transition: color .2s, background .2s;
     white-space: nowrap;
 }
-.cta-mini-item:hover { color: var(--accent); background: rgba(124,58,237,.06); }
-.cta-mini-highlight { color: var(--text); }
+.cta-mini-item:hover { color: var(--accent); background: rgba(235,94,40,0.08); }
+.cta-mini-highlight { color: #fff; }
 .cta-mini-icon { font-size: 16px; }
 .cta-mini-sep {
     width: 1px;
-    background: var(--border);
+    background: rgba(255,255,255,0.12);
     margin: 8px 0;
     flex-shrink: 0;
 }
@@ -144,7 +145,7 @@ $has_logo  = file_exists( $logo_path );
 
             <!-- Quick Links -->
             <div class="footer-col">
-                <div class="footer-col-title"><?php echo $is_en ? 'Quick Access' : 'دسترسی سریع'; ?></div>
+                <div class="footer-col-title"><?php echo $is_en ? 'Content' : 'محتوا'; ?></div>
                 <ul class="footer-links">
                     <li><a href="<?php echo esc_url(home_url('/articles')); ?>"><?php echo $is_en ? 'Articles' : 'مقالات'; ?></a></li>
                     <li><a href="<?php echo esc_url(home_url('/videos')); ?>"><?php echo $is_en ? 'Videos' : 'ویدیوها'; ?></a></li>
@@ -158,25 +159,31 @@ $has_logo  = file_exists( $logo_path );
             <!-- Categories — از دیتابیس واقعی -->
             <div class="footer-col">
                 <div class="footer-col-title"><?php echo $is_en ? 'Categories' : 'دسته‌بندی‌ها'; ?></div>
-                <ul class="footer-links">
+                <ul class="footer-links footer-cats">
                     <?php
-                    $cats = get_categories(['number'=>6,'orderby'=>'count','order'=>'DESC','hide_empty'=>true]);
+                    $cats = get_categories(['number'=>6,'orderby'=>'count','order'=>'DESC','hide_empty'=>true,'parent'=>0]);
                     foreach($cats as $cat):
+                        $raw = $cat->name;
+                        if (strpos($raw, '|') !== false) {
+                            $parts = array_map('trim', explode('|', $raw));
+                            $label = $is_en ? ($parts[1] ?? $raw) : ($parts[0] ?? $raw);
+                        } else {
+                            $label = $raw;
+                        }
                     ?>
-                    <li><a href="<?php echo esc_url(get_category_link($cat->term_id)); ?>"><?php echo esc_html($cat->name); ?></a></li>
+                    <li><a href="<?php echo esc_url(get_category_link($cat->term_id)); ?>"><?php echo esc_html($label); ?></a></li>
                     <?php endforeach; ?>
                 </ul>
             </div>
 
             <!-- Useful Links -->
             <div class="footer-col">
-                <div class="footer-col-title"><?php echo $is_en ? 'Useful Links' : 'لینک‌های مفید'; ?></div>
+                <div class="footer-col-title"><?php echo $is_en ? 'About Us' : 'سایت'; ?></div>
                 <ul class="footer-links">
                     <li><a href="<?php echo esc_url(home_url('/constitution')); ?>"><?php echo $is_en ? 'Constitution' : 'اساسنامه'; ?></a></li>
                     <li><a href="<?php echo esc_url(home_url('/membership')); ?>"><?php echo $is_en ? 'Join the Group' : 'عضویت در گروه'; ?></a></li>
-                    <li><a href="<?php echo esc_url(home_url('/about')); ?>"><?php echo $is_en ? 'About Us' : 'درباره ما'; ?></a></li>
-                    <li><a href="<?php echo esc_url(home_url('/contact')); ?>"><?php echo $is_en ? 'Contact Us' : 'تماس با ما'; ?></a></li>
                     <li><a href="<?php echo esc_url(home_url('/donate')); ?>"><?php echo $is_en ? 'Donate' : 'حمایت مالی'; ?></a></li>
+                    <li><a href="<?php echo esc_url(home_url('/submit')); ?>"><?php echo $is_en ? 'Write for Us' : 'ارسال مقاله'; ?></a></li>
                     <li><a href="<?php echo esc_url(get_privacy_policy_url()); ?>"><?php echo $is_en ? 'Privacy Policy' : 'حریم خصوصی'; ?></a></li>
                 </ul>
             </div>

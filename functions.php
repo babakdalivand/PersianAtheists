@@ -1,7 +1,7 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'PA_VERSION', '1.1.1' );
+define( 'PA_VERSION', '1.1.2' );
 define( 'PA_DIR', get_template_directory() );
 define( 'PA_URI', get_template_directory_uri() );
 
@@ -43,8 +43,12 @@ add_action( 'after_setup_theme', 'pa_theme_setup' );
 
 /* ── ENQUEUE ── */
 function pa_enqueue_assets() {
+    wp_enqueue_style( 'pa-iran-yekan',
+        'https://fonts.cdnfonts.com/css/iran-yekan',
+        [], null
+    );
     wp_enqueue_style( 'pa-google-fonts',
-        'https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap',
+        'https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;800;900&family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap',
         [], null
     );
     wp_enqueue_style( 'pa-style',      get_stylesheet_uri(),                ['pa-google-fonts'],    PA_VERSION );

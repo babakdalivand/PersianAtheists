@@ -55,10 +55,10 @@
 
 /* ── Font global ── */
 body {
-    font-family: 'Vazirmatn', Tahoma, Arial, sans-serif !important;
+    font-family: 'IRANYekan', 'Vazirmatn', Tahoma, Arial, sans-serif !important;
 }
 body.lang-en {
-    font-family: 'Inter', Arial, sans-serif !important;
+    font-family: 'Merriweather', Georgia, serif !important;
 }
 
 /* ── Single post pages ── */
@@ -68,6 +68,43 @@ body.lang-en {
     padding: 28px 20px 60px !important;
     box-sizing: border-box !important;
     width: 100% !important;
+}
+
+/* ══ SCROLL REVEAL ══ */
+[data-reveal] {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity .65s cubic-bezier(.25,.46,.45,.94),
+                transform .65s cubic-bezier(.25,.46,.45,.94);
+    will-change: opacity, transform;
+}
+[data-reveal="left"]  { transform: translateX(-30px); }
+[data-reveal="right"] { transform: translateX(30px); }
+[data-reveal="scale"] { transform: scale(0.92) translateY(16px); }
+[data-reveal="fade"]  { transform: none; }
+[data-reveal].revealed { opacity: 1; transform: none !important; }
+
+[data-delay="1"] { transition-delay:  90ms !important; }
+[data-delay="2"] { transition-delay: 180ms !important; }
+[data-delay="3"] { transition-delay: 270ms !important; }
+[data-delay="4"] { transition-delay: 360ms !important; }
+
+@media (prefers-reduced-motion: reduce) {
+    [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
+
+/* ══ WP BLOCK BUTTON — global fix ══ */
+.wp-block-button__link {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 10px 24px !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    border-radius: 10px !important;
+    min-height: unset !important;
+    height: auto !important;
+    line-height: 1.4 !important;
 }
 
 /* ── Responsive ── */

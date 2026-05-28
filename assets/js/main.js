@@ -94,10 +94,32 @@
   bindMemberForm(document.getElementById('sidebarMemberForm'));
   bindMemberForm(document.getElementById('fullMembershipForm'));
 
-  /* SCROLL ANIMATIONS */
+  /* SCROLL REVEAL ANIMATIONS */
   if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);} }), {threshold:0.1});
-    document.querySelectorAll('.constitution-section').forEach(el => io.observe(el));
+    const revealIO = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        if (!el.hasAttribute('data-delay')) {
+          const siblings = Array.from((el.parentElement || document.body).querySelectorAll('[data-reveal]'));
+          const idx = siblings.indexOf(el);
+          if (idx > 0) el.style.transitionDelay = (idx * 80) + 'ms';
+        }
+        el.classList.add('revealed', 'visible');
+        revealIO.unobserve(el);
+      });
+    }, { threshold: 0.06, rootMargin: '0px 0px -24px 0px' });
+
+    window.__paRevealIO = revealIO;
+    document.querySelectorAll('[data-reveal], .constitution-section').forEach(el => revealIO.observe(el));
+
+    new MutationObserver(muts => {
+      muts.forEach(m => m.addedNodes.forEach(n => {
+        if (n.nodeType !== 1) return;
+        if (n.hasAttribute && n.hasAttribute('data-reveal')) revealIO.observe(n);
+        n.querySelectorAll && n.querySelectorAll('[data-reveal]').forEach(el => revealIO.observe(el));
+      }));
+    }).observe(document.body, { childList: true, subtree: true });
   }
 
   /* STICKY HEADER */

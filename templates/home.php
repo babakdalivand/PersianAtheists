@@ -123,9 +123,16 @@ body.home .pa-lang-item.active .pa-lang-flag { filter: grayscale(0) opacity(1); 
 .pa-hero-full { background: #1A1714; overflow: hidden; }
 .pa-hero-inner {
     display: grid;
-    grid-template-columns: 45fr 55fr;
-    grid-template-rows: minmax(380px, 1fr);
-    /* RTL: اول در DOM = سمت راست. content-col اول → راست، slides-col دوم → چپ */
+    grid-template-columns: 45fr 55fr !important;
+    grid-template-rows: clamp(300px, 38vh, 420px) !important;
+    gap: 0 !important;
+    align-items: stretch !important;
+}
+[dir] .pa-hero-inner,
+[dir="rtl"] .pa-hero-inner {
+    grid-template-columns: 45fr 55fr !important;
+    grid-template-rows: clamp(300px, 38vh, 420px) !important;
+    align-items: stretch !important;
 }
 
 /* ── چپ: اسلاید پست‌ها ── */
@@ -134,7 +141,7 @@ body.home .pa-lang-item.active .pa-lang-flag { filter: grayscale(0) opacity(1); 
     overflow: hidden;
     background: #0D0B09;
     border-inline-end: 1px solid rgba(255,252,242,0.06);
-    min-height: 380px;
+    height: 100%;
 }
 .pa-hs-slide {
     position: absolute; inset: 0;
@@ -193,13 +200,14 @@ body.home .pa-lang-item.active .pa-lang-flag { filter: grayscale(0) opacity(1); 
 .pa-hero-philosopher {
     position: absolute; inset: 0;
     width: 100%; height: 100%;
-    object-fit: cover; object-position: center top;
-    opacity: 0.55; z-index: 0;
+    object-fit: cover; object-position: center 30%;
+    opacity: 0.65; z-index: 0;
 }
 .pa-hero-content-col::before {
     content: ''; position: absolute; inset: 0; z-index: 1;
-    background: linear-gradient(135deg,
-        rgba(26,23,20,0.97) 0%, rgba(26,23,20,0.75) 55%, rgba(26,23,20,0.45) 100%);
+    background: linear-gradient(to bottom,
+        rgba(26,23,20,0.92) 0%, rgba(26,23,20,0.82) 50%,
+        rgba(26,23,20,0.45) 80%, rgba(26,23,20,0.2) 100%);
 }
 .pa-hero-text {
     position: relative; z-index: 2;
@@ -235,9 +243,32 @@ body.home .pa-lang-item.active .pa-lang-flag { filter: grayscale(0) opacity(1); 
 .pa-raha-word { display: block; font-size: 10px; color: rgba(255,252,242,0.5); font-weight: 600; }
 
 @media(max-width:768px){
-    .pa-hero-inner { grid-template-columns: 1fr; }
-    .pa-hero-slides-col { min-height: 260px; border-inline-end: none; border-bottom: 1px solid rgba(255,252,242,0.06); }
-    .pa-hero-content-col::before { background: rgba(26,23,20,0.9); }
+    .pa-hero-inner,
+    [dir] .pa-hero-inner,
+    [dir="rtl"] .pa-hero-inner,
+    [dir="ltr"] .pa-hero-inner {
+        display: flex !important;
+        flex-direction: column !important;
+        grid-template-columns: unset !important;
+        grid-template-rows: unset !important;
+    }
+    .pa-hero-content-col {
+        order: 1;
+        min-height: 240px;
+        height: auto;
+    }
+    .pa-hero-slides-col {
+        order: 2;
+        min-height: 220px;
+        height: 220px;
+        flex-shrink: 0;
+        border-inline-end: none;
+        border-top: 1px solid rgba(255,252,242,0.06);
+    }
+    .pa-hero-content-col::before { background: rgba(26,23,20,0.93); }
+    .pa-hero-text { padding: 24px 20px; }
+    .pa-raha-row { gap: 6px; }
+    .pa-raha-letter { padding: 7px 10px; min-width: 56px; }
 }
 </style>
 
@@ -333,13 +364,6 @@ body.home .pa-lang-item.active .pa-lang-flag { filter: grayscale(0) opacity(1); 
             <h2 class="pa-section-title"><?php echo esc_html($t['latest_title']); ?></h2>
             <a href="<?php echo esc_url(home_url('/')); ?>" class="pa-section-more"><?php echo esc_html($t['latest_more']); ?> →</a>
         </div>
-        <div class="pa-filter-row">
-            <button class="pa-pill active" data-filter="all"><?php echo esc_html($t['filter_all']); ?></button>
-            <button class="pa-pill" data-filter="post"><?php echo esc_html($t['filter_article']); ?></button>
-            <button class="pa-pill" data-filter="pa_video"><?php echo esc_html($t['filter_video']); ?></button>
-            <button class="pa-pill" data-filter="pa_podcast"><?php echo esc_html($t['filter_podcast']); ?></button>
-            <button class="pa-pill" data-filter="pa_short"><?php echo esc_html($t['filter_short']); ?></button>
-        </div>
         <div class="pa-content-grid" id="pa-content-grid">
             <?php if($latest_posts->have_posts()): while($latest_posts->have_posts()): $latest_posts->the_post(); ?>
                 <article class="pa-card" data-type="post">
@@ -370,7 +394,7 @@ body.home .pa-lang-item.active .pa-lang-flag { filter: grayscale(0) opacity(1); 
 ══════════════════════════════════════════ -->
 <section class="pa-media-duo">
     <div class="container">
-    <div class="pa-media-duo-inner">
+    <div class="pa-media-duo-inner <?php echo !$latest_podcasts->have_posts() ? 'pa-duo-single' : ''; ?>" <?php if(!$latest_podcasts->have_posts()) echo 'style="grid-template-columns:1fr!important;"'; ?>>
 
 <!-- ستون ویدیوها -->
 <div class="pa-media-duo-col">
@@ -405,9 +429,9 @@ body.home .pa-lang-item.active .pa-lang-flag { filter: grayscale(0) opacity(1); 
 <?php endif; ?>
 </div><!-- /ستون ویدیوها -->
 
+<?php if($latest_podcasts->have_posts()): ?>
 <!-- ستون پادکست‌ها -->
 <div class="pa-media-duo-col">
-<?php if($latest_podcasts->have_posts()): ?>
 <div class="">
         <div class="pa-section-header">
             <h2 class="pa-section-title">🎙️ <?php echo esc_html($t['podcasts_title']); ?></h2>
@@ -436,8 +460,9 @@ body.home .pa-lang-item.active .pa-lang-flag { filter: grayscale(0) opacity(1); 
                 </div>
             <?php endwhile; wp_reset_postdata(); ?>
         </div>
-<?php endif; ?>
+</div>
 </div><!-- /ستون پادکست‌ها -->
+<?php endif; ?>
 
     </div><!-- /pa-media-duo-inner -->
     </div><!-- /container -->

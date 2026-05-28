@@ -123,8 +123,17 @@ body.home .pa-lang-item.active .pa-lang-flag { filter: grayscale(0) opacity(1); 
 .pa-hero-full { background: #1A1714; overflow: hidden; position: relative; }
 .pa-hero-inner {
     display: grid;
-    grid-template-columns: 45fr 55fr;
-    grid-template-rows: minmax(300px, 1fr);
+    grid-template-columns: 45fr 55fr !important;
+    grid-template-rows: clamp(300px, 38vh, 420px) !important;
+    gap: 0 !important;
+    align-items: stretch !important;
+}
+[dir] .pa-hero-inner,
+[dir="rtl"] .pa-hero-inner {
+    grid-template-columns: 45fr 55fr !important;
+    grid-template-rows: clamp(300px, 38vh, 420px) !important;
+    gap: 0 !important;
+    align-items: stretch !important;
 }
 
 /* ── چپ: اسلاید پست‌ها ── */
@@ -133,7 +142,7 @@ body.home .pa-lang-item.active .pa-lang-flag { filter: grayscale(0) opacity(1); 
     overflow: hidden;
     background: #0D0B09;
     border-inline-end: 1px solid rgba(255,252,242,0.06);
-    min-height: 380px;
+    height: 100%;
 }
 .pa-hs-slide {
     position: absolute; inset: 0;
@@ -141,7 +150,7 @@ body.home .pa-lang-item.active .pa-lang-flag { filter: grayscale(0) opacity(1); 
 }
 .pa-hs-slide.active { display: block; }
 .pa-hs-bg {
-    width: 100%; height: 100%; object-fit: cover; display: block;
+    width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block;
     transition: transform 6s ease;
 }
 .pa-hs-slide.active .pa-hs-bg { transform: scale(1.04); }
@@ -188,26 +197,19 @@ body.home .pa-lang-item.active .pa-lang-flag { filter: grayscale(0) opacity(1); 
 .pa-hero-content-col {
     position: relative; overflow: hidden;
     display: flex; align-items: center;
+    height: 100%;
 }
 .pa-hero-philosopher {
     position: absolute; inset: 0;
     width: 100%; height: 100%;
-    object-fit: cover; object-position: center top;
-    opacity: 0.75; z-index: 0;
+    object-fit: cover; object-position: center 30%;
+    opacity: 0.65; z-index: 0;
 }
 .pa-hero-content-col::before {
     content: ''; position: absolute; inset: 0; z-index: 1;
-    background: linear-gradient(135deg,
-        rgba(26,23,20,0.88) 0%, rgba(26,23,20,0.55) 55%, rgba(26,23,20,0.25) 100%);
-}
-.pa-hero-full::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 60px;
-    background: linear-gradient(to bottom, transparent, var(--bg));
-    z-index: 10;
-    pointer-events: none;
+    background: linear-gradient(to bottom,
+        rgba(26,23,20,0.92) 0%, rgba(26,23,20,0.82) 50%,
+        rgba(26,23,20,0.45) 80%, rgba(26,23,20,0.2) 100%);
 }
 .pa-hero-text {
     position: relative; z-index: 2;
@@ -243,9 +245,32 @@ body.home .pa-lang-item.active .pa-lang-flag { filter: grayscale(0) opacity(1); 
 .pa-raha-word { display: block; font-size: 10px; color: rgba(255,252,242,0.5); font-weight: 600; }
 
 @media(max-width:768px){
-    .pa-hero-inner { grid-template-columns: 1fr; }
-    .pa-hero-slides-col { min-height: 260px; border-inline-end: none; border-bottom: 1px solid rgba(255,252,242,0.06); }
-    .pa-hero-content-col::before { background: rgba(26,23,20,0.9); }
+    .pa-hero-inner,
+    [dir] .pa-hero-inner,
+    [dir="rtl"] .pa-hero-inner,
+    [dir="ltr"] .pa-hero-inner {
+        display: flex !important;
+        flex-direction: column !important;
+        grid-template-columns: unset !important;
+        grid-template-rows: unset !important;
+    }
+    .pa-hero-content-col {
+        order: 1;
+        min-height: 240px;
+        height: auto;
+    }
+    .pa-hero-slides-col {
+        order: 2;
+        min-height: 220px;
+        height: 220px;
+        flex-shrink: 0;
+        border-inline-end: none;
+        border-top: 1px solid rgba(255,252,242,0.06);
+    }
+    .pa-hero-content-col::before { background: rgba(26,23,20,0.93); }
+    .pa-hero-text { padding: 24px 20px; }
+    .pa-raha-row { gap: 6px; }
+    .pa-raha-letter { padding: 7px 10px; min-width: 56px; }
 }
 </style>
 
@@ -334,7 +359,7 @@ body.home .pa-lang-item.active .pa-lang-flag { filter: grayscale(0) opacity(1); 
 
 <?php
 /* ── Random quote + scholar bar ── */
-$home_quotes = [
+$home_quotes_fa = [
     ['text'=>'آنچه بدون شواهد ادعا شود، بدون شواهد رد می‌شود.','who'=>'کریستوفر هیچنز'],
     ['text'=>'خداوند با قریب به یقین وجود ندارد. زندگی کن و لذت ببر.','who'=>'ریچارد داوکینز'],
     ['text'=>'علم منبع عمیق‌ترین معنا برای روح انسان است.','who'=>'کارل سِیگن'],
@@ -346,7 +371,19 @@ $home_quotes = [
     ['text'=>'شک کردن آغاز دانستن است.','who'=>'رنه دکارت'],
     ['text'=>'دین را عقل توجیه نمی‌کند؛ ترس توجیه می‌کند.','who'=>'لوکرتیوس'],
 ];
-$home_scholars = [
+$home_quotes_en = [
+    ['text'=>'What can be asserted without evidence can be dismissed without evidence.','who'=>'Christopher Hitchens'],
+    ['text'=>'God almost certainly does not exist. Enjoy your life.','who'=>'Richard Dawkins'],
+    ['text'=>'Science is not only compatible with spirituality; it is a profound source of it.','who'=>'Carl Sagan'],
+    ['text'=>'If I met God, I would say: not enough evidence.','who'=>'Bertrand Russell'],
+    ['text'=>'I do not believe in a God who concerns himself with the fate of human beings.','who'=>'Albert Einstein'],
+    ['text'=>'Religion is an illusion and it derives its strength from the fact that it falls in with our instinctual desires.','who'=>'Sigmund Freud'],
+    ['text'=>'Think for yourself and let others enjoy the privilege of doing so too.','who'=>'Voltaire'],
+    ['text'=>'Knowledge is the pathway from slavery to freedom.','who'=>'Frederick Douglass'],
+    ['text'=>'Doubt is the beginning, not the end, of wisdom.','who'=>'René Descartes'],
+    ['text'=>'So live that when thy summons comes to join the innumerable caravan of the future, go not with fear.','who'=>'Lucretius'],
+];
+$home_scholars_fa = [
     ['name'=>'ریچارد داوکینز','role'=>'زیست‌شناس تکاملی، نویسنده «ژن خودخواه»','emoji'=>'🔬'],
     ['name'=>'کارل سِیگن','role'=>'اخترشناس، نویسنده «کیهان» و «پیام آبی کمرنگ»','emoji'=>'🌌'],
     ['name'=>'کریستوفر هیچنز','role'=>'روزنامه‌نگار، نویسنده «خدا بزرگ نیست»','emoji'=>'✍️'],
@@ -356,6 +393,18 @@ $home_scholars = [
     ['name'=>'ابن‌رشد','role'=>'فیلسوف و پزشک اندلسی — پدر عقل‌گرایی','emoji'=>'📚'],
     ['name'=>'فردریک نیچه','role'=>'فیلسوف آلمانی — «خدا مرده است»','emoji'=>'⚡'],
 ];
+$home_scholars_en = [
+    ['name'=>'Richard Dawkins','role'=>'Evolutionary biologist · Author of "The Selfish Gene"','emoji'=>'🔬'],
+    ['name'=>'Carl Sagan','role'=>'Astronomer · Author of "Cosmos" and "Pale Blue Dot"','emoji'=>'🌌'],
+    ['name'=>'Christopher Hitchens','role'=>'Journalist · Author of "God Is Not Great"','emoji'=>'✍️'],
+    ['name'=>'Sam Harris','role'=>'Neuroscientist · Author of "The End of Faith"','emoji'=>'🧠'],
+    ['name'=>'Bertrand Russell','role'=>'Philosopher & mathematician · "Why I Am Not a Christian"','emoji'=>'📐'],
+    ['name'=>'Daniel Dennett','role'=>'Philosopher · Author of "Breaking the Spell"','emoji'=>'🦋'],
+    ['name'=>'Averroes (Ibn Rushd)','role'=>'Andalusian philosopher & physician — father of rationalism','emoji'=>'📚'],
+    ['name'=>'Friedrich Nietzsche','role'=>'German philosopher — "God is dead"','emoji'=>'⚡'],
+];
+$home_quotes   = $is_en ? $home_quotes_en   : $home_quotes_fa;
+$home_scholars = $is_en ? $home_scholars_en : $home_scholars_fa;
 $hq = $home_quotes[ array_rand($home_quotes) ];
 $hs = $home_scholars[ array_rand($home_scholars) ];
 ?>
@@ -418,16 +467,9 @@ $hs = $home_scholars[ array_rand($home_scholars) ];
 ══════════════════════════════════════════ -->
 <section class="pa-latest">
     <div class="container">
-        <div class="pa-section-header">
+        <div class="pa-section-header" data-reveal="fade">
             <h2 class="pa-section-title"><?php echo esc_html($t['latest_title']); ?></h2>
             <a href="<?php echo esc_url(home_url('/')); ?>" class="pa-section-more"><?php echo esc_html($t['latest_more']); ?> →</a>
-        </div>
-        <div class="pa-filter-row">
-            <button class="pa-pill active" data-filter="all"><?php echo esc_html($t['filter_all']); ?></button>
-            <button class="pa-pill" data-filter="post"><?php echo esc_html($t['filter_article']); ?></button>
-            <button class="pa-pill" data-filter="pa_video"><?php echo esc_html($t['filter_video']); ?></button>
-            <button class="pa-pill" data-filter="pa_podcast"><?php echo esc_html($t['filter_podcast']); ?></button>
-            <button class="pa-pill" data-filter="pa_short"><?php echo esc_html($t['filter_short']); ?></button>
         </div>
         <div class="pa-content-grid" id="pa-content-grid">
             <?php if($latest_posts->have_posts()): while($latest_posts->have_posts()): $latest_posts->the_post(); ?>
@@ -459,7 +501,7 @@ $hs = $home_scholars[ array_rand($home_scholars) ];
 ══════════════════════════════════════════ -->
 <section class="pa-media-duo">
     <div class="container">
-    <div class="pa-media-duo-inner <?php echo !$latest_podcasts->have_posts() ? 'pa-duo-single' : ''; ?>">
+    <div class="pa-media-duo-inner <?php echo !$latest_podcasts->have_posts() ? 'pa-duo-single' : ''; ?>" <?php if(!$latest_podcasts->have_posts()) echo 'style="grid-template-columns:1fr!important;"'; ?>>
 
 <!-- ستون ویدیوها -->
 <div class="pa-media-duo-col">
@@ -494,9 +536,9 @@ $hs = $home_scholars[ array_rand($home_scholars) ];
 <?php endif; ?>
 </div><!-- /ستون ویدیوها -->
 
+<?php if($latest_podcasts->have_posts()): ?>
 <!-- ستون پادکست‌ها -->
 <div class="pa-media-duo-col">
-<?php if($latest_podcasts->have_posts()): ?>
 <div class="">
         <div class="pa-section-header">
             <h2 class="pa-section-title">🎙️ <?php echo esc_html($t['podcasts_title']); ?></h2>
@@ -525,8 +567,9 @@ $hs = $home_scholars[ array_rand($home_scholars) ];
                 </div>
             <?php endwhile; wp_reset_postdata(); ?>
         </div>
-<?php endif; ?>
+</div>
 </div><!-- /ستون پادکست‌ها -->
+<?php endif; ?>
 
     </div><!-- /pa-media-duo-inner -->
     </div><!-- /container -->
@@ -605,6 +648,37 @@ function closeHomeShort(){
 <?php endif; ?>
 
 </main>
+
+<script>
+/* ── Scroll Reveal tagger ── */
+(function(){
+    function tag(sel, dir, baseDelay) {
+        var els = document.querySelectorAll(sel);
+        els.forEach(function(el, i){
+            if (el.hasAttribute('data-reveal')) return;
+            el.setAttribute('data-reveal', dir || 'fade');
+            if (baseDelay !== false) {
+                var d = (i % 4) + 1;
+                if (d > 1) el.setAttribute('data-delay', d);
+            }
+        });
+    }
+    tag('.pa-hero-bar',          'fade',  false);
+    tag('.pa-section-header',    'fade',  false);
+    tag('.pa-card',              'up',    true);
+    tag('.pa-media-card',        'up',    true);
+    tag('.pa-podcast-item',      'left',  true);
+    tag('.pa-short-card',        'up',    true);
+    tag('.pa-media-duo-col',     'fade',  false);
+
+    /* fire observer on newly tagged elements */
+    if (window.__paRevealIO) {
+        document.querySelectorAll('[data-reveal]:not(.revealed)').forEach(function(el){
+            window.__paRevealIO.observe(el);
+        });
+    }
+})();
+</script>
 
 <script>
 (function(){

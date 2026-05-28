@@ -423,3 +423,68 @@
   .hero-side { grid-template-columns: 1fr; }
   .header-actions { gap: 6px; }
 }
+
+/* ══ CATEGORIES DROPDOWN ══ */
+.pa-cats-nav {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+.pa-cats-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 12px; border: none; background: none;
+    color: var(--muted); font-size: 13px; font-weight: 600;
+    cursor: pointer; border-radius: 8px;
+    transition: color .2s, background .2s; white-space: nowrap;
+    font-family: inherit;
+}
+.pa-cats-btn:hover,
+.pa-cats-nav:hover .pa-cats-btn { color: var(--accent); background: rgba(235,94,40,0.08); }
+.pa-cats-chevron { transition: transform .25s; }
+.pa-cats-nav:hover .pa-cats-chevron { transform: rotate(180deg); }
+
+.pa-cats-panel {
+    position: absolute;
+    top: 100%;
+    inset-inline-end: 0;
+    min-width: 240px; max-width: 300px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.16);
+    padding: 6px;
+    z-index: 1100;
+    display: none;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+.pa-cats-nav:hover .pa-cats-panel { display: block; }
+
+.pa-cats-item { margin-bottom: 1px; }
+.pa-cats-item-link {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    padding: 8px 12px; border-radius: 8px;
+    color: var(--text); text-decoration: none; font-size: 13px; font-weight: 600;
+    transition: background .15s, color .15s;
+}
+.pa-cats-item-link:hover { background: rgba(235,94,40,0.1); color: var(--accent); }
+.pa-cats-name { flex: 1; }
+.pa-cats-count {
+    background: rgba(235,94,40,0.14); color: var(--accent);
+    font-size: 11px; font-weight: 700;
+    padding: 2px 7px; border-radius: 20px; flex-shrink: 0;
+}
+.pa-cats-subs {
+    margin: 1px 0 3px 20px;
+    border-inline-start: 2px solid var(--border);
+}
+[dir="rtl"] .pa-cats-subs { margin-left: 0; margin-right: 20px; }
+.pa-cats-sub-link {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    padding: 6px 10px; border-radius: 6px;
+    color: var(--muted); text-decoration: none; font-size: 12px;
+    transition: color .15s, background .15s;
+}
+.pa-cats-sub-link:hover { color: var(--accent); background: rgba(235,94,40,0.07); }
+
+@media (max-width: 768px) { .pa-cats-nav { display: none; } }

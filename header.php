@@ -127,6 +127,7 @@ $is_fa = ( $lang === 'fa' );
                 'menu_class'     => 'nav-list',
                 'fallback_cb'    => 'pa_fallback_menu',
             ]); ?>
+
         </nav>
 
         <!-- ACTIONS — [UI-03] دکمه حمایت مالی حذف شد -->
