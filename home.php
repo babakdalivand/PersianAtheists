@@ -196,24 +196,27 @@ body.home .pa-lang-item.active .pa-lang-flag { filter: grayscale(0) opacity(1); 
 /* ── راست: فیلسوف + متن + RAHA ── */
 .pa-hero-content-col {
     position: relative; overflow: hidden;
-    display: flex; align-items: center;
+    display: flex; align-items: flex-end;
     height: 100%;
 }
 .pa-hero-philosopher {
     position: absolute; inset: 0;
     width: 100%; height: 100%;
-    object-fit: cover; object-position: center 30%;
-    opacity: 0.65; z-index: 0;
+    object-fit: cover; object-position: center 15%;
+    opacity: 0.88; z-index: 0;
 }
+/* بالا شفاف (فیلسوف دیده می‌شود) → پایین تاریک (پشت متن) */
 .pa-hero-content-col::before {
     content: ''; position: absolute; inset: 0; z-index: 1;
     background: linear-gradient(to bottom,
-        rgba(26,23,20,0.92) 0%, rgba(26,23,20,0.82) 50%,
-        rgba(26,23,20,0.45) 80%, rgba(26,23,20,0.2) 100%);
+        transparent 0%,
+        rgba(26,23,20,0.15) 35%,
+        rgba(26,23,20,0.80) 62%,
+        rgba(26,23,20,0.98) 100%);
 }
 .pa-hero-text {
     position: relative; z-index: 2;
-    padding: 40px 36px; width: 100%;
+    padding: 28px 36px 36px; width: 100%;
 }
 .pa-hero-badge {
     display: inline-flex; align-items: center; gap: 8px;
@@ -314,7 +317,6 @@ body.home .pa-lang-item.active .pa-lang-flag { filter: grayscale(0) opacity(1); 
         border-inline-end: none;
         border-top: 1px solid rgba(255,252,242,0.06);
     }
-    .pa-hero-desc { display: none !important; }
     .pa-raha-row { gap: 6px; }
     .pa-raha-letter { padding: 7px 10px; min-width: 56px; }
 }
