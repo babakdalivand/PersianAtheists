@@ -295,14 +295,9 @@ body.home .pa-lang-item.active .pa-lang-flag { filter: grayscale(0) opacity(1); 
         opacity: 0.88;
         object-position: center 15%; /* صورت بالا */
     }
-    /* گرادیان از پایین تاریک — بالا شفاف */
+    /* overlay حذف شد برای تست */
     .pa-hero-content-col::before {
-        background: linear-gradient(to bottom,
-            transparent 0%,
-            rgba(26,23,20,0.15) 38%,
-            rgba(26,23,20,0.75) 62%,
-            rgba(26,23,20,0.97) 100%
-        );
+        background: transparent;
     }
     .pa-hero-text { padding: 20px 20px 28px; }
     .pa-hero-slides-col {
