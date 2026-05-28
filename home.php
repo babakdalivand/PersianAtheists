@@ -314,6 +314,7 @@ body.home .pa-lang-item.active .pa-lang-flag { filter: grayscale(0) opacity(1); 
         border-inline-end: none;
         border-top: 1px solid rgba(255,252,242,0.06);
     }
+    .pa-hero-desc { display: none !important; }
     .pa-raha-row { gap: 6px; }
     .pa-raha-letter { padding: 7px 10px; min-width: 56px; }
 }
