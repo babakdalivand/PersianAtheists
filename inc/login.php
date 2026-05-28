@@ -253,10 +253,31 @@ function pa_login_enqueue() {
 
     @media (max-width: 700px) {
         #pa-left { display: none !important; }
-        #pa-right { width: 100vw !important; min-width: unset !important;
-                    border-left: none !important; }
-        html, body.login { overflow: auto !important; }
+        #pa-right {
+            width: 100vw !important;
+            min-width: unset !important;
+            border-left: none !important;
+            height: auto !important;
+            min-height: 100vh !important;
+            justify-content: flex-start !important;
+            padding: 48px 24px 60px !important;
+        }
+        html, body.login {
+            overflow: auto !important;
+            height: auto !important;
+            min-height: 100vh !important;
+        }
+        #pa-wrap {
+            height: auto !important;
+            min-height: 100vh !important;
+        }
+        #login { max-width: 100% !important; }
     }
+
+    /* Forgot password link — prominent on all screens */
+    #nav { margin-top: 6px !important; }
+    #nav a { color: rgba(212,160,23,0.7) !important; font-size: 13px !important; }
+    #nav a:hover { color: #D4A017 !important; text-decoration: underline !important; }
     </style>
 
     <script>
@@ -266,15 +287,16 @@ function pa_login_enqueue() {
         var logoUrl = '<?php echo esc_js( $logo ); ?>';
 
         var TX = {
-            badge:  isEn ? 'Persian Atheists Network' : 'شبکه آتئیست‌های ایرانی',
-            title:  isEn ? 'Thinking Is Not a Crime'  : 'اندیشیدن جرم نیست',
-            fTitle: isEn ? 'Sign in to your account'  : 'ورود به حساب کاربری',
-            logoN:  isEn ? 'Persian Atheists'         : 'آتئیست‌های ایرانی',
-            logoS:  isEn ? 'RAHA NETWORK'             : 'شبکه رها',
-            uPh:    isEn ? 'Username or Email'        : 'نام کاربری یا ایمیل',
-            pPh:    isEn ? 'Password'                 : 'رمز عبور',
-            submit: isEn ? 'Login'                    : 'ورود',
-            remMe:  isEn ? 'Remember Me'              : 'مرا به خاطر بسپار',
+            badge:       isEn ? 'Persian Atheists Network'  : 'شبکه آتئیست‌های ایرانی',
+            title:       isEn ? 'Thinking Is Not a Crime'   : 'اندیشیدن جرم نیست',
+            fTitle:      isEn ? 'Sign in to your account'   : 'ورود به حساب کاربری',
+            logoN:       isEn ? 'Persian Atheists'          : 'آتئیست‌های ایرانی',
+            logoS:       isEn ? 'RAHA NETWORK'              : 'شبکه رها',
+            uPh:         isEn ? 'Username or Email'         : 'نام کاربری یا ایمیل',
+            pPh:         isEn ? 'Password'                  : 'رمز عبور',
+            submit:      isEn ? 'Login'                     : 'ورود',
+            remMe:       isEn ? 'Remember Me'               : 'مرا به خاطر بسپار',
+            forgotPass:  isEn ? 'Forgot your password?'     : 'رمز عبور را فراموش کردید؟',
             pills: isEn
                 ? [['R','Rationalist'],['A','Atheist'],['H','Humanist'],['A','Agnostic']]
                 : [['R','عقل‌گرا'],['A','آتئیست'],['H','اومانیست'],['A','آگنوستیک']],
@@ -367,6 +389,22 @@ function pa_login_enqueue() {
                 var cb = remLabel.querySelector('input');
                 remLabel.textContent = TX.remMe;
                 if (cb) remLabel.prepend(cb);
+            }
+
+            // Translate "Lost your password?" link in #nav
+            var navA = document.querySelector('#nav a');
+            if (navA && navA.href && navA.href.indexOf('lostpassword') !== -1) {
+                navA.textContent = TX.forgotPass;
+            }
+
+            // Scroll form into view when keyboard opens (iOS fix)
+            var passInput = document.getElementById('user_pass');
+            if (passInput) {
+                passInput.addEventListener('focus', function() {
+                    setTimeout(function() {
+                        passInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 350);
+                });
             }
         });
 
