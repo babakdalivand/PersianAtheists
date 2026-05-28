@@ -310,16 +310,25 @@ function pa_login_enqueue() {
         color: rgba(255,252,242,0.8) !important;
     }
 
-    /* Hide WP default junk */
-    #login h1, body.login #login p.submit, body.login #loginform .submit { display: none !important; }
-    #login { background: transparent !important; box-shadow: none !important;
-             border: none !important; padding: 0 !important; width: 100% !important;
-             max-width: 100% !important; margin: 0 !important; }
-    #loginform { background: transparent !important; box-shadow: none !important;
-                 border: none !important; padding: 0 !important; margin: 0 !important; }
-    #loginform label { display: none !important; }
-    #loginform p { margin: 0 !important; padding: 0 !important; }
-    #nav, #backtoblog { display: none !important; }
+    /* ── Hide ALL default WP login elements ── */
+    /* Hide everything in body that isn't our stage (runs before JS) */
+    body.login > *:not(#pa-stage) {
+        display: none !important;
+        visibility: hidden !important;
+    }
+    /* Make sure our stage is always visible */
+    #pa-stage { display: flex !important; visibility: visible !important; }
+
+    /* Belt-and-suspenders: kill specific WP elements */
+    #login, #loginform, #nav, #backtoblog,
+    #language-switcher, .wp-login-logo,
+    .login-action-login h1,
+    body.login > p,
+    body.login > div:not(#pa-stage) {
+        display: none !important;
+    }
+    /* WP "Caps lock" warning injected via JS */
+    .caps-lock-warning, #capslock-message { display: none !important; }
     </style>
     <?php
 }
@@ -481,15 +490,57 @@ function pa_login_footer_html() {
             if (e.key === 'Enter') submitBtn.click();
         });
 
-        /* ── Move WP error messages into card ── */
+        /* ── Clean up all WP elements on DOM ready ── */
         document.addEventListener('DOMContentLoaded', function() {
+            // Move error messages into our card first
             var err = document.querySelector('#login_error, .login .message');
             var card = document.getElementById('pa-card');
-            var title = card.querySelector('.pa-ftitle');
+            var title = card ? card.querySelector('.pa-ftitle') : null;
             if (err && card && title) {
+                err.style.cssText = '';  // clear WP inline styles
+                err.style.display = 'block';
+                err.style.visibility = 'visible';
                 card.insertBefore(err, title);
             }
+
+            // Hide every direct child of body except #pa-stage
+            Array.from(document.body.children).forEach(function(el) {
+                if (el.id !== 'pa-stage') {
+                    el.style.setProperty('display', 'none', 'important');
+                    el.style.setProperty('visibility', 'hidden', 'important');
+                }
+            });
+
+            // Also kill WP's caps-lock observer and language switcher
+            var killSelectors = [
+                '#language-switcher', '.language-switcher',
+                '.wp-login-logo', '#login', '#backtoblog', '#nav',
+                '.caps-lock-warning', '#capslock-message',
+            ];
+            killSelectors.forEach(function(sel) {
+                document.querySelectorAll(sel).forEach(function(el) {
+                    el.style.setProperty('display', 'none', 'important');
+                });
+            });
         });
+
+        // MutationObserver: kill any WP element injected after DOMContentLoaded
+        var observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(m) {
+                m.addedNodes.forEach(function(node) {
+                    if (node.nodeType === 1 && node.id !== 'pa-stage') {
+                        var id = node.id || '';
+                        var cls = (node.className || '').toString();
+                        if (id === 'login' || id === 'language-switcher' ||
+                            cls.indexOf('caps-lock') !== -1 ||
+                            cls.indexOf('wp-login') !== -1) {
+                            node.style.setProperty('display', 'none', 'important');
+                        }
+                    }
+                });
+            });
+        });
+        observer.observe(document.body, { childList: true, subtree: false });
 
     })();
     </script>
