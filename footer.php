@@ -230,6 +230,135 @@ $has_logo  = file_exists( $logo_path );
     </div>
 </footer>
 
+<!-- Cookie Consent Banner -->
+<div id="pa-cookie-banner" aria-live="polite" role="dialog" aria-label="<?php echo $is_en ? 'Cookie notice' : 'اطلاعیه کوکی'; ?>" style="display:none">
+    <div class="pa-cookie-inner">
+        <div class="pa-cookie-text">
+            <span class="pa-cookie-icon">🍪</span>
+            <div>
+                <strong><?php echo $is_en ? 'We use cookies' : 'ما از کوکی استفاده می‌کنیم'; ?></strong>
+                <p><?php echo $is_en
+                    ? 'We use essential cookies only to keep you logged in and remember your preferences. No tracking or advertising cookies.'
+                    : 'فقط از کوکی‌های ضروری برای حفظ وضعیت ورود و تنظیمات شما استفاده می‌کنیم. هیچ کوکی تبلیغاتی یا ردیابی وجود ندارد.';
+                ?></p>
+            </div>
+        </div>
+        <div class="pa-cookie-actions">
+            <a href="<?php echo esc_url(get_privacy_policy_url()); ?>" class="pa-cookie-link">
+                <?php echo $is_en ? 'Learn more' : 'اطلاعات بیشتر'; ?>
+            </a>
+            <button id="pa-cookie-accept" class="pa-cookie-btn">
+                <?php echo $is_en ? 'Got it' : 'متوجه شدم'; ?> ✓
+            </button>
+        </div>
+    </div>
+</div>
+
+<style>
+#pa-cookie-banner {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 99999;
+    padding: 0 16px 16px;
+    pointer-events: none;
+    transform: translateY(120%);
+    transition: transform .4s cubic-bezier(.16,1,.3,1);
+}
+#pa-cookie-banner.pa-cookie-visible {
+    transform: translateY(0);
+    pointer-events: auto;
+}
+.pa-cookie-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    background: #1C1915;
+    border: 1px solid rgba(212,160,23,0.25);
+    border-radius: 14px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 -4px 32px rgba(0,0,0,0.5);
+    direction: <?php echo $is_en ? 'ltr' : 'rtl'; ?>;
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    flex-wrap: wrap;
+}
+.pa-cookie-text {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    flex: 1;
+    min-width: 0;
+}
+.pa-cookie-icon { font-size: 24px; flex-shrink: 0; margin-top: 1px; }
+.pa-cookie-text strong {
+    display: block;
+    color: #FFFCF2;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 3px;
+}
+.pa-cookie-text p {
+    color: rgba(255,252,242,0.55);
+    font-size: 13px;
+    margin: 0;
+    line-height: 1.6;
+}
+.pa-cookie-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+.pa-cookie-link {
+    color: rgba(212,160,23,0.8);
+    font-size: 13px;
+    text-decoration: none;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: color .2s;
+}
+.pa-cookie-link:hover { color: #D4A017; }
+.pa-cookie-btn {
+    background: #D4A017;
+    color: #0D0B09;
+    border: none;
+    border-radius: 8px;
+    padding: 9px 20px;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background .2s, transform .15s;
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+}
+.pa-cookie-btn:hover { background: #e6b51e; transform: scale(1.03); }
+.pa-cookie-btn:active { transform: scale(0.98); }
+@media (max-width: 560px) {
+    .pa-cookie-inner { flex-direction: column; align-items: stretch; }
+    .pa-cookie-actions { justify-content: flex-end; }
+}
+</style>
+
+<script>
+(function(){
+    var STORAGE_KEY = 'pa_cookie_ok';
+    if (localStorage.getItem(STORAGE_KEY)) return;
+
+    var banner = document.getElementById('pa-cookie-banner');
+    if (!banner) return;
+
+    banner.style.display = 'block';
+    setTimeout(function(){ banner.classList.add('pa-cookie-visible'); }, 600);
+
+    document.getElementById('pa-cookie-accept').addEventListener('click', function(){
+        localStorage.setItem(STORAGE_KEY, '1');
+        banner.classList.remove('pa-cookie-visible');
+        setTimeout(function(){ banner.style.display = 'none'; }, 450);
+    });
+})();
+</script>
+
 <?php wp_footer(); ?>
 </body>
 </html>

@@ -37,6 +37,35 @@ html, body { direction: ltr !important; }
         margin-right: 0 !important;
     }
 }
+
+/* ── Posts list: fix title column word-breaking ── */
+#the-list .column-title a,
+#the-list .column-title strong,
+.wp-list-table .column-title {
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    white-space: normal !important;
+    min-width: 200px;
+}
+
+/* Narrow fixed-width columns so title gets more room */
+.wp-list-table .column-pa_featured,
+.wp-list-table .column-pa_recommended {
+    width: 50px !important;
+    text-align: center;
+}
+.wp-list-table .column-taxonomy-pa_series,
+.wp-list-table .column-taxonomy-pa_topic,
+.wp-list-table .column-language,
+.wp-list-table .column-pa_lang {
+    width: 90px !important;
+    word-break: normal !important;
+}
+/* RTL text in cells must not break mid-character */
+#the-list td {
+    word-break: normal !important;
+    overflow-wrap: anywhere;
+}
 </style>
 <?php });
 
