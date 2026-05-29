@@ -29,6 +29,18 @@ $has_logo  = file_exists( $logo_path );
                 <span class="cta-mini-icon">✏️</span>
                 <span class="cta-mini-label"><?php echo $is_en ? 'Write for Us' : 'ارسال مقاله'; ?></span>
             </a>
+            <span class="cta-mini-sep"></span>
+            <?php if ( is_user_logged_in() ) : ?>
+                <a href="<?php echo esc_url( get_edit_profile_url() ); ?>" class="cta-mini-item">
+                    <span class="cta-mini-icon">👤</span>
+                    <span class="cta-mini-label"><?php echo $is_en ? 'My Profile' : 'پروفایل'; ?></span>
+                </a>
+            <?php else : ?>
+                <a href="<?php echo esc_url( wp_login_url( get_permalink() ) ); ?>" class="cta-mini-item cta-mini-highlight">
+                    <span class="cta-mini-icon">🔑</span>
+                    <span class="cta-mini-label"><?php echo $is_en ? 'Log In' : 'ورود / ثبت‌نام'; ?></span>
+                </a>
+            <?php endif; ?>
         </div>
     </div>
 </section>
