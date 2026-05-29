@@ -185,6 +185,15 @@ $has_logo  = file_exists( $logo_path );
                     <li><a href="<?php echo esc_url(home_url('/donate')); ?>"><?php echo $is_en ? 'Donate' : 'حمایت مالی'; ?></a></li>
                     <li><a href="<?php echo esc_url(home_url('/submit')); ?>"><?php echo $is_en ? 'Write for Us' : 'ارسال مقاله'; ?></a></li>
                     <li><a href="<?php echo esc_url(get_privacy_policy_url()); ?>"><?php echo $is_en ? 'Privacy Policy' : 'حریم خصوصی'; ?></a></li>
+                    <?php if ( is_user_logged_in() ) : ?>
+                        <li><a href="<?php echo esc_url(get_edit_profile_url()); ?>">👤 <?php echo $is_en ? 'My Profile' : 'پروفایل من'; ?></a></li>
+                        <li><a href="<?php echo esc_url(wp_logout_url(home_url('/'))); ?>">🚪 <?php echo $is_en ? 'Log Out' : 'خروج'; ?></a></li>
+                    <?php else : ?>
+                        <li><a href="<?php echo esc_url(wp_login_url(get_permalink())); ?>">🔑 <?php echo $is_en ? 'Log In' : 'ورود به سایت'; ?></a></li>
+                        <?php if ( get_option('users_can_register') ) : ?>
+                            <li><a href="<?php echo esc_url(wp_registration_url()); ?>">📝 <?php echo $is_en ? 'Register' : 'ثبت نام'; ?></a></li>
+                        <?php endif; ?>
+                    <?php endif; ?>
                 </ul>
             </div>
 
