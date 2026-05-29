@@ -310,6 +310,28 @@ function pa_login_enqueue() {
         color: rgba(255,252,242,0.8) !important;
     }
 
+    /* ── Register row ── */
+    .pa-register-row {
+        margin-top: 16px;
+        font-size: 13px;
+        text-align: center;
+        width: 100%;
+        color: rgba(255,252,242,0.38);
+    }
+    .pa-register-row a {
+        color: #D4A017 !important;
+        text-decoration: none !important;
+        font-weight: 700;
+        margin-right: 4px;
+        transition: color .2s;
+    }
+    .pa-register-row a:hover { color: #e6b020 !important; text-decoration: underline !important; }
+
+    /* ── Hide WP default register button / nav ── */
+    #nav, #backtoblog, .login #nav,
+    .login .message a[href*="register"],
+    .login > p { display: none !important; }
+
     /* ── Hide ALL default WP login elements ── */
     /* Hide everything in body that isn't our stage (runs before JS) */
     body.login > *:not(#pa-stage) {
@@ -392,6 +414,14 @@ function pa_login_footer_html() {
             <div class="pa-forgot">
                 <a href="<?php echo esc_url($lost_pass_url); ?>">رمز عبور را فراموش کردید؟</a>
             </div>
+
+            <?php if ( get_option('users_can_register') ) : ?>
+            <!-- ── Register link ── -->
+            <div class="pa-register-row">
+                <span>حساب کاربری ندارید؟</span>
+                <a href="<?php echo esc_url(wp_registration_url()); ?>">ثبت نام کنید</a>
+            </div>
+            <?php endif; ?>
 
         </div>
     </div>
@@ -516,6 +546,7 @@ function pa_login_footer_html() {
                 '#language-switcher', '.language-switcher',
                 '.wp-login-logo', '#login', '#backtoblog', '#nav',
                 '.caps-lock-warning', '#capslock-message',
+                '.login-action-register #registerform + p',
             ];
             killSelectors.forEach(function(sel) {
                 document.querySelectorAll(sel).forEach(function(el) {
