@@ -523,11 +523,24 @@ function pa_login_footer_html() {
         /* ── Clean up all WP elements on DOM ready ── */
         document.addEventListener('DOMContentLoaded', function() {
             // Move error messages into our card first
-            var err = document.querySelector('#login_error, .login .message');
+            // فقط پیام خطا را منتقل کن — باکس ثبت‌نام WP را نادیده بگیر
+            var err = document.querySelector('#login_error');
+            if (!err) {
+                var msgs = document.querySelectorAll('.login .message');
+                msgs.forEach(function(m) {
+                    // اگر لینک register داشت، مخفی کن و نگه‌ش ندار
+                    if (m.innerHTML.toLowerCase().indexOf('register') !== -1 ||
+                        m.innerHTML.indexOf('wp-login.php?action=register') !== -1) {
+                        m.style.setProperty('display', 'none', 'important');
+                    } else {
+                        err = m; // پیام واقعی (مثل reset password)
+                    }
+                });
+            }
             var card = document.getElementById('pa-card');
             var title = card ? card.querySelector('.pa-ftitle') : null;
             if (err && card && title) {
-                err.style.cssText = '';  // clear WP inline styles
+                err.style.cssText = '';
                 err.style.display = 'block';
                 err.style.visibility = 'visible';
                 card.insertBefore(err, title);
