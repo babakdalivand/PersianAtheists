@@ -8,19 +8,36 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: Install sshpass
+        run: sudo apt-get install -y sshpass rsync
+
+      - name: Deploy via rsync over SSH
+        env:
+          SSHPASS: ${{ secrets.SSH_PASSWORD }}
+        run: |
+          sshpass -e rsync -az --delete \
+            --exclude='.git/' \
+            --exclude='.github/' \
+            --exclude='SESSION_STARTER.md' \
+            --exclude='PROJECT_REPORT.md' \
+            --exclude='PROJECT-REPORT.txt' \
+            --exclude='README.md' \
+            -e "ssh -p ${{ secrets.SSH_PORT }} -o StrictHostKeyChecking=no" \
+            ./ \
+            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.THEME_PATH }}/
+
+      - name: Clear WordPress Cache
+        uses: appleboy/ssh-action@v1.0.3
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: ${{ secrets.FTP_SERVER_DIR }}
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
-            PROJECT-REPORT.txt
+          host: ${{ secrets.SSH_HOST }}
+          port: ${{ secrets.SSH_PORT }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            rm -rf /home/u775839017/domains/persianatheists.com/public_html/wp-content/cache/all/*
+            echo "Cache cleared at $(date)"
