@@ -10,6 +10,7 @@ require_once PA_DIR . '/inc/admin.php';
 require_once PA_DIR . '/inc/login.php';
 require_once PA_DIR . '/inc/migration.php';
 require_once PA_DIR . '/inc/webp.php';
+require_once PA_DIR . '/inc/live.php';
 
 /* ── LANGUAGE ── */
 function pa_current_lang() {

@@ -120,7 +120,7 @@ body.home .pa-lang-flag { filter: grayscale(0.2) opacity(0.75); }
 body.home .pa-lang-item.active .pa-lang-flag { filter: grayscale(0) opacity(1); }
 
 /* ══ HERO SPLIT LAYOUT ══ */
-.pa-hero-full { background: #1A1714; overflow: hidden; }
+.pa-hero-full { background: #1A1714; overflow: hidden; position: relative; }
 .pa-hero-inner {
     display: grid;
     grid-template-columns: 45fr 55fr !important;
@@ -316,13 +316,123 @@ body.home .pa-lang-item.active .pa-lang-flag { filter: grayscale(0) opacity(1); 
     .pa-raha-row { gap: 6px; }
     .pa-raha-letter { padding: 7px 10px; min-width: 56px; }
 }
+
+/* ══ LIVE BADGE ══ */
+.pa-hero-badge-live {
+    background: rgba(220,38,38,0.15) !important;
+    border-color: rgba(220,38,38,0.5) !important;
+    cursor: pointer !important;
+    transition: all .25s !important;
+    font-family: inherit;
+    font-size: inherit;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 5px 14px; border-radius: 20px; margin-bottom: 16px;
+}
+.pa-hero-badge-live:hover {
+    background: rgba(220,38,38,0.28) !important;
+    border-color: #dc2626 !important;
+    transform: scale(1.03);
+}
+.pa-badge-dot-live {
+    width: 8px !important; height: 8px !important;
+    background: #ef4444 !important;
+    animation: pa-live-pulse 1s infinite !important;
+}
+@keyframes pa-live-pulse {
+    0%,100% { opacity:1; transform:scale(1); box-shadow:0 0 0 0 rgba(239,68,68,0.6); }
+    50%      { opacity:.8; transform:scale(1.25); box-shadow:0 0 0 6px rgba(239,68,68,0); }
+}
+
+/* ══ LIVE PANEL ══ */
+.pa-live-panel {
+    position: absolute; inset: 0; z-index: 20;
+    background: #0D0B09;
+    opacity: 0; pointer-events: none;
+    transition: opacity .35s ease, transform .35s ease;
+    transform: translateY(-12px);
+    display: flex; align-items: stretch;
+}
+.pa-live-panel.pa-live-open {
+    opacity: 1; pointer-events: auto;
+    transform: translateY(0);
+}
+.pa-live-panel-inner {
+    display: flex; flex-direction: column; width: 100%;
+}
+.pa-live-panel-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    flex-shrink: 0;
+}
+.pa-live-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(220,38,38,0.2); border: 1px solid rgba(220,38,38,0.5);
+    border-radius: 12px; padding: 3px 10px;
+    font-size: 11px; font-weight: 800; color: #ef4444;
+    white-space: nowrap;
+}
+.pa-live-dot-red {
+    width: 7px; height: 7px; background: #ef4444;
+    border-radius: 50%; animation: pa-live-pulse 1s infinite;
+}
+.pa-live-title-text {
+    font-size: 13px; color: rgba(255,252,242,0.75);
+    flex: 1; min-width: 0;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.pa-live-close {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,252,242,0.7); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .2s; flex-shrink: 0;
+}
+.pa-live-close:hover { background: rgba(220,38,38,0.2); color: #ef4444; border-color: #ef4444; }
+.pa-live-embed {
+    flex: 1; position: relative;
+}
+.pa-live-embed iframe {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    border: none;
+}
 </style>
+
+<?php $live = pa_get_youtube_live(); ?>
 
 <!-- ══════════════════════════════════════════
      HERO — اسلاید چپ | فیلسوف + RAHA راست
 ══════════════════════════════════════════ -->
-<section class="pa-hero-full">
-    <div class="pa-hero-inner">
+<section class="pa-hero-full" id="paHeroSection">
+
+    <?php if ( $live['active'] ) : ?>
+    <!-- LIVE PLAYER PANEL -->
+    <div id="paLivePanel" class="pa-live-panel">
+        <div class="pa-live-panel-inner">
+            <div class="pa-live-panel-header">
+                <span class="pa-live-pill">
+                    <span class="pa-live-dot-red"></span>
+                    <?php echo $is_en ? 'LIVE' : 'پخش زنده'; ?>
+                </span>
+                <span class="pa-live-title-text"><?php echo esc_html( $live['title'] ); ?></span>
+                <button class="pa-live-close" id="paLiveClose" aria-label="بستن">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+            <div class="pa-live-embed">
+                <iframe id="paLiveIframe"
+                        src=""
+                        data-src="https://www.youtube.com/embed/<?php echo esc_attr( $live['video_id'] ); ?>?autoplay=1&rel=0&modestbranding=1"
+                        allow="autoplay; fullscreen; encrypted-media"
+                        allowfullscreen
+                        frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
+
+    <div class="pa-hero-inner" id="paHeroInner">
 
         <!-- DOM اول = سمت راست در RTL: فیلسوف + متن + RAHA -->
         <div class="pa-hero-content-col">
@@ -330,10 +440,20 @@ body.home .pa-lang-item.active .pa-lang-flag { filter: grayscale(0) opacity(1); 
                  src="<?php echo esc_url(PA_URI.'/assets/images/hero-philosopher.png'); ?>"
                  alt="" onerror="this.style.display='none'">
             <div class="pa-hero-text">
+
+                <?php if ( $live['active'] ) : ?>
+                <button class="pa-hero-badge pa-hero-badge-live" id="paLiveTrigger" aria-label="باز کردن پخش زنده">
+                    <span class="pa-badge-dot pa-badge-dot-live"></span>
+                    <span class="pa-hero-badge-text"><?php echo $is_en ? '🔴 LIVE NOW' : '🔴 لایو در جریان است'; ?></span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="margin-inline-start:4px;opacity:.7;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                </button>
+                <?php else : ?>
                 <div class="pa-hero-badge">
                     <span class="pa-badge-dot"></span>
                     <span class="pa-hero-badge-text"><?php echo esc_html($t['hero_badge']); ?></span>
                 </div>
+                <?php endif; ?>
+
                 <h1 class="pa-hero-title"><?php echo esc_html($t['hero_title']); ?></h1>
                 <p class="pa-hero-desc"><?php echo esc_html($t['hero_desc']); ?></p>
                 <div class="pa-raha-row">
@@ -671,6 +791,36 @@ body.home .pa-lang-item.active .pa-lang-flag { filter: grayscale(0) opacity(1); 
     document.addEventListener('DOMContentLoaded',function(){initSlider('latest');});
 })();
 </script>
+
+<?php if ( $live['active'] ) : ?>
+<script>
+(function(){
+    var trigger = document.getElementById('paLiveTrigger');
+    var panel   = document.getElementById('paLivePanel');
+    var closeBtn= document.getElementById('paLiveClose');
+    var iframe  = document.getElementById('paLiveIframe');
+
+    if (!trigger || !panel) return;
+
+    function openLive() {
+        iframe.src = iframe.dataset.src;
+        panel.classList.add('pa-live-open');
+        document.body.style.overflow = '';
+    }
+    function closeLive() {
+        panel.classList.remove('pa-live-open');
+        iframe.src = '';
+    }
+
+    trigger.addEventListener('click', openLive);
+    if (closeBtn) closeBtn.addEventListener('click', closeLive);
+
+    document.addEventListener('keydown', function(e){
+        if (e.key === 'Escape') closeLive();
+    });
+})();
+</script>
+<?php endif; ?>
 
 <?php get_footer(); ?>
 
